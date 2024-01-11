@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /Admin/
+Allow: /images/
+Allow: /tiny_mce/
+Allow: /Logfiles/
+Allow: /*.js$
+Allow: /*.css$
+Allow: /css/
+Allow: /UploadImages/
+Allow: /Upload/
+Allow: /ckfinder/
+Allow: /CMS/
+Allow: /Theme/
+
