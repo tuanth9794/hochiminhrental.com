@@ -1,0 +1,19 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_CATEGORIES>
+<div id="portfolio_filter" class="portfolio_filter mb_50">
+    <div data-filter="*" class="work_portfolio_item active">Xem tất cả</div>
+    @foreach (var category in Model.ToList())
+    {
+        <div data-filter=".ux-@category.CAT_SEO_URL" class="work_portfolio_item">@Html.Raw(category.CAT_NAME)</div>
+    }
+</div>
+
+<div class="row portfolio_gallery mb_30" id="work-portfolio">
+    @foreach (var category in Model.ToList())
+    {
+        @await Component.InvokeAsync("GalariesTabContent", new { catid = category.CAT_ID })
+    }
+</div>
+
+
+
+

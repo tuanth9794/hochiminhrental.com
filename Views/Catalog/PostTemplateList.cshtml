@@ -1,0 +1,103 @@
+﻿@model IEnumerable<CoreCnice.Models.NewsModelCat>
+@using CoreCnice.UtilsCs;
+@*@await Component.InvokeAsync("CatBanner", new { Position = @ViewBag.Id })*@
+@{
+    Layout = "~/Views/Shared/_LayoutDetail.cshtml";
+    int typeCat = ViewBag.Type;
+    string linkimg = "";
+    string alt = "";
+
+    if (!String.IsNullOrEmpty(ViewBag.IMAGE3))
+    {
+        linkimg = "/UploadImages/Data/Cats/" + ViewBag.Id + "/" + ViewBag.IMAGE3;
+    }
+    else
+    {
+        if (!String.IsNullOrEmpty(ViewBag.IMAGE2))
+        {
+            linkimg = "/UploadImages/Data/Cats/" + ViewBag.Id + "/" + ViewBag.IMAGE2;
+        }
+        else
+        {
+            linkimg = "";
+        }
+    }
+
+    if (!String.IsNullOrEmpty(ViewBag.Alt))
+    {
+        alt = ViewBag.Alt;
+    }
+    else
+    {
+        alt = ViewBag.Title;
+    }
+    int lang = Utils.CIntDef(ViewBag.Langue);
+}
+<style>
+    .blog_content {
+        padding: 15px 10px;
+    }
+</style>
+
+@if (lang == 1)
+{
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="#">@Html.Raw(ViewData["Title"])</a></li>
+            </ol>
+        </div><!-- End .container -->
+    </nav>
+}
+else
+{
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="#">@Html.Raw(ViewBag.NAME)</a></li>
+            </ol>
+        </div><!-- End .container -->
+    </nav>
+}
+
+<section class="blog_area sec_pad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9 blog_grid_info">
+                <div class="sec_title text-center mb_20 wow fadeInUp" data-wow-delay="0.3s" style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
+                    <h1 class="f_p f_size_30 l_height50 f_600 t_color" style="text-transform:uppercase">@Html.Raw(ViewData["Title"])</h1>
+                </div>
+                <div class="row">
+                    @{
+                        foreach (var item in Model.ToList())
+                        {
+                            @Html.Partial("~/Views/Catalog/_PostOne.cshtml", item);
+                        }
+                    }
+                </div>
+            </div>
+
+            @Html.Partial("~/Views/Catalog/_LeftNews.cshtml");
+
+        </div>
+    </div>
+</section>
+
+<style>
+    .blog_grid_item .blog_img {
+        width: 100%;
+        float: left;
+        position: relative;
+        overflow: hidden;
+        height: 135px;
+        background: hsl(0deg 0% 93%);
+        text-align: center;
+    }
+
+        .blog_grid_item .blog_img img {
+            max-height: 99%;
+            width: auto !important;
+        }
+</style>

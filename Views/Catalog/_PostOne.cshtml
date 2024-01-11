@@ -1,0 +1,84 @@
+﻿@model CoreCnice.Models.NewsModelCat;
+@using CoreCnice.Connect;
+@using CoreCnice.UtilsCs;
+@{
+    clsFormat cl = new clsFormat();
+    string linkimg = "";
+
+    string linkurl = "";
+    int lang = Utils.CIntDef(ViewBag.Langue);
+    if (lang == 1)
+    {
+        if (!String.IsNullOrEmpty(Model.NEWS_URL))
+        {
+            linkurl = Model.NEWS_URL;
+        }
+        else
+        {
+            linkurl = "/" + Model.CAT_SEO_URL + "/" + Model.NEWS_SEO_URL.Replace("/", "");
+
+        }
+    }
+    else
+    {
+        if (!String.IsNullOrEmpty(Model.NEWS_URL))
+        {
+            linkurl = Model.NEWS_URL;
+        }
+        else
+        {
+            if (!String.IsNullOrEmpty(Model.NEWS_SEO_URL_EN))
+            {
+                linkurl = "/" + Model.CAT_SEO_URL_EN + "/" + Model.NEWS_SEO_URL_EN.Replace("/", "");
+            }
+            else
+            {
+                linkurl = "/" + Model.CAT_SEO_URL_EN + "/" + Model.NEWS_SEO_URL_EN;
+            }
+        }
+    }
+
+    string linkimgNews = "";
+    if (!String.IsNullOrEmpty(Model.NEWS_IMAGE1))
+    {
+        linkimg = "/UploadImages/Data/News/" + Model.NEWS_ID + "/" + Model.NEWS_IMAGE1;
+        linkimgNews = "/UploadImages/Data/News/" + Model.NEWS_ID + "/thumb-" + Model.NEWS_IMAGE1;
+        if (Utils.checkfileExit(linkimgNews) == true)
+        {
+            linkimg = linkimgNews;
+        }
+    }
+    else
+    {
+        linkimg = "/images/noimg.jpg";
+    }
+  
+}
+<div class="col-lg-4 col-sm-6">
+    <div class="blog_grid_item mb-30">
+        <div class="blog_img">
+            <a href="@linkurl" title="@Html.Raw(Model.NEWS_TITLE)">
+                <img class="img-fluid" src="@linkimg" alt="@Html.Raw(Model.NEWS_TITLE)" style="width:100%">
+            </a>
+        </div>
+        <div class="blog_content">
+            <div class="entry_post_info">
+                <a href="#">@Html.Raw(Model.NEWS_PUBLISHDATE.Value.Day)/@Html.Raw(Model.NEWS_PUBLISHDATE.Value.Month)/@Html.Raw(Model.NEWS_PUBLISHDATE.Value.Year) @Html.Raw(Model.NEWS_PUBLISHDATE.Value.Hour):@Html.Raw(Model.NEWS_PUBLISHDATE.Value.Minute):00</a>
+            </div>
+            @if (lang == 1)
+            {
+                <a href="@linkurl">
+                    <h5 class="f_p f_size_20 f_500 t_color mb_20">@Html.Raw(Model.NEWS_TITLE)</h5>
+                </a>
+                <p class="f_400 mb-0">   @Html.Raw(Model.NEWS_DESC)</p>
+            }
+            else
+            {
+                <a href="@linkurl">
+                    <h5 class="f_p f_size_20 f_500 t_color mb_20">@Html.Raw(Model.NEWS_TITLE_EN)</h5>
+                </a>
+                <p class="f_400 mb-0">   @Html.Raw(Model.NEWS_DESC_EN)</p>
+            }
+        </div>
+    </div>
+</div>

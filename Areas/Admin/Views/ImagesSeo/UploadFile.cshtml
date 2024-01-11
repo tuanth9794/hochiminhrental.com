@@ -1,0 +1,51 @@
+﻿@model CoreCnice.Domain.ESHOP_AD_ITEM
+@{
+    ViewData["Title"] = "Upload File";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+@using (Html.BeginForm(FormMethod.Post, new { enctype = "multipart/form-data", data_ajax = "false" }))
+{
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+            Upload File
+        </h1>
+        <div class="pull-right">
+            <button type="submit" name="save" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>
+                Lưu File
+            </button>
+        </div>
+    </div>
+
+    <section class="content">
+        @if (!string.IsNullOrEmpty(ViewBag.Error))
+        {
+            <div class="callout callout-info">
+                <h4>Thông báo</h4>
+                <p>
+                    @Html.Raw(ViewBag.Error)
+                </p>
+            </div>
+        }
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Thông tin chung</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- form start -->
+
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label>Lựa chọn</label>
+                            <input type="file" id="exampleInputFile" asp-for="AD_ITEM_FILENAME">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}

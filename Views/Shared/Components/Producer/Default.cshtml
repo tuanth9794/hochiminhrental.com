@@ -1,0 +1,58 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_CATEGORIES>
+@using CoreCnice.Connect;
+@using CoreCnice.Domain;
+@*@model List<CoreCnice.Domain.ESHOP_AD_ITEM>*@
+@{
+    BulSoftCmsConnectContext _context = new BulSoftCmsConnectContext();
+    int count = 0;
+    string bindActive = "";
+}
+
+@foreach (var category in Model.ToList())
+{
+    count = 0;
+    bindActive = "";
+    <div class="sec-heading-area p_0_15" style="text-align: CENTER;">
+        <h2 class="section-heading">
+            @category.CAT_NAME  <a class="right carousel-control" href="#myCarousel2" data-slide="next" style="width: 42px; margin-top: -3px;">
+                <i class="fas fa-arrow-right" style="margin-top: 10px; margin-bottom: 10px"></i>
+                <span class="sr-only">Next</span>
+            </a>
+        </h2>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-md-12">
+            <div id="myCarousel2" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="row">
+                        @{
+                            var listNew = (from n in _context.ESHOP_NEWS
+                                           join c in _context.ESHOP_NEWS_CAT on n.NEWS_ID equals c.NEWS_ID
+                                           where c.CAT_ID == category.CAT_ID
+                                           select n);
+
+                            foreach (var itemn in listNew.ToList())
+                            {
+                                if (count == 0)
+                                {
+                                    bindActive = "active";
+                                }
+                                count++;
+                                <div class="item @bindActive">
+                                    <div class="col-xs-12 col-md-2">
+                                        <div style="border: 1px solid rgb(227, 227, 227); float: left; list-style: none; position: relative;">
+                                            <a href="@itemn.NEWS_URL">
+                                                <img src="~/UploadImages/@itemn.NEWS_IMAGE1" style="width: 100%;" />
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

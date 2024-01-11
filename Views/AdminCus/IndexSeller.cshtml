@@ -1,0 +1,43 @@
+﻿@using CoreCnice.UtilsCs;
+@{
+    Layout = "~/Views/Shared/_LayoutSeller.cshtml";
+    clsFormat cl = new clsFormat();
+    int lang = Utils.CIntDef(ViewBag.Langue);
+    int tygia = Utils.CIntDef(ViewBag.USD);
+    int tien = Utils.CIntDef(ViewBag.Money);
+    string donvi = "";
+    string donviEn = "";
+}
+
+
+<section class="content-main">
+    <div class="content-header">
+        @{
+            if (lang == 2)
+            {
+                <div>
+                    <h2 class="content-title card-title">Dashboard</h2>
+                    <p>account information overview</p>
+                </div>
+                <div>
+                    <a href="/AdminCus/SellerPost" class="btn btn-primary"><i class="text-muted material-icons md-post_add"></i>POST</a>
+                </div>
+            }
+            else
+            {
+                <div>
+                    <h2 class="content-title card-title">Tổng quan</h2>
+                    <p>tổng quan thông tin tài khoản</p>
+                </div>
+                <div>
+                    <a href="/AdminCus/SellerPost" class="btn btn-primary"><i class="text-muted material-icons md-post_add"></i>GỬI YÊU CẦU</a>
+                </div>
+            }
+        }
+
+    </div>
+
+
+
+    @await Component.InvokeAsync("ProductHomeCus", new { Position = 3 })  
+</section>

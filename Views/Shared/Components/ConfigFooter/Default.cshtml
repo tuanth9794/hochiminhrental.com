@@ -1,0 +1,6 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_CONFIG>
+<section class="adress" style="background: #e3e3e3; padding-top: 10px; padding-bottom: 10px; border-top: 1px solid #1c552c; float: left; width: 100%">
+    <div class="container">
+        @Html.Raw(Model.ToList()[0].CONFIG_FOOTER);
+    </div>
+</section>

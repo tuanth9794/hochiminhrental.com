@@ -1,0 +1,181 @@
+﻿@model IEnumerable<CoreCnice.Models.NewsModelCat>
+@using CoreCnice.Connect;
+@using CoreCnice.UtilsCs;
+@*@await Component.InvokeAsync("CatBanner", new { Position = @ViewBag.Id })*@
+@{
+    Layout = "~/Views/Shared/_LayoutDetail.cshtml";
+    int lang = Utils.CIntDef(ViewBag.Langue);
+}
+<style>
+    .filter-items p {
+        background: hsl(0deg 0% 100%);
+        font-size: 12px;
+        height: 27px;
+        line-height: 26px;
+        padding: 0 12px;
+        position: relative;
+        margin-right: 30px;
+        white-space: nowrap;
+        margin-top: 5px;
+        margin-bottom: 4px;
+        display: inline-block;
+        vertical-align: top;
+        border-radius: 4px 0 0 4px;
+        color: hsl(0deg 0% 96%);
+        font-weight: 300;
+        border: 1px solid #3da29a !important;
+    }
+
+        .filter-items p a {
+            color: hsl(0deg 0% 0%);
+            font-weight: bold;
+        }
+
+        .filter-items p span {
+            cursor: pointer;
+            position: absolute;
+            width: 25px;
+            height: 27px;
+            color: hsl(0deg 0% 0%);
+            background: hsl(0deg 0% 100%) !important;
+            right: -25px;
+            top: -1px;
+            text-align: center;
+            line-height: 20px;
+            display: block;
+            font-weight: 300;
+            font-size: 9px;
+            border-radius: 0 4px 4px 0;
+            border: 1px solid #3da29a !important;
+            border-left: 0;
+        }
+
+    .filter-items h5 {
+        font-weight: 300;
+        font-size: 16px;
+        position: relative;
+        /* padding-left: 26px; */
+        display: block;
+        line-height: 13px;
+        float: left;
+        margin-right: 107px;
+        width: 171px;
+        /* margin-left: -140px; */
+        margin-top: 11px;
+    }
+
+    .inputsearch {
+        display: none !important;
+    }
+</style>
+<style>
+    .sapxep .dropdown-toggle::after {
+        display: inline-block;
+        width: 0;
+        height: 0;
+        margin-left: .255em;
+        vertical-align: .255em;
+        content: "";
+        right: 0px;
+        float: right;
+        margin-top: 9px;
+        border-top: .3em solid;
+        border-right: .3em solid hsl(0deg 0% 0% / 0%);
+        border-bottom: 0;
+        border-left: .3em solid hsl(0deg 0% 0% / 0%);
+    }
+
+    .newsfind .mb_40 {
+        margin-bottom: 0px
+    }
+</style>
+<!--<nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><a href="/">@Html.Raw(ViewData["Title"])</a></li>
+        </ol>
+    </div>-->
+<!-- End .container -->
+<!--</nav>-->
+<div class="find-home newsfind" style="width: 100%; border-bottom: 1px solid hsl(233deg 15% 88%); padding: 0px; border-top: 1px solid hsl(233deg 15% 88%); background: hsl(0deg 0% 100%);">
+    <div class="container">
+        @await Component.InvokeAsync("FilterCatHome", new { Cat = 1 })
+        @*@if (lang == 1)
+        {
+            <p class="default" id="idtimkiem" onclick="clickSearchTotal()" style="background: hsl(33deg 70% 55%) !important;font-weight: bold;margin-top: 5px;cursor:pointer;">
+                Tìm kiếm theo lựa chọn
+            </p>
+        }
+        else
+        {
+            <p class="default" id="idtimkiem" onclick="clickSearchTotal()" style="background: hsl(33deg 70% 55%) !important;font-weight: bold;margin-top: 5px;cursor:pointer;">
+                Search by selection
+            </p>
+        }*@
+    </div>
+</div>
+<div class="find-home">
+    <div class="container">
+        <div class="row ">
+            <div class="col-12 col-md-12 prdctfltr_collector_border">
+                @if (!String.IsNullOrEmpty(ViewBag.HTMLLOC))
+                {
+                    <div class="filter-items" style="margin-bottom: 10px;">
+                        @if (lang == 1)
+                        {
+                            <h5>Lựa chọn bộ lọc : </h5>
+                        }
+                        else
+                        {
+                            <h5>Filter selection : </h5>
+                        }
+                        <div id="tieuchichon">
+                            @Html.Raw(ViewBag.HTMLLOC)
+                            @if (lang == 1)
+                            {
+                                <p class="default" style="color:#000;font-weight:bold">
+                                    Xóa tất cả <span onclick="location.href=window.location.pathname;return false;">
+                                        <i class="fas fa-times"></i>
+                                    </span>
+                                </p>
+                                @*<p class="default" onclick="clickSearchTotal()" style="background: hsl(33deg 70% 55%) !important;font-weight: bold;margin-top: 5px;cursor:pointer;">
+                                        Tìm kiếm theo lựa chọn
+                                    </p>*@
+                            }
+                            else
+                            {
+                                <p class="default" style="color:#000;font-weight:bold">
+                                    Clear All <span onclick="location.href=window.location.pathname;return false;">
+                                        <i class="fas fa-times"></i>
+                                    </span>
+                                </p>
+                                @*<p class="default" onclick="clickSearchTotal()" style="background: hsl(33deg 70% 55%) !important;font-weight: bold;margin-top: 5px;cursor:pointer;">
+                                        Search by selection
+                                    </p>*@
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        @*@await Component.InvokeAsync("FilterCat", new { Cat = ViewBag.id })*@
+    </div>
+</div>
+
+<div class="agency_about_area d-flex bg_color" style="padding:30px 0px">
+    <div class="container">
+        <div class="sec_title text-center mb_20 wow fadeInUp" data-wow-delay="0.3s" style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
+            <h2 class="f_p f_size_30 l_height50 f_600 t_color" style="text-transform:uppercase">@Html.Raw(ViewData["Title"])</h2>
+        </div>
+        <div class="productsp row">
+            @{
+                @foreach (var item in Model.ToList())
+                {
+                    @Html.Partial("~/Views/Catalog/_ProductOne.cshtml", item);
+                }
+            }
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,35 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_PROPERTIES>
+@using CoreCnice.Connect;
+@using CoreCnice.UtilsCs;
+@{
+    int lang = Utils.CIntDef(ViewBag.Langue);
+}
+
+<ul class="list list--3 is-flex">
+    @foreach (var category in Model.ToList())
+    {
+        string linkimg = "";
+        if (!String.IsNullOrEmpty(category.PRO_IMAGES))
+        {
+            linkimg = "/UploadImages/Data/Properties/" + category.PROP_ID + "/" + category.PRO_IMAGES;
+        }
+        else
+        {
+            linkimg = "/images/noimg.jpg";
+        }
+        <li class="mt--12 d-flex justify-content-start align-items-center">
+            <img class="svg-icon" src="@linkimg" title="@category.PROP_NAME" /> <span>
+                @if (lang == 1)
+                {
+                    @category.PROP_NAME
+                }
+                else
+                {
+                    @category.PRO_NAME_EN
+                }
+            </span>
+        </li>
+    }
+</ul>
+
+

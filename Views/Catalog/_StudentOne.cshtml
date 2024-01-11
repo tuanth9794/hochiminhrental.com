@@ -1,0 +1,90 @@
+﻿@model CoreCnice.Models.NewsModelCat;
+@using CoreCnice.Connect;
+@using CoreCnice.UtilsCs;
+@{
+    clsFormat cl = new clsFormat();
+    string linkimg = "";
+
+    string linkurl = "";
+
+    if (!String.IsNullOrEmpty(Model.NEWS_URL))
+    {
+        linkurl = Model.NEWS_URL;
+    }
+    else
+    {
+        linkurl = "/" + Model.CAT_SEO_URL + "/" + Model.NEWS_SEO_URL;
+
+    }
+
+    string linkimgNews = "";
+    if (!String.IsNullOrEmpty(Model.NEWS_IMAGE1))
+    {
+        linkimg = "/UploadImages/Data/News/" + Model.NEWS_ID + "/" + Model.NEWS_IMAGE1;
+        linkimgNews = "/UploadImages/Data/News/" + Model.NEWS_ID + "/thumb-" + Model.NEWS_IMAGE1;
+        if (Utils.checkfileExit(linkimgNews) == true)
+        {
+            linkimg = linkimgNews;
+        }
+    }
+    else
+    {
+        linkimg = "/images/noimg.jpg";
+    }
+}
+@if (Utils.CIntDef(ViewBag.Langue) == 1)
+{
+    <div class="col-md-6">
+        <div class="panel-group accordion-theme-colored" id="accordion4" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingOne4">
+                    <h4 class="panel-title">
+                        <a class="active" role="button" data-toggle="collapse" data-parent="#accordion4" href="#collapseOne4" aria-expanded="true" aria-controls="collapseOne4">
+                            @Html.Raw(Model.NEWS_TITLE)
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseOne4" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne4">
+                    <div class="panel-body">
+                        <div class="col-md-3">
+                            <a href="@linkurl"><img src="@linkimg" alt="@Model.NEWS_TITLE" asp-append-version="true" /></a>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="cmhocvien">
+                                @Html.Raw(Model.NEWS_DESC)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="col-md-6">
+        <div class="panel-group accordion-theme-colored" id="accordion4" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingOne4">
+                    <h4 class="panel-title">
+                        <a class="active" role="button" data-toggle="collapse" data-parent="#accordion4" href="#collapseOne4" aria-expanded="true" aria-controls="collapseOne4">
+                            @Html.Raw(Model.NEWS_TITLE_EN)
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseOne4" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne4">
+                    <div class="panel-body">
+                        <div class="col-md-3">
+                            <a href="@linkurl"><img src="@linkimg" alt="@Model.NEWS_TITLE_EN" asp-append-version="true" /></a>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="cmhocvien">
+                                @Html.Raw(Model.NEWS_DESC_EN)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

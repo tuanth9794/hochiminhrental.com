@@ -1,0 +1,138 @@
+﻿@model CoreCnice.Domain.ESHOP_PROPERTIES
+
+@{
+    ViewData["Title"] = "Thêm mới thuộc tính";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<style>
+    .radio {
+        float: left !important;
+        margin-right: 10px !important
+    }
+</style>
+@using (Html.BeginForm(FormMethod.Post, new { enctype = "multipart/form-data", data_ajax = "false" }))
+{
+
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+            Cập nhật thông tin đơn hàng
+            <small>
+                <i class="fa fa-arrow-circle-left"></i>
+                <a href="/Admin/Properties">Về danh sách</a>
+            </small>
+        </h1>
+        <div class="pull-right">
+            <button type="submit" name="save" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>
+                Lưu chỉnh sửa
+            </button>
+        </div>
+    </div>
+
+    <section class="content">
+        @if (!string.IsNullOrEmpty(ViewBag.Error))
+        {
+            <div class="callout callout-info">
+                <h4>Thông báo</h4>
+                <p>
+                    @Html.Raw(ViewBag.Error)
+                </p>
+            </div>
+        }
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Thông tin liên hệ</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- form start -->
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Tên thuộc tinh</label>
+                            <input type="text" class="form-control" asp-for="PROP_NAME">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Tên tiếng anh</label>
+                            <input type="text" class="form-control" asp-for="PRO_NAME_EN">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Miêu tả thuộc tính</label>
+                            <textarea class="form-control" rows="2" id="catseokey" asp-for="PROP_DESC" style="height:172px"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Thứ tự</label>
+                            <input type="text" class="form-control" asp-for="PRO_ORDER" value="1">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-md-2 control-label">Kích hoạt</label>
+                            <div class="col-md-10">
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.PROP_ACTIVE, "0", new { id = 0, @checked = "checked", @class = "radio" })
+                                    Không sử dụng
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.PROP_ACTIVE, "1", new { id = 1, @class = "radio" })
+                                    Sử dụng tiện ích
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.PROP_ACTIVE, "2", new { id = 2, @class = "radio" })
+                                    Sử dụng bộ lọc
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-md-2 control-label">Loại Hình</label>
+                            <div class="col-md-10">
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.PRO_TYPE, "0", new { id = 0, @checked = "checked", @class = "radio" })
+                                    Thuộc tính
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.PRO_TYPE, "1", new { id = 1, @class = "radio" })
+                                    Giá ngày
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.PRO_TYPE, "2", new { id = 2, @class = "radio" })
+                                    Giá tháng
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-md-2 control-label">Hiện thị trang chủ</label>
+                            <div class="col-md-10">
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.PRO_TYPE_HOME, "0", new { id = 0, @checked = "checked", @class = "radio" })
+                                   Không
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.PRO_TYPE_HOME, "1", new { id = 1, @class = "radio" })
+                                   Hiển thị
+                                </div>                              
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-md-2 control-label">Icon</label>
+                            <div class="col-md-10">
+                                <input name="files" id="filesTh" type="file" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Thuộc tính cha</label>
+                            <select asp-for="PROP_PARENT_ID" class="form-control" asp-items="@(new SelectList(ViewBag.ListCatPr,"PROP_ID","PROP_NAME"))"></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
+}
+

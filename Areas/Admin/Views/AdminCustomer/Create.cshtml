@@ -1,0 +1,216 @@
+﻿@model CoreCnice.Domain.ESHOP_CUSTOMER
+
+@{
+    var defaultGridPageSize = 20;
+    ViewData["Title"] = "Thêm mới khách hàng";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+<style>
+    .jstree-default-large > .jstree-container-ul > .jstree-node {
+        margin-left: 0;
+        margin-right: 0;
+        width: 100% !important;
+        float: left !important;
+    }
+
+
+    /*.jstree-default-large > .jstree-no-dots .jstree-node .jstree-children li {
+        width: 25% !important;
+        float: left !important;
+    }*/
+
+    .jstree-default .jstree-wholerow-clicked {
+        background: none;
+    }
+</style>
+
+<style>
+    .radio {
+        float: left !important;
+        margin-right: 10px !important
+    }
+</style>
+@using (Html.BeginForm(FormMethod.Post, new { enctype = "multipart/form-data", data_ajax = "false" }))
+{
+
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+          Thêm mới khách hàng
+            <small>
+                <i class="fa fa-arrow-circle-left"></i>
+                <a href="/Admin/AdminOrder">Về danh sách</a>
+            </small>
+        </h1>
+        <div class="pull-right">
+            <button type="submit" name="save" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>
+                Lưu chỉnh sửa
+            </button>
+        </div>
+    </div>
+
+    <section class="content">
+        @if (!string.IsNullOrEmpty(ViewBag.Error))
+        {
+            <div class="callout callout-info">
+                <h4>Thông báo</h4>
+                <p>
+                    @Html.Raw(ViewBag.Error)
+                </p>
+            </div>
+        }
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+      
+        <div class="row">
+            <div class="col-md-6">
+                <!-- general form elements -->
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Thông tin liên hệ</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- form start -->
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Tên khách hàng</label>
+                            <input type="text" class="form-control" asp-for="CUSTOMER_FULLNAME">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Số điện thoại</label>
+                            <input type="text" class="form-control" asp-for="CUSTOMER_PHONE1">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Khu vực tìm thuê</label>
+                            <input type="text" class="form-control" asp-for="CUSTOMER_ADDRESS">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Ngày đăng ký</label>
+                            <input type="text" class="form-control" asp-for="CUSTOMER_PUBLISHDATE">
+                        </div>                    
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Thông tin đăng nhập</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- form start -->
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Tài khoản</label>
+                            <input type="text" class="form-control" id="catseourl" asp-for="CUSTOMER_UN">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Mật khẩu</label>
+                            <input type="password" class="form-control" id="catseotitle" asp-for="CUSTOMER_PW">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Tình trạng</label>
+                            <input type="password" class="form-control" id="catseotitle" asp-for="CUSTOMER_SHOWTYPE">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Ip Đăng ký</label>
+                            <input type="text" class="form-control" id="catseotitle" asp-for="CUSTOMER_IP">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Nhu cầu khách hàng</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- form start -->
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Ngân sách khách hàng</label>
+                            <input type="text" class="form-control" asp-for="CUSTOMER_NGANSACH">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Loại căn hộ quan tâm</label>
+                            <select asp-for="CUSTOMER_LOAICANHO" style="height:27px;padding:0px" class="form-control" asp-items="@(new SelectList(ViewBag.OrderStatusList, "id", "value"))"></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Thời gian thuê</label>
+                            <input type="password" class="form-control"  asp-for="CUSTOMER_THOIGIANTHUE">
+                        </div>
+                          <div class="form-group">
+                            <label for="exampleInputPassword1">Ngày dọn vào</label>
+                            <input type="password" class="form-control"  asp-for="CUSTOMER_FIELD1">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Số người ở</label>
+                            <input type="text" class="form-control" asp-for="CUSTOMER_SONGUOIO">
+                        </div>
+                    </div>
+                </div>
+            </div>
+                   <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Tag khách hàng</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- form start -->
+                  <div class="box-body">
+                        <div class="form-group">
+                            <div id="jstree">
+                            </div>
+                             <input type="hidden" name="selectedItems" id="selectedItems" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+        $(function () {
+            $('#jstree').on('changed.jstree', function (e, data) {
+                var i, j;
+                var selectedItems = [];
+                for(i = 0, j = data.selected.length; i < j; i++) {
+
+                    //Fetch the Id.
+                    var id = data.selected[i];
+
+                    //Remove the ParentId.
+                    if(id.indexOf('-') != -1){
+                        id = id.split("-")[1];
+                    }
+
+                    //Add the Node to the JSON Array.
+                    selectedItems.push({
+                        text: data.instance.get_node(data.selected[i]).text,
+                        id: id,
+                        parent: data.node.parents[0]
+                    });
+                }
+
+                //Serialize the JSON Array and save in HiddenField.
+                $('#selectedItems').val(JSON.stringify(selectedItems));
+            }).jstree({
+                "core": {
+                    "themes": {
+                        "variant": "large"
+                    },
+                    "data": @Html.Raw(ViewBag.Json)
+                    },
+                "checkbox": {
+                    "keep_selected_style": true
+                },
+                "plugins": ["wholerow", "checkbox"],
+            });
+        });
+        </script>
+    </section>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
+}

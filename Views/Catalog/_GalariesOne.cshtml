@@ -1,0 +1,58 @@
+﻿@model CoreCnice.Models.NewsModelCat;
+@using CoreCnice.Connect;
+@using CoreCnice.UtilsCs;
+@{
+    clsFormat cl = new clsFormat();
+    string linkimg = "";
+
+    string linkurl = "";
+
+    if (!String.IsNullOrEmpty(Model.NEWS_URL))
+    {
+        linkurl = Model.NEWS_URL;
+    }
+    else
+    {
+        linkurl = "/" + Model.CAT_SEO_URL + "/" + Model.NEWS_SEO_URL;
+
+    }
+
+    string linkimgNews = "";
+    if (!String.IsNullOrEmpty(Model.NEWS_IMAGE1))
+    {
+        linkimg = "/UploadImages/Data/News/" + Model.NEWS_ID + "/" + Model.NEWS_IMAGE1;
+        linkimgNews = "/UploadImages/Data/News/" + Model.NEWS_ID + "/thumb-" + Model.NEWS_IMAGE1;
+        if (Utils.checkfileExit(linkimgNews) == true)
+        {
+            linkimg = linkimgNews;
+        }
+    }
+    else
+    {
+        linkimg = "/images/noimg.jpg";
+    }
+}
+
+<div class="col-lg-4 col-sm-6 portfolio_item br ux-@Model.CAT_SEO_URL mb-30">
+    <div class="blog_list_item blog_list_item_two">
+        <a href="#" class="post_date">
+            <h2>@Html.Raw(Model.NEWS_PUBLISHDATE.Value.Day) <span>@Html.Raw(Model.NEWS_PUBLISHDATE.Value.Month)</span></h2>
+        </a>
+        @if (Model.NEWS_TYPE == 2)
+        {
+            <a href="javascript:;" onclick="GetQuickViews(@Model.NEWS_ID)"><img class="img-fluid" src="@linkimg" alt="@Html.Raw(Model.NEWS_TITLE)" asp-append-version="true"></a>
+        }
+        else
+        {
+            <div class="video_post">
+                <img class="img-fluid" src="@linkimg" alt="@Html.Raw(Model.NEWS_TITLE)">
+                <a class="popup-youtube video_icon" href="@Model.NEWS_URL"><i class="arrow_triangle-right"></i></a>
+            </div>
+        }
+        <div class="blog_content">
+            <a href="@linkimg" class="img_popup">
+                <h5 class="blog_title">@Html.Raw(Model.NEWS_TITLE)</h5>
+            </a>          
+        </div>
+    </div>
+</div>

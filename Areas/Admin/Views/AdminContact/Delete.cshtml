@@ -1,0 +1,82 @@
+﻿@model CoreCnice.Domain.ESHOP_CONTACT
+
+@{
+    ViewData["Title"] = "Delete";
+     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>ESHOP_CONTACT</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CONTACT_NAME)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CONTACT_NAME)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CONTACT_EMAIL)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CONTACT_EMAIL)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CONTACT_PHONE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CONTACT_PHONE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CONTACT_ADDRESS)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CONTACT_ADDRESS)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CONTACT_TITLE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CONTACT_TITLE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CONTACT_CONTENT)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CONTACT_CONTENT)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CONTACT_PUBLISHDATE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CONTACT_PUBLISHDATE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CONTACT_ANSWER)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CONTACT_ANSWER)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CONTACT_SHOWTYPE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CONTACT_SHOWTYPE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CONTACT_TYPE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CONTACT_TYPE)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="CONTACT_ID" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

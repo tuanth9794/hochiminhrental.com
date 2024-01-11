@@ -1,0 +1,270 @@
+﻿@model CoreCnice.Domain.ESHOP_AD_ITEM
+@using CoreCnice.Connect;
+@{
+    BulSoftCmsConnectContext _context = new BulSoftCmsConnectContext();
+    ViewData["Title"] = "Chỉnh sửa hình ảnh";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    var listCatLoad = (from catnew in _context.ESHOP_AD_ITEM
+                       join cat in _context.ESHOP_AD_ITEM_CAT on catnew.AD_ITEM_ID equals cat.AD_ITEM_ID
+                       join C in _context.ESHOP_CATEGORIES on cat.CAT_ID equals C.CAT_ID
+                       where catnew.AD_ITEM_ID == Model.AD_ITEM_ID
+                       select C);
+}
+
+
+<style>
+    .radio {
+        float: left !important;
+        margin-right: 10px !important
+    }
+</style>
+@using (Html.BeginForm(FormMethod.Post, new { enctype = "multipart/form-data", data_ajax = "false" }))
+{
+
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+            Chỉnh sửa thông tin - @Model.AD_ITEM_CODE
+            <small>
+                <i class="fa fa-arrow-circle-left"></i>
+                <a href="/Admin/Picture">Về danh sách</a>
+            </small>
+        </h1>
+        <div class="pull-right">
+            <button type="submit" name="save" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>
+                Lưu chỉnh sửa
+            </button>
+            <button type="submit" name="DeleteCatConfirmed" class="btn bg-red" formmethod="post" formaction="/Admin/Picture/DeleteConfirmed?id=@Model.AD_ITEM_ID">
+                <span class="glyphicon glyphicon-trash"></span>
+                Xóa
+            </button>
+        </div>
+    </div>
+
+    <section class="content">
+        @if (!string.IsNullOrEmpty(ViewBag.Error))
+        {
+            <div class="callout callout-info">
+                <h4>Thông báo</h4>
+                <p>
+                    @Html.Raw(ViewBag.Error)
+                </p>
+            </div>
+        }
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="AD_ITEM_ID" value="@Model.AD_ITEM_ID" />
+        <div class="row">
+            <div class="col-md-4">
+                <!-- general form elements -->
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Thông tin chung</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- form start -->
+
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Tiêu đề hình</label>
+                            <input type="text" class="form-control" asp-for="AD_ITEM_CODE">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Miêu tả nội dung</label>
+                            <textarea class="form-control" rows="3" id="catdesc" asp-for="AD_ITEM_DESC"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Liên kết tĩnh</label>
+                            <input type="text" class="form-control" id="catlienket" asp-for="AD_ITEM_URL">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Thứ tự</label>
+                            <input type="text" class="form-control" id="catlienket" asp-for="AD_ITEM_ORDER">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Thông tin cấu hình</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- form start -->
+
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Chuyên mục</label>
+                            <select name="Employee[]" id="select2" multiple="multiple" class="form-control" asp-items="ViewBag.ListCatPr"></select>
+                        </div>
+                        @{
+                            if (listCatLoad.ToList().Count > 0)
+                            {
+                                <div class="form-group">
+                                    <label>Danh mục lựa chọn</label>
+                                    @foreach (var item in listCatLoad.ToList())
+                                    {
+                                        <button type="button" class="btn btn-primary btn-xs" style="margin-left: 9px;">@item.CAT_NAME</button>
+                                    }
+                                </div>
+                            }
+
+                        }
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Chiều cao</label>
+                            <input type="text" class="form-control" id="catseotitle" asp-for="AD_ITEM_HEIGHT">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Chiều rộng</label>
+                            <input type="text" class="form-control" id="catseourl" asp-for="AD_ITEM_WIDTH">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-md-2 control-label" style="padding-left:0px">Loại hình</label>
+                            <div class="col-md-10">
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.AD_ITEM_TYPE, "0", new { id = 0, @checked = "checked", @class = "radio" })
+                                    Hình ảnh
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.AD_ITEM_TYPE, "1", new { id = 1, @class = "radio" })
+                                    Video
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-md-2 control-label" style="padding-left:0px">Vị trí hiển thị</label>
+                            <div class="col-md-10">
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.AD_ITEM_POSITION, "0", new { id = 0, @checked = "checked", @class = "radio" })
+                                    Slider trang chủ
+                                </div>
+                                @*<div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.AD_ITEM_POSITION, "1", new { id = 1, @class = "radio" })
+                                    Quảng cáo giới thiệu
+                                </div>*@
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.AD_ITEM_POSITION, "2", new { id = 2, @class = "radio" })
+                                    Đối tác
+                                </div>
+                                @*<div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.AD_ITEM_POSITION, "4", new { id = 4, @class = "radio" })
+                                    Phương thức thanh toán
+                                </div>*@
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.AD_ITEM_POSITION, "3", new { id = 3, @class = "radio" })
+                                    Logo
+                                </div>
+                                @*<div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.AD_ITEM_POSITION, "5", new { id = 5, @class = "radio" })
+                                    Banner Left
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.AD_ITEM_POSITION, "15", new { id = 5, @class = "radio" })
+                                    Banner Cat
+                                </div>*@
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.AD_ITEM_POSITION, "10", new { id = 10, @class = "radio" })
+                                    Không hiển thị
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-md-2 control-label" style="padding-left:0px">Hiển thị</label>
+                            <div class="col-md-10">
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.AD_ITEM_LANGUAGE, "0", new { id = 0, @checked = "checked", @class = "radio" })
+                                    Không kích hoạt
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.AD_ITEM_LANGUAGE, "1", new { id = 1, @class = "radio" })
+                                    Kích hoạt
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-6" style="padding-left:0px">
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Miêu tả nội dung</label>
+                                    <div class="input-group date">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input type="text" class="form-control datepicker" id="catseourl" asp-for="AD_ITEM_DATEFROM">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Miêu tả nội dung</label>
+                                    <div class="input-group date">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input type="text" class="form-control datepicker" id="catseourl" asp-for="AD_ITEM_DATETO">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="box box-info">
+                    <div class="box-header">
+                        <h3 class="box-title">
+                            Hình ảnh chuyên mục
+                        </h3>
+                        <!-- tools box -->
+                        <div class="pull-right box-tools">
+                            <button type="button" class="btn btn-info btn-sm" data-widget="collapse" data-toggle="tooltip"
+                                    title="Collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                        <!-- /. tools -->
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body pad">
+                        <div class="form-group form-horizontal ">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="inputEmail3" class="col-md-5 control-label textalginleft">Hình hiển thị</label>
+                                    <div class="col-md-7">
+
+                                        <div class="form-group">
+                                            <input type="file" id="exampleInputFile" asp-for="AD_ITEM_FILENAME">
+                                            <input type="hidden" class="form-control" asp-for="AD_ITEM_FILENAME">
+
+                                        </div>
+                                        <!-- COMPONENT END -->
+                                        @if (!string.IsNullOrEmpty(Model.AD_ITEM_FILENAME))
+                                        {
+                                            <img src="/UploadImages/Data/Banner/@Model.AD_ITEM_FILENAME" id="ImagesThumId" />
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        <script>
+            $(document).ready(function () {
+                $('.datepicker').datepicker({
+                    autoclose: true
+                })
+            });
+            $(function () {
+                //select2 eklentimizin tanımı
+                $('#select2').select2({
+                    placeholder: "Lựa chọn danh mục",
+                });
+            });
+        </script>
+    }
+}

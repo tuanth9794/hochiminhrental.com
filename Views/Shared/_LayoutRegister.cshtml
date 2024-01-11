@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html lang="vi" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="content-language" content="vn">
+    <link rel="icon" href="/UploadImages/Data/@Html.Raw(ViewData["FAVICON"])">
+    <title>@Html.Raw(ViewData["Title"])</title>
+    <meta name="description" content="@Html.Raw(ViewData["Desc"])" />
+    <meta name="keywords" content="@Html.Raw(ViewData["Key"])" />
+    <!-- Stylesheet -->
+    <link href="/sptech/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="/sptech/css/jquery-ui.min.css" rel="stylesheet" type="text/css">
+    <link href="/sptech/css/animate.css" rel="stylesheet" type="text/css">
+    <link href="/sptech/css/css-plugin-collections.css" rel="stylesheet" />
+    <!-- CSS | menuzord megamenu skins -->
+    <link href="~/sptech/css/menuzord-megamenu.css" rel="stylesheet" />
+    <link id="menuzord-menu-skins" href="/sptech/css/menuzord-skins/menuzord-boxed.css" rel="stylesheet" />
+    <!-- CSS | Main style file -->
+    <link href="/sptech/css/style-main.css" rel="stylesheet" type="text/css">
+    <!-- CSS | Preloader Styles -->
+    <link href="/sptech/css/preloader.css" rel="stylesheet" type="text/css">
+    <!-- CSS | Custom Margin Padding Collection -->
+    <link href="/sptech/css/custom-bootstrap-margin-padding.css" rel="stylesheet" type="text/css">
+    <!-- CSS | Responsive media queries -->
+    <link href="/sptech/css/responsive.css" rel="stylesheet" type="text/css">
+
+    <link href="/sptech/css/colors/theme-skin-color-set1.css" rel="stylesheet" type="text/css">
+    <!-- CSS | Style css. This is the file where you can place your own custom css code. Just uncomment it and use it. -->
+    <!-- <link href="css/style.css" rel="stylesheet" type="text/css"> -->
+    <link href="/sptech/js/revolution-slider/css/settings.css" rel="stylesheet" type="text/css" />
+    <link href="/sptech/js/revolution-slider/css/layers.css" rel="stylesheet" type="text/css" />
+    <link href="/sptech/js/revolution-slider/css/navigation.css" rel="stylesheet" type="text/css" />
+
+    <!-- external javascripts -->
+    <script src="/sptech/js/jquery-2.2.4.min.js"></script>
+    <script src="/sptech/js/jquery-ui.min.js"></script>
+    <script src="/sptech/js/bootstrap.min.js"></script>
+    <!-- JS | jquery plugin collection for this theme -->
+    <script src="/sptech/js/jquery-plugin-collection.js"></script>
+    <!-- Revolution Slider 5.x SCRIPTS -->
+    <script src="/sptech/js/revolution-slider/js/jquery.themepunch.tools.min.js"></script>
+    <script src="/sptech/js/revolution-slider/js/jquery.themepunch.revolution.min.js"></script>
+    <link href="/sptech/css/cssSite.css" rel="stylesheet" type="text/css">
+</head>
+<body class="">
+    @RenderBody()
+    <script src="~/js/custom.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

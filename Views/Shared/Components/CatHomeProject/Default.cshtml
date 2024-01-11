@@ -1,0 +1,55 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_CATEGORIES>
+@using CoreCnice.Connect;
+@using CoreCnice.Domain;
+@using CoreCnice.Servicer;
+
+@{
+    BulSoftCmsConnectContext _context = new BulSoftCmsConnectContext();
+    CategoryServices ct = new CategoryServices();
+}
+
+<div class="margin20"></div>
+
+<section class="chinhsach">
+    <div class="container">
+        <div class="row">
+            @foreach (var category in Model.ToList())
+            {
+                <div class="col-xs-12 col-md-12">
+                    <div class="row">
+                        <div class="col-xs-12 col-md-12">
+                            <div class="sec-heading-area p_0_15" style="margin-top: 32px; text-align: CENTER;">
+                                <h2 class="section-heading">
+                                    @category.CAT_NAME  <a class="right carousel-control" href="#myCarousel11" data-slide="next" style="width: 42px; margin-top: -3px;">
+                                        <i class="fas fa-arrow-right" style="margin-top: 10px; margin-bottom: 10px"></i>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                </h2>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-12">
+                            @{
+                                var listNew = (from n in _context.ESHOP_NEWS
+                                               join c in _context.ESHOP_NEWS_CAT on n.NEWS_ID equals c.NEWS_ID
+                                               where c.CAT_ID == category.CAT_ID
+                                               select n);
+
+                                foreach (var itemn in listNew.ToList())
+                                {                                   
+                                    <div class="col-md-3">
+                                        <div class="item-image">
+                                            <img src="~/UploadImages/Data/News/@itemn.NEWS_ID/@itemn.NEWS_IMAGE1">
+                                        </div>
+                                        <a class="c-call-to-action c-glyph" aria-label="mua tại microsoft store microsoft store" href="@itemn.NEWS_URL">
+                                            <span>XEM CHI TIẾT DỰ ÁN</span>
+                                        </a>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

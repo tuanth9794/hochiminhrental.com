@@ -1,0 +1,397 @@
+﻿@using CoreCnice.Domain;
+@using CoreCnice.Connect;
+@using CoreCnice.UtilsCs;
+
+@{
+    BulSoftCmsConnectContext _context = new BulSoftCmsConnectContext();
+    var Meta = _context.ESHOP_CONFIG.SingleOrDefault(m => m.CONFIG_ID == 1);
+    int lang = Utils.CIntDef(ViewBag.Langue);
+}
+
+<footer class="new_footer_area bg_color">
+    <div class="new_footer_top" style="padding-top: 35px !important;">
+        @if (lang == 1)
+        {
+            <section class="start-partners bgc-thm pt50 pb50" style="padding: 18px 0px;display:none">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="row">
+                                <div class="col-lg-5 d-flex align-items-center" style="color:#fff;font-weight:bold">Gửi thông tin tư vấn</div>
+                                <div class="col-lg-6">
+                                    <div class="f_subscribe mailchimp">
+                                        <input type="text" name="EMAIL" class="form-control memail" placeholder="Email" id="emailkhuyenmai">
+                                        <button class="btn btn-submit btguikhuyenmai" type="button"><i class="ti-arrow-right"></i></button>
+                                        <p class="mchimp-errmessage" style="display: none;"></p>
+                                        <p class="mchimp-sucmessage" style="display: none;"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="f_social_icon d-flex justify-content-end align-items-center">
+                                <a href="@Meta.CONFIG_FACEBOOK" class="ti-facebook"></a>
+                                <a href="@Meta.CONFIG_FIELD3" class="ti-twitter-alt"></a>
+                                <a href="@Meta.CONFIG_ADD" class="ti-vimeo-alt"></a>
+                                <a href="#" class="ti-pinterest"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        }
+        else
+        {
+
+            <section class="start-partners bgc-thm pt50 pb50" style="padding: 18px 0px;display:none">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="row">
+                                <div class="col-lg-5 d-flex align-items-center" style="color:#fff;font-weight:bold">Send contact information</div>
+                                <div class="col-lg-6">
+                                    <div class="f_subscribe mailchimp">
+                                        <input type="text" name="EMAIL" class="form-control memail" placeholder="Email" id="emailkhuyenmai">
+                                        <button class="btn btn-submit btguikhuyenmai" type="button"><i class="ti-arrow-right"></i></button>
+                                        <p class="mchimp-errmessage" style="display: none;"></p>
+                                        <p class="mchimp-sucmessage" style="display: none;"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="f_social_icon d-flex justify-content-end align-items-center">
+                                <a href="@Meta.CONFIG_FACEBOOK" class="ti-facebook"></a>
+                                <a href="@Meta.CONFIG_FIELD3" class="ti-twitter-alt"></a>
+                                <a href="@Meta.CONFIG_ADD" class="ti-vimeo-alt"></a>
+                                <a href="#" class="ti-pinterest"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        }
+        <div class="container" style="margin-top:40px">
+            <div class="row">
+                <div class="col-lg-3 col-md-4">
+                    <div class="f_widget social-widget">
+                        <div class="logo_ft" style="margin-bottom:15px">
+                            <img src="https://hochiminhrental.com/CMS/Content/eureka_koweb(1).png" style="width:150px" />
+                        </div>
+                        @if (lang == 1)
+                        {
+                            @Html.Raw(Meta.CONFIG_FOOTER)
+                        }
+                        else
+                        {
+                            @Html.Raw(Meta.CONFIG_DESCRIPTION_EN)
+                        }
+                    </div>
+                </div>
+                @await Component.InvokeAsync("Footer", new { Position = 1 })
+            </div>
+        </div>
+    </div>
+</footer>
+
+<div class="footer_bottom" style="padding: 6px 0px;background:hsl(0deg 0% 0%) !important">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-12 col-sm-12" style="text-align: center;">
+                @if (lang == 1)
+                {
+                    <p class="mb-0 f_400" style="color:#fff;font-size: 12px;">COPYRIGHT © 2020 EUREKA REAL ESTATE . TẤT CẢ QUYỀN ĐỀU ĐƯỢC BẢO HỘ.</p>
+                }
+                else
+                {
+                    <p class="mb-0 f_400" style="color:#fff;font-size: 12px;">COPYRIGHT © 2020 EUREKA REAL ESTATE . ALL RIGHTS RESERVED.</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@await Component.InvokeAsync("SupportFix", new { Position = 1 })
+
+@if (lang == 1)
+{
+    <div id="widget-left">
+        <a class="item download" href="/favorites-list" target="_blank">
+            <span class="mdi mdi-download-chat"> </span><span class="brochure">Danh sách sản phẩm yêu thích</span>
+        </a>
+    </div>
+}
+else
+{
+    <div id="widget-left">
+        <a class="item download" href="/favorites-list" target="_blank">
+            <span class="mdi mdi-download-chat"> </span><span class="brochure">List of favorite products</span>
+        </a>
+    </div>
+}
+
+
+        <style>
+    #widget-left {
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        position: fixed;
+        bottom: 15px;
+        left: 30px;
+        flex-direction: column;
+        z-index: 10;
+    }
+
+    #widget-left {
+        -webkit-transform: translateY(100%);
+        -ms-transform: translateY(100%);
+        -webkit-transition-delay: .6s;
+        -o-transition-delay: .6s;
+        -webkit-transition: all .4s linear;
+        -o-transition: all .4s linear;
+        transform: translateY(100%);
+        opacity: 0;
+        transition: all .4s linear;
+        transition-delay: .6s;
+    }
+
+    #widget-left {
+        -webkit-transform: translateY(0);
+        -ms-transform: translateY(0);
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+        #widget-left .item {
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            position: relative;
+            align-items: center;
+            justify-content: center;
+            margin: 8px 0;
+            border-radius: 25px;
+            background: hsl(240deg 1% 33%);
+            width: 35px;
+            height: 35px;
+            color: hsl(54deg 67% 73%);
+        }
+
+            #widget-left .item:before {
+                position: absolute;
+                top: -6px;
+                right: -6px;
+                bottom: -6px;
+                left: -6px;
+                border: 2px solid hsl(54deg 67% 73%);
+                border-radius: 50%;
+                content: '';
+            }
+
+    .svg-inline--fa {
+        display: inline-block;
+        font-size: inherit;
+        height: 1em;
+        overflow: visible;
+        vertical-align: -0.125em;
+    }
+
+        .svg-inline--fa.fa-w-18 {
+            width: 1.125em;
+        }
+
+    svg:not(:root).svg-inline--fa {
+        overflow: visible;
+    }
+
+    #widget-left .subscribe {
+        -webkit-animation: gradientBG 3s ease infinite;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        position: relative;
+        align-items: center;
+        justify-content: center;
+        animation: gradientBG 3s ease infinite;
+        margin: 8px 0;
+        border-radius: 25px;
+        background: -o-linear-gradient(45deg,#e8de8b,#07414c);
+        background: linear-gradient(45deg,hsl(54deg 67% 73%),hsl(190deg 83% 16%));
+        background-size: 400% 200%;
+        padding: 18px 0;
+        width: 35px;
+    }
+
+        #widget-left .subscribe:before {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            bottom: -6px;
+            left: -6px;
+            border: 2px solid hsl(54deg 67% 73%);
+            border-radius: 39px;
+            content: '';
+        }
+
+        #widget-left .subscribe span {
+            -webkit-writing-mode: vertical-rl;
+            -ms-writing-mode: tb-rl;
+            -webkit-text-orientation: mixed;
+            -webkit-transform: rotateZ(180deg);
+            -ms-transform: rotate(180deg);
+            transform: rotateZ(180deg);
+            color: hsl(54deg 67% 73%);
+            font-size: 20px;
+            font-weight: 700;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+    #widget-left .mdi {
+        font-size: 20px;
+    }
+
+    #widget-left .item .brochure, #widget-left .item .hotline {
+        -webkit-transform: translateX(20px);
+        -ms-transform: translateX(20px);
+        -webkit-transition: all .3s ease-in-out;
+        -o-transition: all .3s ease-in-out;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -ms-flex-wrap: wrap;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        position: absolute;
+        left: 100%;
+        flex-wrap: wrap;
+        align-items: center;
+        transform: translateX(20px);
+        visibility: hidden;
+        opacity: 0;
+        transition: all .3s ease-in-out;
+        margin-left: 18px;
+        background: hsl(240deg 1% 33%);
+        padding: 5px;
+        font-size: 14px;
+        line-height: 1;
+        white-space: nowrap;
+    }
+
+    #widget-left .item .brochure {
+        height: 28px;
+    }
+
+        #widget-left .item .brochure:before, #widget-left .item .hotline:before {
+            position: absolute;
+            top: 0;
+            right: 100%;
+            content: '';
+        }
+
+        #widget-left .item .brochure:before {
+            border-top: 14px solid hsl(0deg 0% 0% / 0%);
+            border-right: 12px solid hsl(190deg 83% 16%);
+            border-bottom: 14px solid hsl(0deg 0% 0% / 0%);
+        }
+
+    #widget-left .item .hotline {
+        height: 58px;
+    }
+
+    #widget-left .item .hotline {
+        -webkit-transform: translateX(20px);
+        -ms-transform: translateX(20px);
+        -webkit-transition: all .3s ease-in-out;
+        -o-transition: all .3s ease-in-out;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -ms-flex-wrap: wrap;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        position: absolute;
+        left: 100%;
+        flex-wrap: wrap;
+        align-items: center;
+        transform: translateX(20px);
+        visibility: hidden;
+        opacity: 0;
+        transition: all .3s ease-in-out;
+        margin-left: 18px;
+        background: hsl(190deg 83% 16%);
+        padding: 5px;
+        font-size: 14px;
+        line-height: 1;
+        white-space: nowrap;
+    }
+
+        #widget-left .item .hotline a {
+            -webkit-box-flex: 0;
+            -ms-flex: 0 0 100%;
+            flex: 0 0 100%;
+            padding: 5px;
+            max-width: 100%;
+        }
+
+        #widget-left .item .hotline a {
+            color: hsl(54deg 67% 73%);
+        }
+
+    .mdi:before {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        display: inline-block;
+        font: normal normal normal 24px/1 "Material Design Icons";
+        font-size: inherit;
+        line-height: inherit;
+        text-rendering: auto;
+    }
+
+    #widget-left .item:hover .brochure, #widget-left .item:hover .hotline {
+        -webkit-transform: translateX(0);
+        -ms-transform: translateX(0);
+        transform: translateX(0);
+        visibility: visible;
+        opacity: 1;
+        background: hsl(190deg 83% 16%);
+        color: hsl(54deg 67% 73%);
+    }
+
+    .mdi-download:before {
+        font-family: "Font Awesome 5 Brands";
+        font-weight: 400;
+        font-family: eleganticons;
+        content: "\e004";
+    }
+
+    .mdi-download-chat:before {
+        font-family: "Font Awesome 5 Brands";
+        font-weight: 400;
+        font-family: eleganticons;
+          content: "";
+    }
+
+
+    .mdi-phone-in-talk:before {
+        font-family: "Font Awesome 5 Brands";
+        font-weight: 400;
+        font-family: eleganticons;
+        content: "\e00b";
+    }
+</style>

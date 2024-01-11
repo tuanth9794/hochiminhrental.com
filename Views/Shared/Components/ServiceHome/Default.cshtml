@@ -1,0 +1,115 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_CATEGORIES>
+@using CoreCnice.Connect;
+@using CoreCnice.Domain;
+@using CoreCnice.Servicer;
+@using CoreCnice.UtilsCs;
+
+@{
+    clsFormat fm = new clsFormat();
+    BulSoftCmsConnectContext _context = new BulSoftCmsConnectContext();
+    int lang = Utils.CIntDef(ViewBag.Langue);
+}
+
+@foreach (var category in Model.ToList())
+{
+    <div class="agency_about_area d-flex wow fadeInUp" style="padding:30px 0px">
+        <div class="container">
+            <div class="sec_title mb_20 wow fadeInUp" data-wow-delay="0.3s" style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
+                @if (lang == 1)
+                {
+                    <h2 class="f_p f_size_30 l_height50 f_600 t_color">@Html.Raw(category.CAT_NAME)</h2>
+                }
+                else
+                {
+                    <h2 class="f_p f_size_30 l_height50 f_600 t_color">@Html.Raw(category.CAT_NAME_EN)</h2>
+                }
+            </div>
+            <div class="event_team_slider owl-carousel goiycss">
+                @{
+                    var listNew = (from n in _context.ESHOP_NEWS
+                                   join c in _context.ESHOP_NEWS_CAT on n.NEWS_ID equals c.NEWS_ID
+                                   join cat in _context.ESHOP_CATEGORIES on c.CAT_ID equals cat.CAT_ID
+                                   where c.CAT_ID == category.CAT_ID
+                                   orderby n.NEWS_ID descending
+                                   select new
+                                   {
+                                       n.NEWS_ID,
+                                       n.NEWS_TITLE,
+                                       n.NEWS_URL,
+                                       n.NEWS_SEO_URL,
+                                       n.NEWS_IMAGE1,
+                                       n.NEWS_PRICE2,
+                                       n.NEWS_PRICE1,
+                                       n.NEWS_DESC,
+                                       n.NEWS_IMAGE2,
+                                       cat.CAT_SEO_URL,
+                                       n.NEWS_TITLE_EN,
+                                       n.NEWS_DESC_EN
+                                   }).Take(16);
+
+
+                    foreach (var itemn in listNew.ToList().Skip(0).Take(100))
+                    {
+                        string linkurl = "";
+
+                        if (!String.IsNullOrEmpty(linkurl))
+                        {
+                            linkurl = itemn.NEWS_URL;
+                        }
+                        else
+                        {
+                            linkurl = itemn.CAT_SEO_URL + "/" + itemn.NEWS_SEO_URL;
+                        }
+
+                        string linkimg = "";
+                        string img1 = "";
+
+                        if (!String.IsNullOrEmpty(itemn.NEWS_IMAGE1))
+                        {
+                            linkimg = "/UploadImages/Data/News/" + itemn.NEWS_ID + "/" + itemn.NEWS_IMAGE1;
+                        }
+                        else
+                        {
+                            linkimg = "/images/noimg.jpg";
+
+                        }
+
+                        if (!String.IsNullOrEmpty(itemn.NEWS_IMAGE2))
+                        {
+                            img1 = "/UploadImages/Data/News/" + itemn.NEWS_ID + "/" + itemn.NEWS_IMAGE2;
+                        }
+                        else
+                        {
+                            img1 = "/images/noimg.jpg";
+
+                        }
+                        <div class="item">
+                            <div class="e_team_img">
+                                <a href="@linkurl">
+                                    <img src="@linkimg" alt="@Html.Raw(itemn.NEWS_TITLE)" style="border-radius:inherit">
+                                </a>                                
+                            </div>
+                            @if (lang == 1)
+                            {
+                                <div class="bodyNew">
+                                    <a href="@linkurl"><h4>@Html.Raw(itemn.NEWS_TITLE)</h4></a>
+                                    <div class="address">@Html.Raw(itemn.NEWS_DESC)</div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="bodyNew">
+                                    <a href="@linkurl"><h4>@Html.Raw(itemn.NEWS_TITLE_EN)</h4></a>
+                                    <div class="address">@Html.Raw(itemn.NEWS_DESC_EN)</div>
+                                </div>
+                            }
+
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+
+}
+

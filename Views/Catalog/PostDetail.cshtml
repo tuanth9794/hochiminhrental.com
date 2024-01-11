@@ -1,0 +1,111 @@
+﻿@model CoreCnice.Domain.ESHOP_NEWS
+@using CoreCnice.UtilsCs;
+@{
+    Layout = "~/Views/Shared/_LayoutDetail.cshtml";
+    clsFormat cl = new clsFormat();
+    string linkimg = "";
+
+    if (!String.IsNullOrEmpty(Model.NEWS_IMAGE2))
+    {
+        linkimg = "/UploadImages/Data/News/" + Model.NEWS_ID + "/" + Model.NEWS_IMAGE2;
+    }
+    else
+    {
+        linkimg = "/images/noimg.jpg";
+    }
+
+    string alt = "";
+    if (!String.IsNullOrEmpty(ViewBag.Alt))
+    {
+        alt = ViewBag.Alt;
+    }
+    else
+    {
+        alt = ViewBag.Title;
+    }
+    string fileName = "";
+    int lang = Utils.CIntDef(ViewBag.Langue);
+    if (lang == 1)
+    {
+        fileName = "wwwroot/UploadImages/Data/News/" + Model.NEWS_ID + "/" + Model.NEWS_FILEHTML;
+    }
+    else
+    {
+        fileName = "wwwroot/UploadImages/Data/News/" + Model.NEWS_ID + "/" + Model.NEWS_FILEHTML_EN;
+    }
+}
+<style>
+    .blog_content {
+        background: hsl(240, 33%, 99%);
+        height: auto !important;
+        overflow: hidden;
+    }
+        .blog_content .content {
+            padding: 0px;
+        }
+            .blog_content .content p {
+                text-align: left;
+                line-height: initial;
+            }
+</style>
+<nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><a href="@ViewBag.UrlCat">@Html.Raw(ViewBag.NameCat)</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><a href="san-pham" style="text-transform:lowercase">@Html.Raw(Model.NEWS_TITLE)</a></li>
+        </ol>
+    </div><!-- End .container -->
+</nav>
+<section class="blog_area bg_color sec_pad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9 blog_sidebar_left">
+                <div class="blog_single mb_50">
+                    <div class="blog_content" style="padding:0px">
+                        @if (lang == 1)
+                        {
+                            <h1 class="f_p f_size_20 f_500 t_color" style="font-size: 20px;color: #000;height: auto;">@Html.Raw(Model.NEWS_TITLE)</h1>
+                        }
+                        else
+                        {
+                            <h1 class="f_p f_size_20 f_500 t_color" style="font-size: 20px;color: #000;height: auto;">@Html.Raw(Model.NEWS_TITLE_EN)</h1>
+                        }
+                        @Html.Raw(cl.ReadFile(fileName.Replace("<p>", "").Replace("</p>", "")))
+                    </div>
+                </div>
+                <div class="post_share mb_20">
+                    <div class="post-nam"> Share: </div>
+                    <div class="flex">
+                        <a href="#"><i class="ti-facebook"></i>Facebook</a>
+                        <a href="#"><i class="ti-twitter"></i>Twitter</a>
+                        <a href="#"><i class="ti-pinterest"></i>Pinterest</a>
+                    </div>
+                </div>
+                <div class="blog_post">
+                    <div class="widget_title">
+                        @if (lang == 1)
+                        {
+                            <h3 class="f_p f_size_20 t_color3">Tin tức liên quan</h3>
+                        }
+                        else
+                        {
+                            <h3 class="f_p f_size_20 t_color3">Related news</h3>
+                        }
+                        <div class="border_bottom"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            @await Component.InvokeAsync("NewsRelation", new { catid = ViewBag.CatId })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @Html.Partial("~/Views/Catalog/_LeftNews.cshtml")
+        </div>
+    </div>
+</section>
+
+
+
+

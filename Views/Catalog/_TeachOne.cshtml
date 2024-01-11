@@ -1,0 +1,72 @@
+﻿@model CoreCnice.Models.NewsModelCat;
+@using CoreCnice.Connect;
+@using CoreCnice.UtilsCs;
+@{
+    clsFormat cl = new clsFormat();
+    string linkimg = "";
+
+    string linkurl = "";
+
+    if (!String.IsNullOrEmpty(Model.NEWS_URL))
+    {
+        linkurl = Model.NEWS_URL;
+    }
+    else
+    {
+        linkurl = "/" + Model.CAT_SEO_URL + "/" + Model.NEWS_SEO_URL;
+
+    }
+
+    string linkimgNews = "";
+    if (!String.IsNullOrEmpty(Model.NEWS_IMAGE1))
+    {
+        linkimg = "/UploadImages/Data/News/" + Model.NEWS_ID + "/" + Model.NEWS_IMAGE1;
+        linkimgNews = "/UploadImages/Data/News/" + Model.NEWS_ID + "/thumb-" + Model.NEWS_IMAGE1;
+        if (Utils.checkfileExit(linkimgNews) == true)
+        {
+            linkimg = linkimgNews;
+        }
+    }
+    else
+    {
+        linkimg = "/images/noimg.jpg";
+    }
+}
+@if (Utils.CIntDef(ViewBag.Langue) == 1)
+{
+    <div class="col-sm-6 col-md-3 mb-sm-30 mb-15 text-center">
+        <div class="team-member bg-light pt-10 pb-15">
+            <div class="thumb">
+                <a href="@linkurl">
+                    <img src="@linkimg" alt="@Model.NEWS_TITLE" asp-append-version="true" class="img-fullwidth">
+                </a>
+            </div>
+            <div class="info">
+                <div class="pt-10 pb-10 bg-theme-colored2">
+                    <h4 class="mt-0 mb-0 text-white">@Html.Raw(Model.NEWS_TITLE)</h4>
+                    <h6 class="mt-0 mb-0 text-white">@Html.Raw(Model.NEWS_CODE)</h6>
+                </div>
+                <p class="p-15 pb-0" style="text-align:justify">@Html.Raw(Model.NEWS_DESC.ToString())</p>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="col-sm-6 col-md-3 mb-sm-30 mb-15 text-center">
+        <div class="team-member bg-light pt-10 pb-15">
+            <div class="thumb">
+                <a href="@linkurl">
+                    <img src="@linkimg" alt="@Model.NEWS_TITLE_EN" asp-append-version="true" class="img-fullwidth">
+                </a>
+            </div>
+            <div class="info">
+                <div class="pt-10 pb-10 bg-theme-colored2">
+                    <h4 class="mt-0 mb-0 text-white">@Html.Raw(Model.NEWS_TITLE_EN)</h4>
+                    <h6 class="mt-0 mb-0 text-white">@Html.Raw(Model.NEWS_CODE)</h6>
+                </div>
+                <p class="p-15 pb-0" style="text-align:justify">@Html.Raw(Model.NEWS_DESC_EN.ToString())</p>
+            </div>
+        </div>
+    </div>
+}

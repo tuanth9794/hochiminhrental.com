@@ -1,0 +1,120 @@
+﻿@model CoreCnice.Domain.ESHOP_PROPERTIES
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = ViewBag.Title;
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayoutNull.cshtml";
+    IQueryable<CoreCnice.Models.ESHOP_PRO_MODEL> nq = null;
+    if (ViewBag.ListAdd != null)
+    {
+        nq = ViewBag.ListAdd;
+    }
+    else
+    {
+
+
+    }
+
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+<style>
+    .jstree-default-large > .jstree-container-ul > .jstree-node {
+        margin-left: 0;
+        margin-right: 0;
+        width: 100% !important;
+        float: left !important;
+    }
+
+
+    /*.jstree-default-large > .jstree-no-dots .jstree-node .jstree-children li {
+        width: 25% !important;
+        float: left !important;
+    }*/
+
+    .jstree-default .jstree-wholerow-clicked {
+        background: none;
+    }
+</style>
+@using (Html.BeginForm(FormMethod.Post, new { enctype = "multipart/form-data", data_ajax = "false" }))
+{
+    <div class="content-header clearfix" style="background:#ffffff">      
+        <div class="pull-right">
+            <button type="submit" name="save" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>
+                Lưu chỉnh sửa
+            </button>
+        </div>
+    </div>
+    <section class="content">
+        @if (!string.IsNullOrEmpty(ViewBag.Error))
+        {
+            <div class="callout callout-info">
+                <h4>Thông báo</h4>
+                <p>
+                    @Html.Raw(ViewBag.Error)
+                </p>
+            </div>
+        }
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" class="form-control" value="@ViewBag.NewsId">
+        <div class="row">    
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Lựa chọn tiện ích</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-group">
+                            <div id="jstree">
+                            </div>
+                             <input type="hidden" name="selectedItems" id="selectedItems" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      
+
+        <script type="text/javascript">
+        $(function () {
+            $('#jstree').on('changed.jstree', function (e, data) {
+                var i, j;
+                var selectedItems = [];
+                for(i = 0, j = data.selected.length; i < j; i++) {
+
+                    //Fetch the Id.
+                    var id = data.selected[i];
+
+                    //Remove the ParentId.
+                    if(id.indexOf('-') != -1){
+                        id = id.split("-")[1];
+                    }
+
+                    //Add the Node to the JSON Array.
+                    selectedItems.push({
+                        text: data.instance.get_node(data.selected[i]).text,
+                        id: id,
+                        parent: data.node.parents[0]
+                    });
+                }
+
+                //Serialize the JSON Array and save in HiddenField.
+                $('#selectedItems').val(JSON.stringify(selectedItems));
+            }).jstree({
+                "core": {
+                    "themes": {
+                        "variant": "large"
+                    },
+                    "data": @Html.Raw(ViewBag.Json)
+                    },
+                "checkbox": {
+                    "keep_selected_style": true
+                },
+                "plugins": ["wholerow", "checkbox"],
+            });
+        });
+        </script>
+    </section>
+}

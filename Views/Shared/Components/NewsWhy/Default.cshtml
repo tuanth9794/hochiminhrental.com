@@ -1,0 +1,100 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_CATEGORIES>
+@using CoreCnice.Connect;
+@using CoreCnice.Domain;
+@using CoreCnice.UtilsCs;
+@{
+    clsFormat cl = new clsFormat();
+    BulSoftCmsConnectContext _context = new BulSoftCmsConnectContext();
+
+}
+@foreach (var category in Model.ToList())
+{
+    string LinkUrl = "";
+
+    if (String.IsNullOrEmpty(category.CAT_URL))
+    {
+        LinkUrl = "/" + category.CAT_SEO_URL;
+    }
+    else
+    {
+        LinkUrl = category.CAT_URL;
+    }
+
+    <!-- Section: Mission -->
+    <section class="text-center bg-silver-light" style="background:hsl(220, 23%, 97%) !important">
+        <div class="container pb-70 pb-sm-60">
+            <div class="section-title">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 newwhy">
+                        <h2 class="mt-0 mt-sm-30 line-height-1 line-bottom-edu">@Html.Raw(category.CAT_NAME) <span class="text-theme-colored3">@Html.Raw(category.CAT_CODE)</span></h2>
+                        <p class="text-center" style="text-align:center!important">@Html.Raw(category.CAT_DESC)</p>
+                    </div>
+                </div>
+            </div>
+            <div class="section-content">
+                <div class="row equal-height">
+                    @{
+                        var listNew = (from n in _context.ESHOP_NEWS
+                                       join c in _context.ESHOP_NEWS_CAT on n.NEWS_ID equals c.NEWS_ID
+                                       join cat in _context.ESHOP_CATEGORIES on c.CAT_ID equals cat.CAT_ID
+                                       where c.CAT_ID == category.CAT_ID
+                                       orderby n.NEWS_PUBLISHDATE descending
+                                       select new
+                                       {
+                                           n.NEWS_ID,
+                                           n.NEWS_TITLE,
+                                           n.NEWS_URL,
+                                           n.NEWS_SEO_URL,
+                                           n.NEWS_IMAGE1,
+                                           n.NEWS_DESC,
+                                           cat.CAT_SEO_URL,
+                                           n.NEWS_CODE,
+                                       });
+                        //int countloop = 0;
+                        //int counttt = listNew.ToList().Count;
+                        foreach (var itemn in listNew.ToList())
+                        {
+                            string linkurl = "";
+
+                            if (!String.IsNullOrEmpty(linkurl))
+                            {
+                                linkurl = itemn.NEWS_URL;
+                            }
+                            else
+                            {
+                                linkurl = "/" + itemn.CAT_SEO_URL + "/" + itemn.NEWS_SEO_URL;
+                            }
+
+                            string linkimg = "";
+                            string linkimgNews = "";
+                            if (!String.IsNullOrEmpty(itemn.NEWS_IMAGE1))
+                            {
+                                linkimg = "/UploadImages/Data/News/" + itemn.NEWS_ID + "/" + itemn.NEWS_IMAGE1;
+                                linkimgNews = "/UploadImages/Data/News/" + itemn.NEWS_ID + "/thumb-" + itemn.NEWS_IMAGE1;
+                                if (Utils.checkfileExit(linkimgNews) == true)
+                                {
+                                    linkimg = linkimgNews;
+                                }
+                            }
+                            else
+                            {
+                                linkimg = "/images/noimg.jpg";
+                            }
+
+                            <div class="col-sm-4" style="min-height: 15.86em;">
+                                <div class="icon-box iconbox-theme-colored">
+                                    <a class="icon icon-dark icon-bordered icon-rounded icon-border-effect effect-rounded mb-10" href="#">
+                                        @Html.Raw(itemn.NEWS_CODE)
+                                    </a>
+                                    <h4 class="icon-box-title">@Html.Raw(itemn.NEWS_TITLE)</h4>
+                                    <p class="text-gray">@Html.Raw(itemn.NEWS_DESC)</p>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Section: Testimonial  -->
+}

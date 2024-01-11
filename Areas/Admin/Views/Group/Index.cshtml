@@ -1,0 +1,108 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_GROUP>
+
+@{
+
+    var defaultGridPageSize = 20;
+    //page title
+    ViewData["Title"] = "Danh sách phân nhóm";
+     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="content-header clearfix">
+    <h1 class="pull-left">
+     DANH SÁCH PHÂN NHÓM
+    </h1>
+    <div class="pull-right">
+        <a href="@Url.Action("Create")" class="btn bg-blue">
+            <i class="fa fa-plus-square"></i>
+            THÊM MỚI
+        </a>
+    </div>
+</div>
+<div class="content">
+    <div id="example">
+        <div id="grid"></div>
+        <script>
+                $(document).ready(function () {
+                    $("#grid").kendoGrid({
+                        dataSource: {
+                            type: "json",
+                            transport: {
+                                read: "/Admin/Group/GroupList"
+                            },
+                            pageSize: @(defaultGridPageSize)
+                        },
+                        groupable: true,
+                        sortable: true,
+                        selectable: true,
+                        navigatable: true,
+                         filterable: true,
+                        pageable: {
+                            refresh: true,
+                            pageSizes: true,
+                            buttonCount: 5
+                        },
+                        columns: [{
+                            field: "grouP_CODE",
+                            title: "Mã nhóm",
+                        },{
+                                field: "grouP_NAME",
+                            title: "Tên Nhóm",
+                            filterable: {
+                                multi: true,
+                                search: true
+                            }
+                        }, {
+                                field: "grouP_PUBLISHDATE",
+                            title: "Ngày tạo",
+                        },{
+                                field: "grouP_ID",
+                    title: "Xem thông tin",
+                    headerAttributes: { style: "text-align:center" },
+                    attributes: { style: "text-align:center" },                               
+                                template: '<a href="/Group/Edit/#=grouP_ID#" class="btn btn-social btn-info btn-xs"><i class="fa fa-pencil" ></i> Xem chi tiết</a><a class="btn bg-red btn-xs" onclick="xoagroup(#=grouP_ID#)"><span class="glyphicon glyphicon-trash"></span>Xóa</a>',
+                    width:200
+                }]
+                    });
+                });
+        </script>
+    </div>
+</div>
+<style type="text/css">
+    .customer-photo {
+        display: inline-block;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background-size: 32px 35px;
+        background-position: center center;
+        vertical-align: middle;
+        line-height: 32px;
+        box-shadow: inset 0 0 1px #999, inset 0 0 10px rgba(0,0,0,.2);
+        margin-left: 5px;
+    }
+
+    .customer-name {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: 32px;
+        padding-left: 3px;
+    }
+</style>
+
+<script>
+    function xoagroup(x) {
+        var getItemId = parseInt(x);
+        $.ajax({
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            url: '/Admin/Group/DeleteGR?id=' + getItemId,
+            data: "{ 'ItemId':' " + getItemId + "' }",
+            success: function (data) {
+                window.location.reload(true);
+            },
+            error: function (data) {
+                alert(data);
+            }
+        });
+    };
+</script>

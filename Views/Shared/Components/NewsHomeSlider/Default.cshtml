@@ -1,0 +1,136 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_CATEGORIES>
+@using CoreCnice.Connect;
+@using CoreCnice.Domain;
+@using CoreCnice.UtilsCs;
+@*@model List<CoreCnice.Domain.ESHOP_AD_ITEM>*@
+@{
+    BulSoftCmsConnectContext _context = new BulSoftCmsConnectContext();
+}
+@foreach (var category in Model.ToList())
+{
+    string LinkUrl = "";
+
+    if (String.IsNullOrEmpty(category.CAT_URL))
+    {
+        LinkUrl = "/" + category.CAT_SEO_URL;
+    }
+    else
+    {
+        LinkUrl = category.CAT_URL;
+    }
+    <section class="listwpyl wow bounceInLeft" data-wow-duration="2s" data-wow-offset="100" style="min-height: 686px;background: url('/UploadImages/Data/Cats/@category.CAT_ID/@category.CAT_IMAGE1');">
+        <div class="container ">
+            <div class="row ">
+                <div class="text-center titlemb" style="width: 100%; padding: 20px; font-size: 25px; font-weight: bold; margin-top: 20px; margin-bottom: 15px;">
+                    <h3 class="display-4 font-weight-normal cltext" style="font-size: 40px;"><a href="@LinkUrl"> @Html.Raw(category.CAT_NAME)</a></h3>
+                </div>
+            </div>
+            <div class="row cndh">
+                @{
+                    var listcatClid = _context.ESHOP_CATEGORIES.Where(x => x.CAT_PARENT_ID == category.CAT_ID && x.CAT_SHOWHOME != 2);
+                    foreach (var child in listcatClid.ToList())
+                    {
+                        string LinkUrlCon = "";
+
+                        if (String.IsNullOrEmpty(child.CAT_URL))
+                        {
+                            LinkUrlCon = "/" + child.CAT_SEO_URL;
+                        }
+                        else
+                        {
+                            LinkUrlCon = child.CAT_URL;
+                        }
+                        string idload = "mite" + child.CAT_ID;
+                        <div id="@idload" class="item col-12 col-md-4 px-4">
+                            <div class="titlecn">
+                                <a href="@LinkUrlCon">@Html.Raw(child.CAT_NAME)</a>
+                            </div>
+                            @{
+                                var listNew = (from n in _context.ESHOP_NEWS
+                                               join c in _context.ESHOP_NEWS_CAT on n.NEWS_ID equals c.NEWS_ID
+                                               join cat in _context.ESHOP_CATEGORIES on c.CAT_ID equals cat.CAT_ID
+                                               where c.CAT_ID == child.CAT_ID && cat.CAT_SHOWHOME != 2
+                                               orderby n.NEWS_ID descending
+                                               select new
+                                               {
+                                                   n.NEWS_ID,
+                                                   n.NEWS_TITLE,
+                                                   n.NEWS_URL,
+                                                   n.NEWS_SEO_URL,
+                                                   n.NEWS_IMAGE1,
+                                                   n.NEWS_DESC,
+                                                   cat.CAT_SEO_URL
+                                               });
+
+                                foreach (var itemn in listNew.ToList().Skip(0).Take(1))
+                                {
+                                    string linkurl = "";
+
+                                    if (!String.IsNullOrEmpty(linkurl))
+                                    {
+                                        linkurl = itemn.NEWS_URL;
+                                    }
+                                    else
+                                    {
+                                        linkurl = "/" + itemn.CAT_SEO_URL + "/" + itemn.NEWS_SEO_URL;
+                                    }
+
+                                    string linkimg = "";
+                                    string linkimgNews = "";
+                                    if (!String.IsNullOrEmpty(itemn.NEWS_IMAGE1))
+                                    {
+                                        linkimg = "/UploadImages/Data/News/" + itemn.NEWS_ID + "/" + itemn.NEWS_IMAGE1;
+                                        linkimgNews = "/UploadImages/Data/News/" + itemn.NEWS_ID + "/thumb-" + itemn.NEWS_IMAGE1;
+                                        if (Utils.checkfileExit(linkimgNews) == true)
+                                        {
+                                            linkimg = linkimgNews;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        linkimg = "/images/noimg.jpg";
+                                    }
+
+                                    <div class="thumbnail" style="min-height:459px;border:1px solid #e3e3e3">
+                                        <a href="@linkurl">
+                                            <img class="group list-group-image" src="@linkimg" alt="@itemn.NEWS_TITLE" asp-append-version="true"/>
+                                            <div class="caption" style="border:none">
+                                                <h5 class="group inner list-group-item-heading">@Html.Raw(itemn.NEWS_TITLE)</h5>
+                                                <p class="group inner list-group-item-text">
+                                                    @Html.Raw(itemn.NEWS_DESC)
+                                                </p>
+                                                <div class="xemchitiet">
+                                                    <a href="@linkurl">Xem chi tiết >>></a>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                }
+
+                                <div class="tinlienquan">
+                                    <ul>
+                                        @foreach (var itemn in listNew.ToList().Skip(1).Take(3))
+                                        {
+                                            string linkurl = "";
+
+                                            if (!String.IsNullOrEmpty(linkurl))
+                                            {
+                                                linkurl = itemn.NEWS_URL;
+                                            }
+                                            else
+                                            {
+                                                linkurl = "/" + itemn.CAT_SEO_URL + "/" + itemn.NEWS_SEO_URL;
+                                            }
+                                            <li><a href="@linkurl"><span class="dotci"></span>@Html.Raw(itemn.NEWS_TITLE)</a></li>
+                                        }
+                                    </ul>
+                                </div>
+                            }
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </section>
+}
+

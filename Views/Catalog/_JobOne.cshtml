@@ -1,0 +1,77 @@
+﻿@model CoreCnice.Models.NewsModelCat;
+@using CoreCnice.Connect;
+@using CoreCnice.UtilsCs;
+@{
+    clsFormat cl = new clsFormat();
+    string linkimg = "";
+
+    string linkurl = "";
+
+    if (!String.IsNullOrEmpty(Model.NEWS_URL))
+    {
+        linkurl = Model.NEWS_URL;
+    }
+    else
+    {
+        linkurl = "/" + Model.CAT_SEO_URL + "/" + Model.NEWS_SEO_URL;
+
+    }
+
+    string linkimgNews = "";
+    if (!String.IsNullOrEmpty(Model.NEWS_IMAGE1))
+    {
+        linkimg = "/UploadImages/Data/News/" + Model.NEWS_ID + "/" + Model.NEWS_IMAGE1;
+        linkimgNews = "/UploadImages/Data/News/" + Model.NEWS_ID + "/thumb-" + Model.NEWS_IMAGE1;
+        if (Utils.checkfileExit(linkimgNews) == true)
+        {
+            linkimg = linkimgNews;
+        }
+    }
+    else
+    {
+        linkimg = "/images/noimg.jpg";
+    }
+    string fileName = "wwwroot/UploadImages/Data/News/" + Model.NEWS_ID + "/" + Model.NEWS_FILEHTML;
+}
+
+<div class="item lon new">
+    <div class="list_item">
+        <figure>
+            <a href="#" class="d-flex align-items-center">
+                <img src="@linkimg" alt="@Html.Raw(Model.NEWS_TITLE)" style="width:100%;height:58px">
+            </a>
+        </figure>
+        <div class="joblisting_text">
+            <div class="job_list_table">
+                <div class="jobsearch-table-cell">
+                    <h4><a href="#" class="f_500 t_color3">@Html.Raw(Model.NEWS_TITLE)</a></h4>
+                    <ul class="list-unstyled">
+                        <li class="p_color">@Html.Raw(Model.NEWS_DESC)</li>
+                        <li>Thời gian đăng @Html.Raw(Model.NEWS_PUBLISHDATE.Value.Day)-@Html.Raw(Model.NEWS_PUBLISHDATE.Value.Month)-@Html.Raw(Model.NEWS_PUBLISHDATE.Value.Year) @Html.Raw(Model.NEWS_PUBLISHDATE.Value.Hour):@Html.Raw(Model.NEWS_PUBLISHDATE.Value.Minute):@Html.Raw(Model.NEWS_PUBLISHDATE.Value.Millisecond) </li>
+                    </ul>
+
+                    <div class="jobsearch-job-userlist">
+                        <a class="apply_btn" data-toggle="modal" data-target="#exampleModalCenter">Nộp đơn</a>
+                        <a class="apply_btn" data-toggle="modal" data-target="#exampleModal-@Model.NEWS_ID" style="background: hsl(171, 100%, 29%);color:#fff;cursor:pointer">Xem chi tiết</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal-@Model.NEWS_ID" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@Html.Raw(Model.NEWS_TITLE)</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @Html.Raw(cl.ReadFile(fileName.Replace("<p>", "").Replace("</p>", "")))
+            </div>
+        </div>
+    </div>
+</div>

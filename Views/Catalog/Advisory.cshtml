@@ -1,0 +1,285 @@
+﻿@model IEnumerable<CoreCnice.Models.NewsModelCat>
+@using CoreCnice.UtilsCs;
+@{
+    clsFormat cl = new clsFormat();
+    Layout = "~/Views/Shared/_LayoutDetail.cshtml";
+    int typeCat = ViewBag.Type;
+    int idcat = ViewBag.Id;
+    int _count = 0;
+    string linkimg = "";
+
+    if (!String.IsNullOrEmpty(ViewBag.IMAGE2))
+    {
+        linkimg = "/UploadImages/Data/Cats/" + ViewBag.Id + "/" + ViewBag.IMAGE2;
+    }
+    else
+    {
+        linkimg = "/images/noimg.png";
+    }
+    int lang = Utils.CIntDef(ViewBag.Langue);
+}
+
+<style>
+    .breadcrumb_area_two {
+        background: hsl(255, 80%, 98%);
+        position: relative;
+        padding: 50px 0px 50px;
+        z-index: 1;
+    }
+
+    .navbar-brand img {
+        width: 231px;
+    }
+
+    .header_area {
+        position: initial;
+        background: hsl(56, 28%, 55%);
+    }
+
+    .event_banner_area {
+        width: 100%;
+        height: auto;
+        position: relative;
+        z-index: 1;
+        padding: 200px 0 200px;
+        min-height: 350px;
+        background-size: cover !important;
+    }
+
+    .saas_banner_btn {
+        padding: 16px 40px;
+    
+        border-radius: 4px;
+        color: hsl(0, 0%, 100%);
+    }
+
+    .header_area {
+        position: fixed !important;
+        background: none !important;
+    }
+
+    .dt .menu > .nav-item > .nav-link {
+        color: #fff !important;
+    }
+
+    .navbar_fixed {
+        background: #fff !important;
+    }
+
+        .navbar_fixed .menu > .nav-item > .nav-link {
+            color: #000 !important;
+        }
+</style>
+
+
+@{
+    foreach (var item in Model.ToList().Where(x => x.NEWS_SHOWINDETAIL == 1))
+    {
+        string linkimgNews = "";
+        if (!String.IsNullOrEmpty(item.NEWS_IMAGE1))
+        {
+            linkimg = "/UploadImages/Data/News/" + item.NEWS_ID + "/" + item.NEWS_IMAGE1;
+            linkimgNews = "/UploadImages/Data/News/" + item.NEWS_ID + "/thumb-" + item.NEWS_IMAGE1;
+            if (Utils.checkfileExit(linkimgNews) == true)
+            {
+                linkimg = linkimgNews;
+            }
+        }
+        else
+        {
+            linkimg = "/images/noimg.jpg";
+        }
+        string fileName = "";
+        @if (lang == 1)
+        {
+            fileName = "wwwroot/UploadImages/Data/News/" + item.NEWS_ID + "/" + item.NEWS_FILEHTML;
+        }
+        else
+        {
+            fileName = "wwwroot/UploadImages/Data/News/" + item.NEWS_ID + "/" + item.NEWS_FILEHTML_EN;
+        }
+        <section class="event_banner_area" style="background: url('@linkimg');">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="saas_banner_content">
+                            @if (lang == 1)
+                            {
+                                <h2 class="f_700 f_size_40 w_color mb-0 wow fadeInUp" data-wow-delay="0.3s">@Html.Raw(item.NEWS_TITLE)</h2>
+                            }
+                            else
+                            {
+                                <h2 class="f_700 f_size_40 w_color mb-0 wow fadeInUp" data-wow-delay="0.3s">@Html.Raw(item.NEWS_TITLE_EN)</h2>
+                            }
+                            @Html.Raw(cl.ReadFile(fileName.Replace("<p>", "").Replace("</p>", "")))
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+}
+
+<section class="saas_features_area_three bg_color" style="padding:0px;">
+    <div class="container">
+        <div class="row mb_30 new_service">
+            @{
+                foreach (var item in Model.ToList().Where(x => x.NEWS_SHOWINDETAIL == 2))
+                {
+                    string linkimgNews = "";
+                    if (!String.IsNullOrEmpty(item.NEWS_IMAGE1))
+                    {
+                        linkimg = "/UploadImages/Data/News/" + item.NEWS_ID + "/" + item.NEWS_IMAGE1;
+                        linkimgNews = "/UploadImages/Data/News/" + item.NEWS_ID + "/thumb-" + item.NEWS_IMAGE1;
+                        if (Utils.checkfileExit(linkimgNews) == true)
+                        {
+                            linkimg = linkimgNews;
+                        }
+                    }
+                    else
+                    {
+                        linkimg = "/images/noimg.jpg";
+                    }
+                    string fileName = "wwwroot/UploadImages/Data/News/" + item.NEWS_ID + "/" + item.NEWS_FILEHTML;
+                    <div class="col-lg-4 col-sm-6">
+                        <div class="saas_features_item text-center wow fadeInUp" data-wow-delay="0.3s">
+                            @if (lang == 1)
+                            {
+                                <div class="new_service_content">
+                                    <img src="@linkimg" alt="">
+                                    <h4 class="f_size_20 f_p t_color f_500">@Html.Raw(item.NEWS_TITLE)</h4>
+                                    <p class="f_400 f_size_15 mb-0">@Html.Raw(item.NEWS_DESC)</p>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="new_service_content">
+                                    <img src="@linkimg" alt="">
+                                    <h4 class="f_size_20 f_p t_color f_500">@Html.Raw(item.NEWS_TITLE_EN)</h4>
+                                    <p class="f_400 f_size_15 mb-0">@Html.Raw(item.NEWS_DESC_EN)</p>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</section>
+
+@{
+    @foreach (var item in Model.ToList().Where(x => x.NEWS_SHOWINDETAIL == 3))
+    {
+        string linkimgNews = "";
+        if (!String.IsNullOrEmpty(item.NEWS_IMAGE1))
+        {
+            linkimg = "/UploadImages/Data/News/" + item.NEWS_ID + "/" + item.NEWS_IMAGE1;
+            linkimgNews = "/UploadImages/Data/News/" + item.NEWS_ID + "/thumb-" + item.NEWS_IMAGE1;
+            if (Utils.checkfileExit(linkimgNews) == true)
+            {
+                linkimg = linkimgNews;
+            }
+        }
+        else
+        {
+            linkimg = "/images/noimg.jpg";
+        }
+        _count++;
+
+        string fileName = "";
+        @if (lang == 1)
+        {
+            fileName = "wwwroot/UploadImages/Data/News/" + item.NEWS_ID + "/" + item.NEWS_FILEHTML;
+        }
+        else
+        {
+            fileName = "wwwroot/UploadImages/Data/News/" + item.NEWS_ID + "/" + item.NEWS_FILEHTML_EN;
+        }
+
+        <section class="section-padding-50 s-sale-rever" style="padding:100px 0px">
+            <div class="container">
+                <div class="row">
+                    @if (lang == 1)
+                    {
+                        <h2 class="s-heading">@Html.Raw(item.NEWS_TITLE)</h2>
+                    }
+                    else
+                    {
+                        <h2 class="s-heading">@Html.Raw(item.NEWS_TITLE_EN)</h2>
+                    }
+                </div>
+                <div class="row">
+                    <div class="service-sale-compare">
+                        @Html.Raw(cl.ReadFile(fileName.Replace("<p>", "").Replace("</p>", "")))
+                    </div>
+                </div>
+            </div>
+            <div class="btn-contact mt-40">
+                @if (lang == 1)
+                {
+                    <a href="/lien-he" class="s-btn-red mgb-0" data-action="request-service">Đăng ký ngay</a>
+                }
+                else
+                {
+                    <a href="/lien-he" class="s-btn-red mgb-0" data-action="request-service">Register now</a>
+                }
+            </div>
+        </section>
+    }
+}
+
+@{
+    @foreach (var item in Model.ToList().Where(x => x.NEWS_SHOWINDETAIL == 4))
+    {
+        string linkimgNews = "";
+        if (!String.IsNullOrEmpty(item.NEWS_IMAGE1))
+        {
+            linkimg = "/UploadImages/Data/News/" + item.NEWS_ID + "/" + item.NEWS_IMAGE1;
+            linkimgNews = "/UploadImages/Data/News/" + item.NEWS_ID + "/thumb-" + item.NEWS_IMAGE1;
+            if (Utils.checkfileExit(linkimgNews) == true)
+            {
+                linkimg = linkimgNews;
+            }
+        }
+        else
+        {
+            linkimg = "/images/noimg.jpg";
+        }
+        _count++;
+        string fileName = "";
+        @if (lang == 1)
+        {
+            fileName = "wwwroot/UploadImages/Data/News/" + item.NEWS_ID + "/" + item.NEWS_FILEHTML;
+        }
+        else
+        {
+            fileName = "wwwroot/UploadImages/Data/News/" + item.NEWS_ID + "/" + item.NEWS_FILEHTML_EN;
+        }
+        <section class="about-service-photo service-sale">
+            <div class="container">
+                <div class="w-60">
+                    <div class="row">
+                        @if (lang == 1)
+                        {
+                            <h3 class="col-12 s-heading">@Html.Raw(item.NEWS_TITLE)</h3>
+                        }
+                        else
+                        {
+
+                            <h3 class="col-12 s-heading">@Html.Raw(item.NEWS_TITLE_EN)</h3>
+                        }
+
+                    </div>
+                    <div class="row">
+                        @Html.Raw(cl.ReadFile(fileName.Replace("<p>", "").Replace("</p>", "")))
+                        <div class="service-image-mobile">
+                            <img src="@linkimg" alt="SAVIHOUSE">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+}
+
+@await Component.InvokeAsync("AdvisoryPrice", new { Position = 9, cat_Pr = idcat })

@@ -1,0 +1,54 @@
+﻿@model CoreCnice.Models.NewsModelCat;
+@using CoreCnice.Connect;
+@using CoreCnice.UtilsCs;
+@{
+    clsFormat cl = new clsFormat();
+    string linkimg = "";
+
+    string linkurl = "";
+
+    if (!String.IsNullOrEmpty(Model.NEWS_URL))
+    {
+        linkurl = Model.NEWS_URL;
+    }
+    else
+    {
+        linkurl = "/" + Model.CAT_SEO_URL + "/" + Model.NEWS_SEO_URL;
+
+    }
+
+    string linkimgNews = "";
+    if (!String.IsNullOrEmpty(Model.NEWS_IMAGE1))
+    {
+        linkimg = "/UploadImages/Data/News/" + Model.NEWS_ID + "/" + Model.NEWS_IMAGE1;
+        linkimgNews = "/UploadImages/Data/News/" + Model.NEWS_ID + "/thumb-" + Model.NEWS_IMAGE1;
+        if (Utils.checkfileExit(linkimgNews) == true)
+        {
+            linkimg = linkimgNews;
+        }
+    }
+    else
+    {
+        linkimg = "/images/noimg.jpg";
+    }
+}
+@if (Utils.CIntDef(ViewBag.Langue) == 1)
+{
+    <article class="post media-post clearfix pb-0 mb-10">
+        <a class="post-thumb" href="@linkurl"><img src="@linkimg" alt="@Model.NEWS_TITLE" asp-append-version="true" style="width:75px;height:75px"></a>
+        <div class="post-right">
+            <h5 class="post-title mt-0"><a href="@linkurl">@Model.NEWS_TITLE</a></h5>
+            <p>@Html.Raw(Model.NEWS_DESC)</p>
+        </div>
+    </article>
+}
+else
+{
+    <article class="post media-post clearfix pb-0 mb-10">
+        <a class="post-thumb" href="@linkurl"><img src="@linkimg" alt="@Model.NEWS_TITLE_EN" asp-append-version="true" style="width:75px;height:75px"></a>
+        <div class="post-right">
+            <h5 class="post-title mt-0"><a href="@linkurl">@Model.NEWS_TITLE_EN</a></h5>
+            <p>@Html.Raw(Model.NEWS_DESC_EN)</p>
+        </div>
+    </article>
+}

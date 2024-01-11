@@ -1,0 +1,80 @@
+﻿@model IEnumerable<CoreCnice.Models.NewsModelCat>
+@using CoreCnice.Connect;
+@using CoreCnice.Domain;
+@using CoreCnice.UtilsCs;
+@*@model List<CoreCnice.Domain.ESHOP_AD_ITEM>*@
+@{
+    clsFormat cl = new clsFormat();
+    int lang = Utils.CIntDef(ViewBag.Langue);
+
+}
+
+
+@foreach (var category in Model.ToList())
+{
+    string linkurl = "";
+
+    if (!String.IsNullOrEmpty(linkurl))
+    {
+        linkurl = category.NEWS_URL;
+    }
+    else
+    {
+        linkurl = "/" + category.CAT_SEO_URL + "/" + category.NEWS_SEO_URL;
+    }
+
+    string linkimg = "";
+    string linkimg1 = "";
+    string linkimgNews = "";
+    string linkimgNews1 = "";
+    if (!String.IsNullOrEmpty(category.NEWS_IMAGE1))
+    {
+        linkimg = "/UploadImages/Data/News/" + category.NEWS_ID + "/" + category.NEWS_IMAGE1;
+        linkimgNews = "/UploadImages/Data/News/" + category.NEWS_ID + "/thumb-" + category.NEWS_IMAGE1;
+        if (Utils.checkfileExit(linkimgNews) == true)
+        {
+            linkimg = linkimgNews;
+        }
+    }
+    else
+    {
+        linkimg = "/images/noimg.jpg";
+    }
+
+    if (!String.IsNullOrEmpty(category.NEWS_IMAGE2))
+    {
+        linkimg1 = "/UploadImages/Data/News/" + category.NEWS_ID + "/" + category.NEWS_IMAGE2;
+        linkimgNews1 = "/UploadImages/Data/News/" + category.NEWS_ID + "/thumb-" + category.NEWS_IMAGE2;
+        if (Utils.checkfileExit(linkimgNews1) == true)
+        {
+            linkimg1 = linkimgNews;
+        }
+    }
+    else
+    {
+        linkimg1 = "/images/noimg.jpg";
+    }
+    string fileName = "";
+    @if (lang == 1)
+    {
+        fileName = "wwwroot/UploadImages/Data/News/" + category.NEWS_ID + "/" + category.NEWS_FILEHTML;
+    }
+    else
+    {
+        fileName = "wwwroot/UploadImages/Data/News/" + category.NEWS_ID + "/" + category.NEWS_FILEHTML_EN;
+    }
+    <section class="perfect_solution_area bg_color" style="padding-top:50px">
+        <div class="container">
+            <div class="inner pd-top-bottom-block quickly-sell">
+                <div class="quickly-sell-cover">
+                    <img class="" alt="@category.NEWS_TITLE" src="@linkimg">
+                </div>
+                <div class="detail-block">
+                    <div class="content-detail-block">
+                        @Html.Raw(cl.ReadFile(fileName.Replace("<p>", "").Replace("</p>", "")))
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}

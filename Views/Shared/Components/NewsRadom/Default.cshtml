@@ -1,0 +1,29 @@
+﻿@model IEnumerable<NewsModelCat>
+@using CoreCnice.Connect;
+@using CoreCnice.Domain;
+@using CoreCnice.Servicer;
+
+
+@foreach (var category in Model.ToList().Take(8))
+{
+    string LinkUrl = "";
+
+    if (!String.IsNullOrEmpty(category.NEWS_URL))
+    {
+        LinkUrl = category.NEWS_URL;
+    }
+    else
+    {
+        LinkUrl = category.CAT_SEO_URL + "/" + category.NEWS_SEO_URL;
+    }
+
+    <div class="media post_item">
+        <img src="~/UploadImages/Data/News/@category.NEWS_ID/@category.NEWS_IMAGE1" alt="" style="width:90px">
+        <div class="media-body">
+            <a href="@LinkUrl">
+                <h3 class="f_size_16 f_p f_400">@Html.Raw(category.NEWS_TITLE)</h3>
+            </a>
+        </div>
+    </div>   
+}
+

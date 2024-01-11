@@ -1,0 +1,60 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_CATEGORIES>
+@using CoreCnice.UtilsCs;
+@using CoreCnice.Servicer;
+@{
+    int lang = Utils.CIntDef(ViewBag.Langue);
+    CategoryServices ct = new CategoryServices();
+}
+
+<div class="widget sidebar_widget widget_categorie mt_30">
+    <div class="widget_title" style="margin-bottom:10px;">
+        @if (lang == 1)
+        {
+            <h3 class="f_p f_size_20 t_color3">Danh sách chuyên mục</h3>
+            <div class="border_bottom"></div>
+        }
+        else
+        {
+            <h3 class="f_p f_size_20 t_color3">Category list</h3>
+            <div class="border_bottom"></div>
+        }
+    </div>
+    <ul class="list-unstyled">
+        @foreach (var category in Model.ToList())
+        {
+            string LinkUrl = "";
+
+            if (lang == 1)
+            {
+                if (String.IsNullOrEmpty(category.CAT_URL) == true)
+                {
+                    LinkUrl = "/" + category.CAT_SEO_URL;
+                }
+                else
+                {
+                    LinkUrl = category.CAT_URL;
+                }
+            }
+            else
+            {
+                if (String.IsNullOrEmpty(category.CAT_URL) == true)
+                {
+                    LinkUrl = "/" + category.CAT_SEO_URL_EN;
+                }
+                else
+                {
+                    LinkUrl = category.CAT_URL;
+                }
+            }
+
+            @if (lang == 1)
+            {
+                <li style="padding: 10px 0px;border-bottom: 1px solid hsl(0deg 0% 89%);"> <a href="@LinkUrl" style="color:#000;font-style:normal"><span>@Html.Raw(category.CAT_NAME)</span><em style="font-style: normal;">(@await ct.getCountNews(category.CAT_ID))</em></a> </li>
+            }
+            else
+            {
+                <li style="padding: 10px 0px;border-bottom: 1px solid hsl(0deg 0% 89%);"> <a href="@LinkUrl" style="color:#000;font-style:normal"><span>@Html.Raw(category.CAT_NAME_EN)</span><em style="font-style: normal;">(@await ct.getCountNews(category.CAT_ID))</em></a> </li>
+            }
+        }
+    </ul>
+</div>

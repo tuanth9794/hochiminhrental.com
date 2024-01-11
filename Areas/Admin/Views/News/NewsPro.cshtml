@@ -1,0 +1,146 @@
+﻿@model CoreCnice.Domain.ESHOP_PROPERTIES
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = ViewBag.Title;
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    IQueryable<CoreCnice.Models.ESHOP_PRO_MODEL> nq = null;
+    if (ViewBag.ListAdd != null)
+    {
+        nq = ViewBag.ListAdd;
+    }
+    else
+    {
+
+
+    }
+
+}
+
+<script>
+    function xoathuoctinh(x) {
+        var getItemId = parseInt(x);
+        //alert(soluong);
+        $.ajax({
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            url: '/Admin/News/DeleteNewPro?id=' + getItemId,
+            data: "{ 'id':' " + getItemId + "' }",
+            success: function (data) {             
+                window.location.reload(true);
+            },
+            error: function (data) {
+                alert(data);
+            }
+        });
+    };
+</script>
+
+@using (Html.BeginForm(FormMethod.Post, new { enctype = "multipart/form-data", data_ajax = "false" }))
+{
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+            @ViewBag.Title
+            <small>
+                <i class="fa fa-arrow-circle-left"></i>
+                <a href="/Admin/News">Về danh sách</a>
+            </small>
+        </h1>
+        <div class="pull-right">
+            <button type="submit" name="save" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>
+                Lưu chỉnh sửa
+            </button>
+        </div>
+    </div>
+    <section class="content">
+        @if (!string.IsNullOrEmpty(ViewBag.Error))
+        {
+            <div class="callout callout-info">
+                <h4>Thông báo</h4>
+                <p>
+                    @Html.Raw(ViewBag.Error)
+                </p>
+            </div>
+        }
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" class="form-control" value="@ViewBag.NewsId">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Thông tin chung</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- form start -->
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Mã Tin</label>
+                            <input type="text" class="form-control" value="@ViewBag.Code" readonly="readonly">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Tên Tin</label>
+                            <input type="text" class="form-control" value="@ViewBag.Title" readonly="readonly">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Lựa chọn thuộc tính</label>
+                            @*<select asp-for="PROP_PARENT_ID" class="form-control" asp-items="@(new SelectList(ViewBag.ListCatPr,"PROP_ID","PROP_NAME"))"></select>*@
+                            <select name="Employee[]" id="select2" multiple="multiple" class="form-control" asp-items="ViewBag.ListCatPr"></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Danh sách thuộc tính lựa chọn</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- form start -->
+                    <div class="box-body">
+                        <div class="box-body table-responsive no-padding">
+                            <table class="table table-hover">
+                                <tr>
+                                    <th>Mã</th>
+                                    <th>Tên thuộc tính</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                                @{
+                                    foreach (var item in nq.ToList())
+                                    {
+                                        <tr>
+                                            <td>@item.PROP_ID</td>
+                                            <td>@item.PROP_NAME</td>
+                                            <td>
+                                                <button type="button" name="DeleteCatConfirmed" class="btn bg-red btn-xs" onclick="xoathuoctinh(@item.NEWS_PROP_ID)" style="padding: 3px 16px;">
+                                                    <span class="glyphicon glyphicon-trash"></span>
+                                                    Xóa
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        <script>
+            $(function () {
+                //select2 eklentimizin tanımı
+                $('#select2').select2({
+                    placeholder: "Lựa chọn danh mục",
+                });
+            });
+        </script>
+
+    }
+}

@@ -1,0 +1,126 @@
+﻿@using CoreCnice.UtilsCs;
+@model IEnumerable<CoreCnice.Domain.ESHOP_CUSTOMER>
+@{
+    Layout = "~/Views/Shared/_LayoutCus.cshtml";
+    clsFormat cl = new clsFormat();
+    int lang = Utils.CIntDef(ViewBag.Langue);
+    int tygia = Utils.CIntDef(ViewBag.USD);
+    int tien = Utils.CIntDef(ViewBag.Money);
+    string donvi = "";
+    string donviEn = "";
+}
+
+<style>
+    .form-control, .form-select {
+        border: 1px solid #c3c4c8 !important;
+    }
+</style>
+
+@{
+    if (lang == 1)
+    {
+        <section class="content-main">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h4>Danh sách kinh doanh</h4>
+                        </div>
+                        <div class="card-body">
+                            @{
+                                if (Model.ToList().Count > 0)
+                                {
+                                    @foreach (var itemCatChild in Model.ToList())
+                                    {
+
+                                        <article class="itemlist">
+                                            <div class="row align-items-center">
+                                                <div class="col-lg-3 col-sm-3 col-8 col-name">
+                                                    <a class="itemside" href="#">
+                                                        <div class="left">
+                                                            <img src="~/AdminCus/assets/imgs/items/1.jpg" class="img-sm img-thumbnail" alt="Item" />
+                                                        </div>
+                                                        <div class="info">
+                                                            <h6 class="mb-0">@itemCatChild.CUSTOMER_FULLNAME</h6>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="col-lg-3 col-sm-3 col-4 col-price"><span>@itemCatChild.CUSTOMER_ADDRESS</span></div>
+                                                <div class="col-lg-2 col-sm-2 col-4 col-status">
+                                                    <span class="badge rounded-pill alert-success">Active</span>
+                                                </div>
+                                                <div class="col-lg-1 col-sm-2 col-4 col-date">
+                                                    <span>@itemCatChild.CUSTOMER_PUBLISHDATE.Value.ToShortDateString()</span>
+                                                </div>
+                                                <div class="col-lg-2 col-sm-2 col-4 col-action text-end">
+                                                    <a href="/AdminCus/ProjectListAprove/@itemCatChild.CUSTOMER_ID" class="btn btn-sm font-sm rounded btn-brand"> <i class="material-icons md-edit"></i> Xem dự án </a>
+                                                </div>
+                                            </div>
+                                            <!-- row .// -->
+                                        </article>
+                                    }
+                                }
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+    else
+    {
+        <section class="content-main">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h4>Business List</h4>
+                        </div>
+                        <div class="card-body">
+                          @{
+                                if (Model.ToList().Count > 0)
+                                {
+                                    @foreach (var itemCatChild in Model.ToList())
+                                    {
+
+                                        <article class="itemlist">
+                                            <div class="row align-items-center">
+                                                <div class="col-lg-3 col-sm-3 col-8 col-name">
+                                                    <a class="itemside" href="#">
+                                                        <div class="left">
+                                                            <img src="~/AdminCus/assets/imgs/items/1.jpg" class="img-sm img-thumbnail" alt="Item" />
+                                                        </div>
+                                                        <div class="info">
+                                                            <h6 class="mb-0">@itemCatChild.CUSTOMER_FULLNAME</h6>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="col-lg-3 col-sm-3 col-4 col-price"><span>@itemCatChild.CUSTOMER_ADDRESS</span></div>
+                                                <div class="col-lg-2 col-sm-2 col-4 col-status">
+                                                    <span class="badge rounded-pill alert-success">Active</span>
+                                                </div>
+                                                <div class="col-lg-1 col-sm-2 col-4 col-date">
+                                                    <span>@itemCatChild.CUSTOMER_PUBLISHDATE.Value.ToShortDateString()</span>
+                                                </div>
+                                                <div class="col-lg-2 col-sm-2 col-4 col-action text-end">
+                                                    <a href="/AdminCus/ProjectListAprove/@itemCatChild.CUSTOMER_ID" class="btn btn-sm font-sm rounded btn-brand"> <i class="material-icons md-edit"></i> Xem dự án </a>
+                                                </div>
+                                            </div>
+                                            <!-- row .// -->
+                                        </article>
+                                    }
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+}
+<style>
+    .card-body span {
+        color: #000000;
+    }
+</style>

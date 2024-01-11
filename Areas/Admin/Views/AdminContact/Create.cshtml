@@ -1,0 +1,79 @@
+﻿@model CoreCnice.Domain.ESHOP_CONTACT
+
+@{
+    ViewData["Title"] = "Create";
+     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Create</h2>
+
+<h4>ESHOP_CONTACT</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="CONTACT_NAME" class="control-label"></label>
+                <input asp-for="CONTACT_NAME" class="form-control" />
+                <span asp-validation-for="CONTACT_NAME" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CONTACT_EMAIL" class="control-label"></label>
+                <input asp-for="CONTACT_EMAIL" class="form-control" />
+                <span asp-validation-for="CONTACT_EMAIL" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CONTACT_PHONE" class="control-label"></label>
+                <input asp-for="CONTACT_PHONE" class="form-control" />
+                <span asp-validation-for="CONTACT_PHONE" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CONTACT_ADDRESS" class="control-label"></label>
+                <input asp-for="CONTACT_ADDRESS" class="form-control" />
+                <span asp-validation-for="CONTACT_ADDRESS" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CONTACT_TITLE" class="control-label"></label>
+                <input asp-for="CONTACT_TITLE" class="form-control" />
+                <span asp-validation-for="CONTACT_TITLE" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CONTACT_CONTENT" class="control-label"></label>
+                <input asp-for="CONTACT_CONTENT" class="form-control" />
+                <span asp-validation-for="CONTACT_CONTENT" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CONTACT_PUBLISHDATE" class="control-label"></label>
+                <input asp-for="CONTACT_PUBLISHDATE" class="form-control" />
+                <span asp-validation-for="CONTACT_PUBLISHDATE" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CONTACT_ANSWER" class="control-label"></label>
+                <input asp-for="CONTACT_ANSWER" class="form-control" />
+                <span asp-validation-for="CONTACT_ANSWER" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CONTACT_SHOWTYPE" class="control-label"></label>
+                <input asp-for="CONTACT_SHOWTYPE" class="form-control" />
+                <span asp-validation-for="CONTACT_SHOWTYPE" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CONTACT_TYPE" class="control-label"></label>
+                <input asp-for="CONTACT_TYPE" class="form-control" />
+                <span asp-validation-for="CONTACT_TYPE" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

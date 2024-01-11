@@ -1,0 +1,104 @@
+﻿@model CoreCnice.Domain.ESHOP_ORDER
+
+@{
+    ViewData["Title"] = "Create";
+     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Create</h2>
+
+<h4>ESHOP_ORDER</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="CUSTOMER_ID" class="control-label"></label>
+                <input asp-for="CUSTOMER_ID" class="form-control" />
+                <span asp-validation-for="CUSTOMER_ID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ORDER_CODE" class="control-label"></label>
+                <input asp-for="ORDER_CODE" class="form-control" />
+                <span asp-validation-for="ORDER_CODE" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ORDER_TOTAL_ALL" class="control-label"></label>
+                <input asp-for="ORDER_TOTAL_ALL" class="form-control" />
+                <span asp-validation-for="ORDER_TOTAL_ALL" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ORDER_PUBLISHDATE" class="control-label"></label>
+                <input asp-for="ORDER_PUBLISHDATE" class="form-control" />
+                <span asp-validation-for="ORDER_PUBLISHDATE" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ORDER_UPDATE" class="control-label"></label>
+                <input asp-for="ORDER_UPDATE" class="form-control" />
+                <span asp-validation-for="ORDER_UPDATE" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RECEIVER_FULLNAME" class="control-label"></label>
+                <input asp-for="RECEIVER_FULLNAME" class="form-control" />
+                <span asp-validation-for="RECEIVER_FULLNAME" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RECEIVER_ADDRESS" class="control-label"></label>
+                <input asp-for="RECEIVER_ADDRESS" class="form-control" />
+                <span asp-validation-for="RECEIVER_ADDRESS" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RECEIVER_PHONE1" class="control-label"></label>
+                <input asp-for="RECEIVER_PHONE1" class="form-control" />
+                <span asp-validation-for="RECEIVER_PHONE1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RECEIVER_EMAIL" class="control-label"></label>
+                <input asp-for="RECEIVER_EMAIL" class="form-control" />
+                <span asp-validation-for="RECEIVER_EMAIL" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ORDER_DESC" class="control-label"></label>
+                <input asp-for="ORDER_DESC" class="form-control" />
+                <span asp-validation-for="ORDER_DESC" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ORDER_STATUS" class="control-label"></label>
+                <input asp-for="ORDER_STATUS" class="form-control" />
+                <span asp-validation-for="ORDER_STATUS" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ORDER_DAY" class="control-label"></label>
+                <input asp-for="ORDER_DAY" class="form-control" />
+                <span asp-validation-for="ORDER_DAY" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ORDER_MONTH" class="control-label"></label>
+                <input asp-for="ORDER_MONTH" class="form-control" />
+                <span asp-validation-for="ORDER_MONTH" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ORDER_YEAR" class="control-label"></label>
+                <input asp-for="ORDER_YEAR" class="form-control" />
+                <span asp-validation-for="ORDER_YEAR" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ORDER_IP" class="control-label"></label>
+                <input asp-for="ORDER_IP" class="form-control" />
+                <span asp-validation-for="ORDER_IP" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

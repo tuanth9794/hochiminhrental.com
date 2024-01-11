@@ -1,0 +1,31 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_CATEGORIES>
+@using CoreCnice.Connect;
+@using CoreCnice.Domain;
+<div class="margin20"></div>
+<section class="hotro">
+    <div class="container">
+        <div class="row">
+            @foreach (var category in Model.ToList())
+            {
+                <div class="col-xs-12 col-md-12">
+                    <div class="picslider">
+                        <a href="vi/@category.CAT_SEO_URL" style="float: left; width: 100%;">
+                            <img src="~/UploadImages/Data/Cats/@category.CAT_ID/@category.CAT_IMAGE1" style="width: 100%;" />
+                        </a>
+                    </div>
+                    <div class="x-hidden-focus divtextslider">
+                        <div class="textslider">
+                            <h2 class="c-heading x-hidden-focus" style="color: #000">@category.CAT_NAME</h2>
+                            <div class="c-paragraph" style="color: #000">@category.CAT_DESC</div>
+                            <div class="c-group">
+                                <a class="c-call-to-action c-glyph" aria-label="XEM THÔNG TIN DỊCH VỤ" href="vi/@category.CAT_SEO_URL">
+                                    <span>XEM THÔNG TIN DỊCH VỤ</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

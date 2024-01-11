@@ -1,0 +1,29 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_PROPERTIES>
+@using CoreCnice.Connect;
+@using CoreCnice.UtilsCs;
+@{
+    int id = ViewBag.Id;
+    int lang = Utils.CIntDef(ViewBag.Langue);
+}
+
+@foreach (var category in Model.ToList())
+{
+    <div class="job_info" style="margin-bottom:20px;margin-top:20px;padding: 10px;padding-bottom: 0px;">
+        <div class="info_head">
+            <div item="[object Object]">
+                @if (lang == 1)
+                {
+                    <h6 class="f_p f_600 f_size_18" style="font-weight:normal;">@category.PROP_NAME</h6>
+                }
+                else
+                {
+                    <h6 class="f_p f_600 f_size_18" style="font-weight:normal;">@category.PRO_NAME_EN</h6>
+                }
+
+            </div>
+        </div>
+        @await Component.InvokeAsync("ProDescInerItem", new { pro_id = category.PROP_ID, NewsId = id })
+    </div>
+}
+
+

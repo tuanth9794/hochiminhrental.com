@@ -1,0 +1,46 @@
+﻿@model CoreCnice.Models.NewsModelCat;
+@using CoreCnice.Connect;
+@using CoreCnice.UtilsCs;
+@{
+    clsFormat cl = new clsFormat();
+    string linkimg = "";
+
+    string linkurl = "";
+
+    if (!String.IsNullOrEmpty(Model.NEWS_URL))
+    {
+        linkurl = Model.NEWS_URL;
+    }
+    else
+    {
+        linkurl = "/" + Model.CAT_SEO_URL + "/" + Model.NEWS_SEO_URL;
+
+    }
+
+    string linkimgNews = "";
+    if (!String.IsNullOrEmpty(Model.NEWS_IMAGE1))
+    {
+        linkimg = "/UploadImages/Data/News/" + Model.NEWS_ID + "/" + Model.NEWS_IMAGE1;
+        linkimgNews = "/UploadImages/Data/News/" + Model.NEWS_ID + "/thumb-" + Model.NEWS_IMAGE1;
+        if (Utils.checkfileExit(linkimgNews) == true)
+        {
+            linkimg = linkimgNews;
+        }
+    }
+    else
+    {
+        linkimg = "/images/noimg.jpg";
+    }
+}
+
+
+<tr class="cart_item">
+    <td class="product-thumbnail"><a href="#"><img src="@linkimg" alt="@Model.NEWS_TITLE" asp-append-version="true"></a></td>
+    <td class="product-name">
+        <a href="#">@Html.Raw(Model.NEWS_TITLE)</a>
+    </td>
+    <td class="product-price">Global Teenglish</td>
+    <td class="product-quantity">
+        @Html.Raw(Model.NEWS_DESC)
+    </td>
+</tr>

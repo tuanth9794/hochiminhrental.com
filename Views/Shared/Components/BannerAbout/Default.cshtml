@@ -1,0 +1,16 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_AD_ITEM>
+
+@{
+    int _count = 0;
+}
+
+<!-- SLIDE 1 -->
+@foreach (var category in Model.ToList())
+{
+    _count++;
+    <div class="promo-content">
+        <img src="/UploadImages/Data/Banner/@category.AD_ITEM_FILENAME" alt="...">
+        <h4>@Html.Raw(category.AD_ITEM_CODE)</h4>
+    </div>
+}
+

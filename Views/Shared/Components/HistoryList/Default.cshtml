@@ -1,0 +1,47 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_CATEGORIES>
+@{
+    string _clsactive = "";
+    int _count = 0;
+    int _count1 = 0;
+    string _clactiveTab = "";
+}
+
+<div class="row">
+    <ul class="nav nav-tabs price_tab price_tab_two mt_70" role="tablist">
+        @foreach (var category in Model.ToList())
+        {
+            _count++;
+            if (_count == 1)
+            {
+                _clsactive = "active active_hover";
+            }
+            else
+            {
+                _clsactive = "";
+            }
+            <li class="nav-item">
+                <a class="nav-link @_clsactive" id="@Html.Raw(category.CAT_ID)" data-toggle="tab" href="#@Html.Raw(category.CAT_ID)" aria-controls="@Html.Raw(category.CAT_ID)">@category.CAT_NAME</a>
+            </li>
+        }
+    </ul>
+    <div class="tab-content price_content price_content_two" style="width:100%">
+        @foreach (var category in Model.ToList())
+        {
+            _count1++;
+            if (_count1 == 1)
+            {
+                _clactiveTab = "show active text-center";
+            }
+            else
+            {
+                _clactiveTab = "";
+            }
+
+            <div class="tab-pane fade @_clactiveTab" id="@Html.Raw(category.CAT_ID)" role="tabpanel" aria-labelledby="@Html.Raw(category.CAT_ID)">
+                <div class="setup_inner">
+                    @await Component.InvokeAsync("HistoriesContent", new { catid = category.CAT_ID })
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,40 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>@ViewData["Title"]</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    @*<environment include="Development">*@
+        <!-- Bootstrap 3.3.7 -->
+        <link rel="stylesheet" href="~/Admin/bower_components/bootstrap/dist/css/bootstrap.min.css">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="~/Admin/bower_components/font-awesome/css/font-awesome.min.css">
+        <!-- Ionicons -->
+        <link rel="stylesheet" href="~/Admin/bower_components/Ionicons/css/ionicons.min.css">
+        <!-- Theme style -->
+        <link rel="stylesheet" href="~/Admin/dist/css/AdminLTE.min.css">
+        <!-- iCheck -->
+        <link rel="stylesheet" href="~/Admin/plugins/iCheck/square/blue.css">
+        <link rel="stylesheet" href="~/Admin/css/Theme/main.css">
+        <link rel="stylesheet" href="~/Admin/css/Theme/util.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+    @*</environment>*@
+  
+</head>
+<body>
+    @RenderBody()
+    @*<environment include="Development">*@
+        <!-- jQuery 3 -->
+        <script src="~/Admin/bower_components/jquery/dist/jquery.min.js"></script>
+        <!-- Bootstrap 3.3.7 -->
+        <script src="~/Admin/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <!-- iCheck -->
+        <script src="~/Admin/plugins/iCheck/icheck.min.js"></script>
+    @*</environment>*@
+
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

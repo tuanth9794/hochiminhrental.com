@@ -1,0 +1,162 @@
+﻿@using CoreCnice.Domain;
+@using CoreCnice.Connect;
+@using CoreCnice.Servicer;
+@using CoreCnice.UtilsCs;
+
+@{
+    string hotline = "";
+    string Email = "";
+    string linklogo = "";
+    BulSoftCmsConnectContext _context = new BulSoftCmsConnectContext();
+    var Config = _context.ESHOP_AD_ITEM.Where(m => m.AD_ITEM_POSITION == 3);
+    var Meta = _context.ESHOP_CONFIG.SingleOrDefault(m => m.CONFIG_ID == 1);
+    var Support = _context.ESHOP_ONLINE.Where(x => x.ONLINE_TYPE == 1);
+    if (Support.ToList().Count > 0)
+    {
+        hotline = Support.ToList()[0].ONLINE_COMBACK;
+        Email = Support.ToList()[0].ONLINE_NICKNAME;
+    }
+
+    if (Config.ToList().Count > 0)
+    {
+
+        linklogo = "/UploadImages/Data/Banner/" + Config.ToList()[0].AD_ITEM_FILENAME;
+
+    }
+    int lang = Utils.CIntDef(ViewBag.Langue);
+}
+
+<aside class="navbar-aside" id="offcanvas_aside">
+    <div class="aside-top">
+        <a href="/" class="brand-wrap">
+            <img src="@linklogo" alt="@Meta.CONFIG_TITLE" class="logo" />
+        </a>
+        <div>
+            <button class="btn btn-icon btn-aside-minimize"><i class="text-muted material-icons md-menu_open"></i></button>
+        </div>
+    </div>
+    @{
+        if (lang == 2)
+        {
+            <nav>
+                <ul class="menu-aside">
+                    <li class="menu-item active">
+                        <a class="menu-link" href="/tong-quan-khach-hang">
+                            <i class="icon material-icons md-home"></i>
+                            <span class="text">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a class="menu-link" href="/danh-sach-cho-thue">
+                            <i class="icon material-icons md-shopping_bag"></i>
+                            <span class="text">List of apartments</span>
+                        </a>                      
+                    </li>
+                      <li class="menu-item">
+                          <a class="menu-link" href="/AdminCus/ProjectList">
+                            <i class="icon material-icons md-shopping_bag"></i>
+                            <span class="text">suitable project</span>
+                        </a>                      
+                    </li>
+                    <li class="menu-item has-submenu">
+                        <a class="menu-link" href="#">
+                            <i class="icon material-icons md-shopping_cart"></i>
+                            <span class="text">Request to send</span>
+                        </a>
+                        <div class="submenu">
+                            <a href="/danh-sach-gui-yeu-cau">Request list</a>
+                            <a href="/dang-tim-can-ho">Send require</a>
+                        </div>
+                    </li>
+                    <li class="menu-item has-submenu">
+                        <a class="menu-link" href="page-sellers-cards.html">
+                            <i class="icon material-icons md-store"></i>
+                            <span class="text">Seller</span>
+                        </a>
+                        <div class="submenu">
+                            <a href="/danh-sach-seller">List of sellers</a>                     
+                        </div>
+                    </li>
+                </ul>
+                <hr />
+                <ul class="menu-aside">
+                    <li class="menu-item">
+                        <a class="menu-link" href="/AdminCus/CustomerSetting">       
+                          <i class="icon material-icons md-store"></i>
+                            <span class="text">Update account</span>
+                        </a>                      
+                    </li>
+                    <li class="menu-item">
+                        <a class="menu-link" href="page-blank.html">
+                            <i class="icon material-icons md-local_offer"></i>
+                            <span class="text"> On the homepage </span>
+                        </a>
+                    </li>
+                </ul>
+                <br />
+                <br />
+            </nav>
+        }
+        else
+        {
+          <nav>
+                <ul class="menu-aside">
+                    <li class="menu-item active">
+                        <a class="menu-link" href="/tong-quan-khach-hang">
+                            <i class="icon material-icons md-home"></i>
+                            <span class="text">Tổng quan</span>
+                        </a>
+                    </li>
+                   <li class="menu-item">
+                        <a class="menu-link" href="/danh-sach-cho-thue">
+                            <i class="icon material-icons md-shopping_bag"></i>
+                            <span class="text">Căn hộ đang có</span>
+                        </a>                      
+                    </li>
+                      <li class="menu-item">
+                        <a class="menu-link" href="/AdminCus/ProjectList">
+                            <i class="icon material-icons md-shopping_bag"></i>
+                            <span class="text">Gợi ý dự án phù hợp</span>
+                        </a>                      
+                    </li>
+                    <li class="menu-item has-submenu">
+                        <a class="menu-link" href="page-orders-1.html">
+                            <i class="icon material-icons md-shopping_cart"></i>
+                            <span class="text">Yêu cầu để gửi</span>
+                        </a>
+                        <div class="submenu">
+                            <a href="/danh-sach-gui-yeu-cau">Danh sách yêu cầu</a>
+                            <a href="/dang-tim-can-ho">Gửi yêu cầu</a>
+                        </div>
+                    </li>
+                    <li class="menu-item has-submenu">
+                        <a class="menu-link" href="page-sellers-cards.html">
+                            <i class="icon material-icons md-store"></i>
+                            <span class="text">Kinh doanh</span>
+                        </a>
+                        <div class="submenu">
+                            <a href="/danh-sach-seller">Danh sách kinh doanh</a>                     
+                        </div>
+                    </li>
+                </ul>
+                <hr />
+                <ul class="menu-aside">
+                    <li class="menu-item">
+                        <a class="menu-link" href="/AdminCus/CustomerSetting">          
+                          <i class="icon material-icons md-store"></i>
+                            <span class="text">Cập nhật tài khoản</span>
+                        </a>                      
+                    </li>
+                    <li class="menu-item">
+                        <a class="menu-link" href="page-blank.html">
+                            <i class="icon material-icons md-local_offer"></i>
+                            <span class="text"> Về trang chủ </span>
+                        </a>
+                    </li>
+                </ul>
+                <br />
+                <br />
+            </nav>
+        }
+    }
+</aside>

@@ -1,0 +1,325 @@
+﻿@using CoreCnice.UtilsCs;
+@model CoreCnice.Domain.ESHOP_CUSTOMER
+@{
+    Layout = "~/Views/Shared/_LayoutSeller.cshtml";
+    clsFormat cl = new clsFormat();
+    int lang = Utils.CIntDef(ViewBag.Langue);
+    int tygia = Utils.CIntDef(ViewBag.USD);
+    int tien = Utils.CIntDef(ViewBag.Money);
+    string donvi = "";
+    string donviEn = "";
+}
+<style>
+    .form-control, .form-select {
+        border: 1px solid #c3c4c8 !important;
+    }
+</style>
+<link rel="stylesheet" href="~/Admin/dist/css/AdminLTE.css">
+@{
+    if (lang == 1)
+    {
+        @using (Html.BeginForm(FormMethod.Post, new { enctype = "multipart/form-data", data_ajax = "false" }))
+        {
+               <input type="hidden" asp-for="CUSTOMER_ID" value="@Model.CUSTOMER_ID" />
+                                <input type="hidden" asp-for="CUSTOMER_PW" value="@Model.CUSTOMER_PW" />
+                                <input type="hidden" asp-for="CUSTOMER_IP" value="@Model.CUSTOMER_IP" />
+                                <input type="hidden" asp-for="CUSTOMER_KHUVU" value="@Model.CUSTOMER_KHUVU" />
+                                <input type="hidden" asp-for="CUSTOMER_LOAICANHO" value="@Model.CUSTOMER_LOAICANHO" />
+                                <input type="hidden" asp-for="CUSTOMER_SHOWTYPE" value="@Model.CUSTOMER_SHOWTYPE" />
+                                <input type="hidden" asp-for="CUSTOMER_UN" value="@Model.CUSTOMER_UN" />
+                                <input type="hidden" asp-for="CUSTOMER_PUBLISHDATE" value="@Model.CUSTOMER_PUBLISHDATE" />
+            <section class="content-main">
+                <div class="row">
+                <div class="col-lg-9">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h4>Thông tin cập nhật</h4>
+                        </div>
+                        <div class="card-body">  
+                          @if (!string.IsNullOrEmpty(ViewBag.Error))
+                                {
+                                    <div class="callout callout-info">
+                                       <p style="color:#ffffff">
+                                            @Html.Raw(ViewBag.Error)
+                                        </p>
+                                    </div>
+                                }
+                                <div class="mb-4">
+                                    <label for="product_name" class="form-label">Họ và tên</label>
+                                    <input type="text" placeholder="Họ tên khách hàng" class="form-control name" asp-for="CUSTOMER_FULLNAME" />
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="mb-4">
+                                            <label class="form-label">Số điện thoại</label>
+                                            <div class="row gx-2">
+                                                <input placeholder="" type="text" class="form-control sodt" asp-for="CUSTOMER_PHONE1" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-4">
+                                            <label class="form-label">Địa chỉ email</label>
+                                            <input placeholder="" type="text" class="form-control emailkhach"   asp-for="CUSTOMER_EMAIL"  />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="product_name" class="form-label">Địa chỉ</label>
+                                    <input type="text" placeholder="" class="form-control diachi"  asp-for="CUSTOMER_ADDRESS" />
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <select name="quanhuyen" class="form-select form-select-lg form-control" aria-label=".form-select-lg example">
+                                            <option selected>Quận/Huyện</option>
+                                            <option value="1">One</option>
+                                            <option value="2">Two</option>
+                                            <option value="3">Three</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <select name="tinhthanh" class="select  form-control">
+                                            <option value="1">Tỉnh/Tp</option>
+                                            <option value="2">Option 1</option>
+                                            <option value="3">Option 2</option>
+                                            <option value="4">Option 3</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                    <div class="form-group">
+                                    <label for="inputEmail3" class="col-md-2 control-label">Giới tính</label>
+                                    <div class="col-md-10">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                @Html.RadioButtonFor(model => model.CUSTOMER_SEX, "1", new { id = 1, @checked = "checked", @class = "radio" })
+                                                Nữ
+                                            </div>
+                                            <div class="col-md-3">
+                                                @Html.RadioButtonFor(model => model.CUSTOMER_SEX, "2", new { id = 2, @class = "radio" })
+                                                Nam
+                                            </div>
+                                            <div class="col-md-3">
+                                                @Html.RadioButtonFor(model => model.CUSTOMER_SEX, "3", new { id = 3, @class = "radio" })
+                                                Khác
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="line" />                      
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="mb-4">
+                                            <label class="form-label">Ngày sinh</label>
+                                            <div class="row gx-2">
+                                                <input class="form-control thoigiandonvao" type="date"  asp-for="CUSTOMER_PHONE2"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                     <div class="form-group">
+                                    <label for="inputEmail3" class="col-md-2 control-label">Loại tài khoản</label>
+                                    <div class="col-md-10">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                @Html.RadioButtonFor(model => model.CUSTOMER_SHOWTYPE, "1", new { id = 1, @checked = "checked", @class = "radio" })
+                                                Khách hàng
+                                            </div>
+                                            <div class="col-md-3">
+                                                @Html.RadioButtonFor(model => model.CUSTOMER_SHOWTYPE, "2", new { id = 2, @class = "radio" })
+                                                Kinh doanh
+                                            </div>
+                                            <div class="col-md-3">
+                                                @Html.RadioButtonFor(model => model.CUSTOMER_SHOWTYPE, "3", new { id = 3, @class = "radio" })
+                                                Khác
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="line" />                               
+                                <div class="mb-4">
+                                    <label class="form-label">Mô tả thông tin</label>
+                                    <textarea placeholder="Mô tả yêu cầu" class="form-control mota" rows="4" asp-for="CUSTOMER_FIELD3"></textarea>
+                                </div>
+                           <div class="mb-4">
+                                    <button type="submit" name="save" class="btn btn-sm bg-blue">
+                                        <i class="fa fa-floppy-o"></i>
+                                        Lưu chỉnh sửa
+                                    </button>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h4>Hình ảnh</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="input-upload">
+                                <img src="~/AdminCus/assets/imgs/theme/upload.svg" alt="" />
+                                <input class="form-control" type="file" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        }
+    }
+    else
+    {
+        @using (Html.BeginForm(FormMethod.Post, new { enctype = "multipart/form-data", data_ajax = "false" }))
+        {
+            <input type="hidden" asp-for="CUSTOMER_ID" value="@Model.CUSTOMER_ID" />
+                                <input type="hidden" asp-for="CUSTOMER_PW" value="@Model.CUSTOMER_PW" />
+                                <input type="hidden" asp-for="CUSTOMER_IP" value="@Model.CUSTOMER_IP" />
+                                <input type="hidden" asp-for="CUSTOMER_KHUVU" value="@Model.CUSTOMER_KHUVU" />
+                                <input type="hidden" asp-for="CUSTOMER_LOAICANHO" value="@Model.CUSTOMER_LOAICANHO" />
+                                <input type="hidden" asp-for="CUSTOMER_SHOWTYPE" value="@Model.CUSTOMER_SHOWTYPE" />
+                                <input type="hidden" asp-for="CUSTOMER_UN" value="@Model.CUSTOMER_UN" />
+                                <input type="hidden" asp-for="CUSTOMER_PUBLISHDATE" value="@Model.CUSTOMER_PUBLISHDATE" />
+            <section class="content-main">
+                <div class="row">
+                <div class="col-lg-9">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h4>Account information</h4>
+                        </div>
+                        <div class="card-body">
+                             @if (!string.IsNullOrEmpty(ViewBag.Error))
+                                {
+                                    <div class="callout callout-info">
+                                        <p style="color:#ffffff">
+                                            @Html.Raw(ViewBag.Error)
+                                        </p>
+                                    </div>
+                                }
+                                <div class="mb-4">
+                                    <label for="product_name" class="form-label">First and last name</label>
+                                    <input type="text" placeholder="" class="form-control name" asp-for="CUSTOMER_FULLNAME"/>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="mb-4">
+                                            <label class="form-label">Phone number</label>
+                                            <div class="row gx-2">
+                                                <input placeholder="" type="text" class="form-control sodt" asp-for="CUSTOMER_PHONE1"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-4">
+                                            <label class="form-label">Email address</label>
+                                            <input placeholder="" type="text" class="form-control emailkhach" asp-for="CUSTOMER_EMAIL"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                          <select name="quanhuyen" class="form-select form-select-lg form-control" aria-label=".form-select-lg example">
+                                                    <option selected>District</option>
+                                                    <option value="1">District 1</option>
+                                                    <option value="2">District 2</option>
+                                                    <option value="3">District 3</option>
+                                                    <option value="4">District 4</option>
+                                                    <option value="7">District 7</option>
+                                                    <option value="10">District 10</option>
+                                                    <option value="6">Binh Thanh District</option>
+                                                    <option value="8">Phu Nhuan District</option>
+                                                    <option value="9">Tan Binh District</option>
+                                                </select>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                      <select name="tinhthanh" class="select  form-control">
+                                                <option value="1">Province/City</option>
+                                                <option value="2">Ho Chi Minh</option>                                            
+                                            </select>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="product_name" class="form-label">Address</label>
+                                    <input type="text" placeholder="" class="form-control diachi" value="@Model.CUSTOMER_ADDRESS"/>
+                                </div>
+                              
+                                  <div class="form-group">
+                                    <label for="inputEmail3" class="col-md-2 control-label">Sex</label>
+                                    <div class="col-md-10">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                @Html.RadioButtonFor(model => model.CUSTOMER_SEX, "1", new { id = 1, @checked = "checked", @class = "radio" })
+                                                Female
+                                            </div>
+                                            <div class="col-md-3">
+                                                @Html.RadioButtonFor(model => model.CUSTOMER_SEX, "2", new { id = 2, @class = "radio" })
+                                                Male
+                                            </div>
+                                            <div class="col-md-3">
+                                                @Html.RadioButtonFor(model => model.CUSTOMER_SEX, "3", new { id = 3, @class = "radio" })
+                                                Orther
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="line" />  
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="mb-4">
+                                            <label class="form-label">Date of birth</label>
+                                            <div class="row gx-2">
+                                                <input class="form-control thoigiandonvao" type="date" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                          <div class="form-group">
+                                    <label for="inputEmail3" class="col-md-2 control-label">Account Type</label>
+                                    <div class="col-md-10">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                @Html.RadioButtonFor(model => model.CUSTOMER_SHOWTYPE, "1", new { id = 1, @checked = "checked", @class = "radio" })
+                                                Client
+                                            </div>
+                                            <div class="col-md-3">
+                                                @Html.RadioButtonFor(model => model.CUSTOMER_SHOWTYPE, "2", new { id = 2, @class = "radio" })
+                                               Business
+                                            </div>
+                                            <div class="col-md-3">
+                                                @Html.RadioButtonFor(model => model.CUSTOMER_SHOWTYPE, "3", new { id = 3, @class = "radio" })
+                                                Orther
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="line" />                               
+                                <div class="mb-4">
+                                    <label class="form-label">Description of information</label>
+                                    <textarea placeholder="" class="form-control mota" rows="4"></textarea>
+                                </div>
+                                <div class="mb-4">
+                                    <button type="submit" name="save" class="btn btn-sm bg-blue">
+                                        <i class="fa fa-floppy-o"></i>
+                                      Save
+                                    </button>
+                                </div>
+                          
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h4>Images</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="input-upload">
+                                <img src="~/AdminCus/assets/imgs/theme/upload.svg" alt="" />
+                                <input class="form-control" type="file" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        }
+    }
+}

@@ -1,0 +1,386 @@
+﻿@model IEnumerable<CoreCnice.Models.NewsModelCat>
+@using CoreCnice.UtilsCs;
+@{
+    clsFormat cl = new clsFormat();
+    Layout = "~/Views/Shared/_LayoutDetail.cshtml";
+    int typeCat = ViewBag.Type;
+    int _count = 0;
+    string cla = "";
+    string linkimg = "";
+    string cla_one = "";
+
+    if (!String.IsNullOrEmpty(ViewBag.IMAGE2))
+    {
+        linkimg = "/UploadImages/Data/Cats/" + ViewBag.Id + "/" + ViewBag.IMAGE2;
+    }
+    else
+    {
+        linkimg = "/images/noimg.png";
+    }
+    int lang = Utils.CIntDef(ViewBag.Langue);
+}
+
+<style>
+    .ex_team_item .hover_content, .ex_team_item .team_content {
+        position: relative;
+    }
+
+    .ex_team_item .hover_content {
+        display: none;
+    }
+
+    .seo_call_to_action_area {
+        background: hsl(171, 100%, 29%);
+        padding: 20px 0px;
+    }
+
+    .seo_banner_content h2 {
+        font-size: 47px;
+        line-height: 70px;
+        color: hsl(218, 42%, 26%);
+        font-weight: 600;
+    }
+
+    .price_tab {
+        border-radius: 45px;
+        max-width: 100%;
+        background-color: hsl(0, 0%, 100%);
+        -webkit-box-shadow: 0px 3px 13px 0px rgba(0, 11, 40, 0.08);
+        box-shadow: 0px 3px 13px 0px rgba(0, 11, 40, 0.08);
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 60px;
+        border: 0px;
+        padding: 7px;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        position: relative;
+    }
+
+        .price_tab .nav-item .nav-link {
+            margin: 0px;
+            font: 400 16px "Poppins", sans-serif;
+            color: hsl(225, 18%, 49%);
+            padding: 12px 26px;
+            display: inline-block;
+            border: 0px;
+            border-radius: 45px;
+            min-width: auto;
+            text-align: center;
+            -webkit-transition: color 0.3s linear;
+            -o-transition: color 0.3s linear;
+            transition: color 0.3s linear;
+            position: relative;
+            z-index: 1;
+        }
+
+    .blog_content p {
+        font-weight: 400;
+        font-size: 15px;
+        line-height: 21px;
+    }
+
+    .agency_testimonial_info {
+        width: 100%;
+    }
+
+    .seo_banner_content p {
+        text-align: justify;
+        font-size: 18px;
+        line-height: 30px;
+        color: hsl(0deg 0% 100%);
+        margin-bottom: 0px;
+        font-weight: bold;
+    }
+
+    .h_action_area:before {
+        content: "";
+        width: 100%;
+        height: 100%;
+        background: hsl(213deg 6% 35%);
+        opacity: 0.70;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+    }
+</style>
+
+@if (lang == 1)
+{
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="#">@Html.Raw(ViewData["Title"])</a></li>
+            </ol>
+        </div><!-- End .container -->
+    </nav>
+}
+else
+{
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="#">@Html.Raw(ViewBag.NAME)</a></li>
+            </ol>
+        </div><!-- End .container -->
+    </nav>
+}
+
+
+@{
+    foreach (var item in Model.ToList().Where(x => x.NEWS_SHOWINDETAIL == 1))
+    {
+        string linkimgNews = "";
+        if (!String.IsNullOrEmpty(item.NEWS_IMAGE1))
+        {
+            linkimg = "/UploadImages/Data/News/" + item.NEWS_ID + "/" + item.NEWS_IMAGE1;
+            linkimgNews = "/UploadImages/Data/News/" + item.NEWS_ID + "/thumb-" + item.NEWS_IMAGE1;
+            if (Utils.checkfileExit(linkimgNews) == true)
+            {
+                linkimg = linkimgNews;
+            }
+        }
+        else
+        {
+            linkimg = "/images/noimg.jpg";
+        }
+        string fileName = "";
+        @if (lang == 1)
+        {
+            fileName = "wwwroot/UploadImages/Data/News/" + item.NEWS_ID + "/" + item.NEWS_FILEHTML;
+        }
+        else
+        {
+            fileName = "wwwroot/UploadImages/Data/News/" + item.NEWS_ID + "/" + item.NEWS_FILEHTML_EN;
+        }
+        <section class="h_action_area" style="background: url('@linkimg');padding-bottom: 0px;padding-top: 20px;background-size: cover;position: relative;">
+            <div class="container">
+                <div class="row" style="position: relative;z-index:9999;">
+                    <div class="col-md-12">
+                        <div class="col-md-12 sec_title text-center">
+                            @if (lang == 1)
+                            {
+                                <h1 class="f_p f_size_30 l_height45 f_600" style="color: hsl(0, 0%, 0%);margin-bottom: 0px;color:hsl(47deg 90% 58%)">@Html.Raw(item.NEWS_TITLE)</h1>
+                            }
+                            else
+                            {
+                                <h1 class="f_p f_size_30 l_height45 f_600" style="color: hsl(0, 0%, 0%);margin-bottom: 0px;color:hsl(47deg 90% 58%)">@Html.Raw(item.NEWS_TITLE_EN)</h1>
+                            }
+                        </div>
+                        <div class="col-md-12 text-center seo_banner_content" style="padding:100px 0px">
+                            @Html.Raw(cl.ReadFile(fileName.Replace("<p>", "").Replace("</p>", "")))
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+}
+
+<style>
+    .gdlr-core-pbf-wrapper {
+        clear: both;
+        padding: 60px 0px 30px;
+        position: relative;
+        min-height: 450px;
+    }
+
+    .gdlr-core-pbf-background-wrap {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        bottom: 0px;
+        left: 0px;
+        overflow: hidden;
+    }
+
+    .gdlr-core-pbf-background {
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+    }
+
+    .gdlr-core-pbf-background-frame {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        bottom: 0px;
+        left: 0px;
+    }
+
+    .bgads {
+        padding-bottom: 0px;
+    }
+
+        .bgads p {
+            color: hsl(0deg 0% 100%);
+            line-height: 24px;
+            margin-bottom: 0px;
+        }
+
+        .bgads .app_service_item {
+            background: none;
+            padding: 30px 30px;
+            text-align: center;
+            border: none;
+            margin-bottom: 0px;
+        }
+
+        .bgads h5 {
+            text-transform: uppercase;
+        }
+
+    .numberText {
+        font-weight: bold;
+        color: hsl(33deg 70% 55%);
+    }
+</style>
+@{
+    foreach (var item in Model.ToList().Where(x => x.NEWS_SHOWINDETAIL == 4))
+    {
+        string linkimgNews = "";
+        if (!String.IsNullOrEmpty(item.NEWS_IMAGE1))
+        {
+            linkimg = "/UploadImages/Data/News/" + item.NEWS_ID + "/" + item.NEWS_IMAGE1;
+            linkimgNews = "/UploadImages/Data/News/" + item.NEWS_ID + "/thumb-" + item.NEWS_IMAGE1;
+            if (Utils.checkfileExit(linkimgNews) == true)
+            {
+                linkimg = linkimgNews;
+            }
+        }
+        else
+        {
+            linkimg = "/images/noimg.jpg";
+        }
+        string fileName = "";
+        @if (lang == 1)
+        {
+            fileName = "wwwroot/UploadImages/Data/News/" + item.NEWS_ID + "/" + item.NEWS_FILEHTML;
+        }
+        else
+        {
+            fileName = "wwwroot/UploadImages/Data/News/" + item.NEWS_ID + "/" + item.NEWS_FILEHTML_EN;
+        }
+        <section class="gdlr-core-pbf-wrapper wow fadeInLeft" data-wow-delay="0.7s" style="padding: 60px 80px 60px;margin-top:50px" id="gdlr-core-wrapper-2">
+            <div class="gdlr-core-pbf-background-wrap">
+                <div class="gdlr-core-pbf-background gdlr-core-parallax gdlr-core-js" style="background-image: url('@linkimg'); background-size: cover; background-position: center center; transform: translate(0px, -20.2px);" data-parallax-speed="0.2"></div>
+            </div>
+            <div class="gdlr-core-pbf-background-frame" style="margin: 45px 45px 45px 45px;border-width: 1px 1px 1px 1px;border-style: solid;border-color: #575757;"></div>
+            <div class="bgads">
+                @Html.Raw(cl.ReadFile(fileName.Replace("<p>", "").Replace("</p>", "")))
+            </div>
+        </section>
+    }
+}
+
+@{
+    @foreach (var item in Model.ToList().Where(x => x.NEWS_SHOWINDETAIL == 2))
+    {
+        string linkimgNews = "";
+        if (!String.IsNullOrEmpty(item.NEWS_IMAGE1))
+        {
+            linkimg = "/UploadImages/Data/News/" + item.NEWS_ID + "/" + item.NEWS_IMAGE1;
+            linkimgNews = "/UploadImages/Data/News/" + item.NEWS_ID + "/thumb-" + item.NEWS_IMAGE1;
+            if (Utils.checkfileExit(linkimgNews) == true)
+            {
+                linkimg = linkimgNews;
+            }
+        }
+        else
+        {
+            linkimg = "/images/noimg.jpg";
+        }
+        _count++;
+        cla = "";
+        cla_one = "";
+        string fileName = "";
+        @if (lang == 1)
+        {
+            fileName = "wwwroot/UploadImages/Data/News/" + item.NEWS_ID + "/" + item.NEWS_FILEHTML;
+        }
+        else
+        {
+            fileName = "wwwroot/UploadImages/Data/News/" + item.NEWS_ID + "/" + item.NEWS_FILEHTML_EN;
+        }
+
+        <section class="video_area bg_color sec_pad wow fadeInLeft" data-wow-delay="0.4s" style="padding-top:50px;background:hsl(0, 0%, 100%);padding-bottom:50px">
+            <div class="container">
+                <div class="sec_title text-center">
+                    @if (lang == 1)
+                    {
+                        <h2 class="f_p f_size_30 l_height45 f_600 t_color">@Html.Raw(item.NEWS_TITLE)</h2>
+                    }
+                    else
+                    {
+                        <h2 class="f_p f_size_30 l_height45 f_600 t_color">@Html.Raw(item.NEWS_TITLE_EN)</h2>
+                    }
+                </div>
+                <div class="bglydo">
+                    @Html.Raw(cl.ReadFile(fileName.Replace("<p>", "").Replace("</p>", "")))
+                </div>
+
+            </div>
+        </section>
+    }
+}
+<section class="video_area bg_color sec_pad" style="padding-top:50px;background:hsl(0deg 0% 89%)">
+    <div class="container">
+        <div class="sec_title text-center mb_70">
+            @if (lang == 1)
+            {
+                <h2 class="f_p f_size_30 l_height45 f_600" style="color:hsl(0, 0%, 0%);text-transform:uppercase">Video giới thiệu về EUREKA</h2>
+                <p class="f_400 f_size_16 mb-0">với sự thành công của chúng tôi mang tới cho bạn lợi ích trong quá trình hoạt động của chúng tôi dẫn đến sự thành công của cả 2</p>
+            }
+            else
+            {
+                <h2 class="f_p f_size_30 l_height45 f_600" style="color:hsl(0, 0%, 0%);text-transform:uppercase"> EUREKA introduction video </h2>
+                <p class="f_400 f_size_16 mb-0"> with our success gives you benefits in our operations leading to the success of both </p>
+            }
+        </div>
+        <div class="video_content">
+            <div class="video_info">
+                <div class="ovarlay_color"></div>
+                @*<a class="popup-youtube video_icon" href="https://www.youtube.com/watch?v=Y2-snvL6Dg4"><i class="arrow_triangle-right"></i></a>*@
+                <iframe width="770" height="450" src="https://www.youtube.com/embed/Y2-snvL6Dg4?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <h2>EUREKA</h2>
+            </div>
+            <img class="video_leaf" src="../img/new/leaf.png" alt="">
+            <img class="cup" src="../images/cup.png" alt="">
+        </div>
+    </div>
+</section>
+@await Component.InvokeAsync("CustomerTalk", new { Position = 5 })
+@*@await Component.InvokeAsync("ServiceAbCompany", new { Position = 10 })*@
+
+
+<style>
+    .gioidv .item {
+        text-align: center;
+        color: hsl(0deg 0% 100%);
+    }
+
+        .gioidv .item .author_img {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: inline-block;
+            overflow: hidden;
+            margin-bottom: 35px;
+        }
+
+        .gioidv .item img {
+            width: auto;
+        }
+
+        .gioidv .item p {
+            font-size: 16px;
+            line-height: 27px;
+            font-style: italic;
+            margin-bottom: 20px;
+            color: hsl(0, 0%, 100%);
+        }
+</style>

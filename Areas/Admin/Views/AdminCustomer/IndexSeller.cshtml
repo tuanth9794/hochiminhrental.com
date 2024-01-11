@@ -1,0 +1,89 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_CUSTOMER>
+
+@{
+    var defaultGridPageSize = 20;
+    //page title
+    ViewData["Title"] = "Danh sách khách hàng";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="content-header clearfix">
+    <h1 class="pull-left">
+       DANH SÁCH KHÁCH HÀNG
+    </h1>
+    <div class="pull-right">
+        <a href="/Admin/@Url.Action("Create")" class="btn btn-social btn-bitbucket btn-xs"> <i class="fa fa-plus-square"></i>THÊM MỚI</a>
+    </div>
+</div>
+<div class="content">
+    <div id="example">
+        <div id="grid"></div>
+        <script>
+                $(document).ready(function () {
+                    $("#grid").kendoGrid({
+                        dataSource: {
+                            type: "json",
+                            transport: {                                 
+                                read: "/Admin/AdminCustomer/CustomerListSelle"
+                            },
+                            pageSize: @(defaultGridPageSize)
+                        },
+                        groupable: true,
+                        sortable: true,
+                        selectable: true,
+                        navigatable: true,
+                         filterable: true,
+                        pageable: {
+                            refresh: true,
+                            pageSizes: true,
+                            buttonCount: 5
+                        },
+                        columns: [    columns: [{
+                            field: "customeR_EMAIL",
+                            title: "Email",
+                        },{
+                                field: "customeR_ADDRESS",
+                            title: "Địa chỉ",
+                            filterable: {
+                                multi: true,
+                                search: true
+                            }
+                        }, {
+                                field: "customeR_PUBLISHDATE",
+                                title: "Ngày tạo",
+                                type: "date",
+                                format: "{0:dd-MM-yyyy}",
+                        },{
+                                field: "newS_ID",
+                    title: "Xem thông tin",
+                    headerAttributes: { style: "text-align:center" },
+                    attributes: { style: "text-align:center" },
+                                template: '<a href="/Admin/News/IndexSeller/#=customeR_ID#" class="btn btn-social btn-info btn-xs" style="margin-right: 10px;background:hsl(0deg 0% 35%)"><i class="fa fa-pencil" ></i> Dự án đang có</a><a href="/Admin/AdminCustomer/Edit/#=customeR_ID#" class="btn btn-social btn-info btn-xs"><i class="fa fa-pencil" ></i> Xem chi tiết</a>',
+                    width:250
+                }]
+                    });
+                });
+        </script>
+    </div>
+</div>
+<style type="text/css">
+    .customer-photo {
+        display: inline-block;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background-size: 32px 35px;
+        background-position: center center;
+        vertical-align: middle;
+        line-height: 32px;
+        box-shadow: inset 0 0 1px #999, inset 0 0 10px rgba(0,0,0,.2);
+        margin-left: 5px;
+    }
+
+    .customer-name {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: 32px;
+        padding-left: 3px;
+    }
+</style>
+

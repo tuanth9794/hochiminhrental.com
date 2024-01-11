@@ -1,0 +1,112 @@
+﻿@model CoreCnice.Domain.ESHOP_CUSTOMER
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>ESHOP_CUSTOMER</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CUSTOMER_FULLNAME)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CUSTOMER_FULLNAME)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CUSTOMER_UN)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CUSTOMER_UN)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CUSTOMER_PW)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CUSTOMER_PW)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CUSTOMER_SEX)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CUSTOMER_SEX)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CUSTOMER_ADDRESS)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CUSTOMER_ADDRESS)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CUSTOMER_PHONE1)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CUSTOMER_PHONE1)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CUSTOMER_NEWSLETTER)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CUSTOMER_NEWSLETTER)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CUSTOMER_PUBLISHDATE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CUSTOMER_PUBLISHDATE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CUSTOMER_UPDATE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CUSTOMER_UPDATE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CUSTOMER_OID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CUSTOMER_OID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CUSTOMER_SHOWTYPE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CUSTOMER_SHOWTYPE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CUSTOMER_TOTAL_POINT)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CUSTOMER_TOTAL_POINT)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CUSTOMER_REMAIN)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CUSTOMER_REMAIN)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CUSTOMER_FIELD1)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CUSTOMER_FIELD1)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CUSTOMER_IP)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CUSTOMER_IP)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="CUSTOMER_ID" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

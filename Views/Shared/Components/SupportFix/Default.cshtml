@@ -1,0 +1,13 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_ONLINE>
+
+<div class="supportfix">
+    @foreach (var item in Model)
+    {
+        <a href="@Html.Raw(item.ONLINE_NICKNAME)" class="iconsuport cllredone d-flex justify-content-center align-items-center" target="_blank">
+            <img src="~/UploadImages/Data/Online/@item.ONLINE_ID/@item.ONLINE_IMAGE" />
+        </a>
+    }
+  @*  <a href="#" class="iconsuport lasticon clred d-flex justify-content-center align-items-center">     
+        <img src="../images/support.svg" />
+    </a>*@
+</div>

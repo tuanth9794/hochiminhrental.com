@@ -1,0 +1,136 @@
+﻿@model CoreCnice.Domain.ESHOP_CATEGORIES
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Delete";
+     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>ESHOP_CATEGORIES</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CAT_NAME)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CAT_NAME)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CAT_CODE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CAT_CODE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CAT_DESC)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CAT_DESC)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CAT_URL)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CAT_URL)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CAT_TARGET)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CAT_TARGET)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CAT_STATUS)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CAT_STATUS)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CAT_PARENT_ID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CAT_PARENT_ID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CAT_PAGEITEM)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CAT_PAGEITEM)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CAT_PERIOD)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CAT_PERIOD)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CAT_SEO_TITLE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CAT_SEO_TITLE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CAT_SEO_DESC)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CAT_SEO_DESC)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CAT_SEO_KEYWORD)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CAT_SEO_KEYWORD)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CAT_SEO_URL)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CAT_SEO_URL)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CAT_SHOWHOME)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CAT_SHOWHOME)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CAT_TYPE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CAT_TYPE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CAT_SHOWFOOTER)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CAT_SHOWFOOTER)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CAT_POSITION)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CAT_POSITION)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CAT_IMAGE1)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CAT_IMAGE1)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CAT_IMAGE2)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CAT_IMAGE2)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="CAT_ID" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

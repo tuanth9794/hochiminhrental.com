@@ -1,0 +1,22 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_CATEGORIES>
+@{ 
+    int _count = 0;
+    string acti = "";
+}
+<ul class="nav nav-tabs software_service_tab" id="myTab" role="tablist">
+    @foreach (var category in Model.ToList())
+    {
+        _count++;
+        if(_count == 1)
+        {
+            acti = "active show";
+        }
+        else
+        {
+            acti = "";
+        }
+        <li class="nav-item">
+            <a class="nav-link @acti" id="de-tab-@Html.Raw(category.CAT_ID)" data-toggle="tab" href="#de-@Html.Raw(category.CAT_ID)"  aria-controls="de-@Html.Raw(category.CAT_ID)" aria-selected="false">@category.CAT_NAME</a>
+        </li>      
+    }
+</ul>

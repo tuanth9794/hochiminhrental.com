@@ -1,0 +1,66 @@
+﻿@model CoreCnice.Domain.ESHOP_USER
+@{
+
+    Layout = "~/Views/Shared/_LayoutAccount.cshtml";
+    ViewData["Title"] = "Đăng Nhập Quản Trị Cms Cnice";
+
+}
+
+<style>
+    .bg-aqua, .callout.callout-info, .alert-info, .label-info, .modal-info .modal-body {
+        background-color: #ffffff !important;
+    }
+</style>
+
+<div class="container-login100" style="background-image: url('/Admin/images/bg-01.jpg');">
+    <div class="wrap-login100">
+        @if (!string.IsNullOrEmpty(ViewBag.Error))
+        {
+            <div class="callout callout-info">
+                <p>
+                    @Html.Raw(ViewBag.Error)
+                </p>
+            </div>
+        }
+        @using (Html.BeginForm(FormMethod.Post, new { enctype = "multipart/form-data", data_ajax = "false" }))
+        {
+            <span class="login100-form-logo">
+                @*<i class="zmdi zmdi-landscape"></i>*@
+                <span class="glyphicon glyphicon-road"></span>
+            </span>
+            <span class="login100-form-title p-b-34 p-t-27">
+                ĐĂNG NHẬP CMS CNICE
+            </span>
+
+            <div class="wrap-input100 validate-input" data-validate="Enter username">
+                <input type="text" class="input100" asp-for="USER_UN" placeholder="Tài khoản">
+                <span class="focus-input100" data-placeholder=""></span>
+            </div>
+
+            <div class="wrap-input100 validate-input" data-validate="Enter password">
+                @*<input class="input100" type="password" name="pass" placeholder="Mật khẩu">*@
+                <input type="password" class="input100" asp-for="USER_PW" placeholder="Mật khẩu">
+                <span class="focus-input100" data-placeholder=""></span>
+            </div>
+
+            <div class="contact100-form-checkbox">
+                <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+                <label class="label-checkbox100" for="ckb1">
+                    Nhớ mật khẩu
+                </label>
+            </div>
+
+            <div class="container-login100-form-btn">
+                <button class="login100-form-btn">
+                    Đăng Nhập
+                </button>
+            </div>
+
+            <div class="text-center p-t-90">
+                <a class="txt1" href="#">
+                    Quên mật khẩu ?
+                </a>
+            </div>
+        }
+    </div>
+</div>

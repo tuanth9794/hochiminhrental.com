@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html lang="vi" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    @{
+        string linkimg = "";
+        string alt = "";
+
+        if (!String.IsNullOrEmpty(ViewBag.IMAGE3))
+        {
+            linkimg = "~/UploadImages/Data/Cats/" + ViewBag.Id + "/" + ViewBag.IMAGE3;
+        }
+        else
+        {
+            if (!String.IsNullOrEmpty(ViewBag.IMAGE2))
+            {
+                linkimg = "~/UploadImages/Data/Cats/" + ViewBag.Id + "/" + ViewBag.IMAGE2;
+            }
+            else
+            {
+                linkimg = "~/images/noimg.png";
+            }
+        }
+        if (!String.IsNullOrEmpty(ViewBag.Alt))
+        {
+            alt = ViewBag.Alt;
+        }
+        else
+        {
+            alt = ViewBag.Title;
+        }
+        string titlehead = "";
+
+        if (!String.IsNullOrEmpty(ViewBag.TitleHead))
+        {
+            titlehead = ViewBag.TitleHead;
+        }
+        else
+        {
+            titlehead = "";
+        }
+    }
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="monday.edu.vn">
+    <meta http-equiv="content-language" content="vn">
+    <link rel="icon" href="/UploadImages/Data/@Html.Raw(ViewData["FAVICON"])">
+    <title>@Html.Raw(ViewData["Title"])</title>
+    <meta name="description" content="@Html.Raw(ViewData["Desc"])" />
+    <meta name="keywords" content="@Html.Raw(ViewData["Key"])" />
+    <link rel="canonical" href="@ViewBag.UrlCal" />
+    @Html.Raw(titlehead)
+   
+</head>
+<body class="dt">
+    <div id="page">
+        @await Component.InvokeAsync("MenuMobile", new { Position = 1 })
+        <div class="body_wrapper">
+            @await Html.PartialAsync("_HeaderDt")
+            @*@await Html.PartialAsync("_Menu")*@
+            <div class="main-content">
+                @RenderBody()
+            </div>
+            @await Html.PartialAsync("_Footer")
+        </div>
+    </div>    
+</body>
+</html>

@@ -1,0 +1,268 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_CATEGORIES>
+@using CoreCnice.Connect;
+@using CoreCnice.Servicer;
+@using CoreCnice.UtilsCs;
+@{
+    BulSoftCmsConnectContext _context = new BulSoftCmsConnectContext();
+    CategoryServices ct = new CategoryServices();
+    clsFormat cl = new clsFormat();
+    int lang = Utils.CIntDef(ViewBag.Langue);
+    int tien = Utils.CIntDef(ViewBag.Money);
+    string vnd = "VNĐ";
+    string usd = "USD";
+    string classactive = "style='color: hsl(0deg 100% 50%);font - weight: bold;'";
+}
+
+<link type="text/css" rel="stylesheet" href="~/MenuMobile/demo.css" />
+<link type="text/css" rel="stylesheet" href="~/MenuMobile/dist/jquery.mmenu.css" />
+<style>
+    .mm-listitem .mm-btn_next {
+        background: rgba(3,2,1,0);
+        padding: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 43px;
+        z-index: 2;
+        border-left: 1px solid #e3e3e3;
+    }
+</style>
+<div id="menuMbd" class="header menuMB">
+    <a href="#menu"><span></span></a>
+</div>
+
+<nav id="menu">
+    <ul>
+        @foreach (var item in Model.ToList())
+        {
+            string LinkUrl = "";
+
+            if (lang == 1)
+            {
+                if (String.IsNullOrEmpty(item.CAT_URL) == true)
+                {
+                    LinkUrl = "/" + item.CAT_SEO_URL;
+                }
+                else
+                {
+                    LinkUrl = item.CAT_URL;
+                }
+            }
+            else
+            {
+                if (String.IsNullOrEmpty(item.CAT_URL) == true)
+                {
+                    LinkUrl = "/" + item.CAT_SEO_URL_EN;
+                }
+                else
+                {
+                    LinkUrl = item.CAT_URL;
+                }
+            }
+            var listmenucon = ct.MenuCatCh(item.CAT_ID);
+            if (listmenucon.ToList().Count == 0)
+            {
+                if (lang == 1)
+                {
+                    <li><a href="@LinkUrl">@Html.Raw(item.CAT_NAME)</a></li>
+                }
+                else
+                {
+                    <li><a href="@LinkUrl">@Html.Raw(item.CAT_NAME_EN)</a></li>
+                }
+            }
+            else
+            {
+                <li>
+                    @if (lang == 1)
+                    {
+                        <span> <a href="@LinkUrl">@Html.Raw(item.CAT_NAME)</a></span>
+                    }
+                    else
+                    {
+                        <span> <a href="@LinkUrl">@Html.Raw(item.CAT_NAME_EN)</a></span>
+                    }
+                    <ul>
+                        @foreach (var itemCatChild in listmenucon.ToList())
+                        {
+                            string LinkUrlCon = "";
+
+                            if (lang == 1)
+                            {
+                                if (String.IsNullOrEmpty(itemCatChild.CAT_URL) == true)
+                                {
+                                    LinkUrlCon = "/" + itemCatChild.CAT_SEO_URL;
+                                }
+                                else
+                                {
+                                    LinkUrlCon = itemCatChild.CAT_URL;
+                                }
+                            }
+                            else
+                            {
+                                if (String.IsNullOrEmpty(itemCatChild.CAT_URL) == true)
+                                {
+                                    LinkUrlCon = "/" + itemCatChild.CAT_SEO_URL_EN;
+                                }
+                                else
+                                {
+                                    LinkUrlCon = itemCatChild.CAT_URL;
+                                }
+                            }
+                        
+                            var listmenucon1 = ct.MenuCatCh(itemCatChild.CAT_ID);
+                            if (listmenucon1.ToList().Count == 0)
+                            {
+                                if (lang == 1)
+                                {
+                                    <li><a href="@LinkUrlCon">@Html.Raw(itemCatChild.CAT_NAME)</a></li>
+                                }
+                                else
+                                {
+                                    <li><a href="@LinkUrlCon">@Html.Raw(itemCatChild.CAT_NAME_EN)</a></li>
+                                }
+                            }
+                            else
+                            {
+                                <li>
+                                    @if (lang == 1)
+                                    {
+                                        <span><a href="@LinkUrlCon">@Html.Raw(itemCatChild.CAT_NAME)</a></span>
+                                    }
+                                    else
+                                    {
+                                        <span><a href="@LinkUrl">@Html.Raw(itemCatChild.CAT_NAME_EN)</a></span>
+                                    }
+
+                                    <ul>
+                                        @foreach (var itemCatChild12 in listmenucon1.ToList())
+                                        {
+                                            string LinkUrlCon12 = "";
+
+                                            if (lang == 1)
+                                            {
+                                                if (String.IsNullOrEmpty(itemCatChild12.CAT_URL) == true)
+                                                {
+                                                    LinkUrlCon12 = "/" + itemCatChild12.CAT_SEO_URL;
+                                                }
+                                                else
+                                                {
+                                                    LinkUrlCon12 = itemCatChild12.CAT_URL;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (String.IsNullOrEmpty(itemCatChild12.CAT_URL) == true)
+                                                {
+                                                    LinkUrlCon12 = "/" + itemCatChild12.CAT_SEO_URL_EN;
+                                                }
+                                                else
+                                                {
+                                                    LinkUrlCon12 = itemCatChild12.CAT_URL;
+                                                }
+                                            }
+
+                                           
+                                            var listmenucon12 = ct.MenuCatCh(itemCatChild12.CAT_ID);
+                                            if (listmenucon12.ToList().Count == 0)
+                                            {
+
+                                                if (lang == 1)
+                                                {
+                                                    <li><a href="@LinkUrlCon12">@Html.Raw(itemCatChild12.CAT_NAME)</a></li>
+                                                }
+                                                else
+                                                {
+                                                    <li><a href="@LinkUrlCon12">@Html.Raw(itemCatChild12.CAT_NAME_EN)</a></li>
+                                                }
+                                            }
+                                            else
+                                            {
+
+
+                                            }
+
+                                        }
+                                    </ul>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </li>
+            }
+        }
+        <li>
+            <span>
+                <a class="is-flex middle-xs is-relative pointer is-checked" style="cursor:pointer" onclick="ChuyenNgonNgu(1)">
+                    <img src="~/images/vi.svg" width="16" height="16">
+                    <span class="px--12">Tiếng Việt</span>
+                </a>
+            </span>
+        </li>
+        <li>
+            <span>
+                <a class="is-flex middle-xs is-relative pointer" style="cursor:pointer" onclick="ChuyenNgonNgu(2)">
+                    <img src="~/images/en.svg" width="16" height="16">
+                    <span class="px--12">English</span>
+                </a>
+            </span>
+        </li>
+        <li>
+            <a class="is-flex middle-xs is-relative pointer is-checked" style="cursor:pointer" onclick="ChangeMoney(1)">
+                <b>VND</b>
+                <span class="px--12">Việt Nam Đồng</span>
+            </a>
+        </li>
+        <li>
+            <a class="is-flex middle-xs is-relative pointer" style="cursor:pointer" onclick="ChangeMoney(2)">
+                <b>USD</b>
+                <span class="px--12">Dollar USA</span>
+            </a>
+        </li>
+        <li>
+            <a class="is-flex middle-xs is-relative pointer">
+                <b>USD</b>
+                <span class="px--12">@cl.FormatMoney(Utils.CDecDef(ViewBag.USD)) VND</span>
+            </a>
+        </li>
+        <li>
+            @if (lang == 1)
+            {
+                <a class="is-flex middle-xs is-relative pointer" style="color:#ff0000;font-weight:bold;">
+                    <img src="~/images/vi.svg" width="16" height="16">
+                    <span class="px--12">
+                        Tiếng Việt
+                        @if (tien == 1)
+                        {
+                            @vnd
+                        }
+                        else
+                        {
+                            @usd
+                        }
+                    </span>
+                </a>
+            }
+            else
+            {
+                <a class="is-flex middle-xs is-relative pointer" style="color:#ff0000;font-weight:bold;">
+                    <img src="~/images/en.svg" width="16" height="16">
+                    <span class="px--12">
+                        English
+                        @if (tien == 1)
+                        {
+                            @vnd
+                        }
+                        else
+                        {
+                            @usd
+                        }
+                    </span>
+                </a>
+            }
+        </li>
+    </ul>
+
+</nav>
+

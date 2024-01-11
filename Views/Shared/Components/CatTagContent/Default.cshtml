@@ -1,0 +1,27 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_CATEGORIES>
+@{
+    int count = 0;
+    string showtab = "";
+}
+
+@foreach (var category in Model.ToList())
+{
+    count++;
+    if (count == 1)
+    {
+        showtab = "active show";
+    }
+    else
+    {
+        showtab = "";
+    }
+
+    <div class="tab-pane fade @showtab" id="de-@Html.Raw(category.CAT_ID)" role="tabpanel" aria-labelledby="de-tab-@Html.Raw(category.CAT_ID)">
+        <div class="row job_listing" style="margin-top:0px;">
+            <div class="listing_tab" style="margin-top:0px;">
+                @await Component.InvokeAsync("JobList", new { catid = category.CAT_ID })
+            </div>
+        </div>
+    </div>
+}
+

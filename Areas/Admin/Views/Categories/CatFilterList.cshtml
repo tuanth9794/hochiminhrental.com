@@ -1,0 +1,222 @@
+﻿@model CoreCnice.Domain.ESHOP_CAT_PRO
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = ViewBag.Title;
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    var defaultGridPageSize = 20;
+}
+<style>
+    .radio {
+        float: left !important;
+        margin-right: 10px !important
+    }
+</style>
+
+<script>
+    function xoathuoctinh(x,y) {
+        var getItemId = parseInt(x);
+        var Cat_ID = parseInt(@ViewBag.catId);
+        $.ajax({
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            url: '/Admin/Categories/DeleteProCat?id=' + getItemId + "&&cat_id=" + Cat_ID,
+            data: "{ 'ItemId':' " + getItemId + "' }",
+            success: function (data) {
+                window.location.reload(true);
+            },
+            error: function (data) {
+                alert(data);
+            }
+        });
+    };
+</script>
+
+@using (Html.BeginForm(FormMethod.Post, new { enctype = "multipart/form-data", data_ajax = "false" }))
+{
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+            Danh sách thuộc tính của - @ViewBag.Title
+            <small>
+                <i class="fa fa-arrow-circle-left"></i>
+                <a href="/Admin/Categories/List">Về danh sách</a>
+            </small>
+        </h1>
+        <div class="pull-right">
+            <button type="submit" name="save" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>
+                Lưu thông tin
+            </button>
+        </div>
+    </div>
+
+    <section class="content">
+        @if (!string.IsNullOrEmpty(ViewBag.Error))
+        {
+            <div class="callout callout-info">
+                <h4>Thông báo</h4>
+                <p>
+                    @Html.Raw(ViewBag.Error)
+                </p>
+            </div>
+        }
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" class="form-control" value="@ViewBag.catId">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Thông tin chung</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- form start -->
+
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Mã chuyên mục</label>
+                            <input type="text" class="form-control" value="@ViewBag.Code" readonly="readonly">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Tên chuyên mục</label>
+                            <input type="text" class="form-control" value="@ViewBag.Title" readonly="readonly">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Lựa chọn thuộc tính</label>
+                            <select name="Employee[]" id="select2" multiple="multiple" class="form-control" asp-items="ViewBag.Cats"></select>
+                            @*<select asp-for="PROP_ID" class="form-control" asp-items="@(new SelectList(ViewBag.ListCatPr,"PROP_ID","PROP_NAME"))"></select>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">
+                            Danh sách thuộc tính đã chọn
+                        </h3>
+                        <!-- tools box -->
+                        <div class="pull-right box-tools">
+                            <button type="button" class="btn btn-default btn-sm" data-widget="collapse" data-toggle="tooltip"
+                                    title="Collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                        <!-- /. tools -->
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div id="grid"></div>
+                        <script>
+                $(document).ready(function () {
+                    $("#grid").kendoGrid({
+                        dataSource: {
+                            type: "json",
+                            transport: {
+                                read: "/Admin/Categories/CatListFilter/@ViewBag.catId"
+                            },
+                            pageSize: @(defaultGridPageSize)
+                        },
+                        groupable: true,
+                        sortable: true,
+                        selectable: true,
+                        navigatable: true,
+                         filterable: true,
+                        pageable: {
+                            refresh: true,
+                            pageSizes: true,
+                            buttonCount: 5
+                        },
+                            columns: [{
+                                field: "proP_ID",
+                                title: "Mã thuộc tính",
+                                filterable: {
+                                    multi: true,
+                                    search: true
+                                }
+                            }, {
+                                field: "proP_NAME",
+                                title: "Tên thuộc tính",
+                                filterable: {
+                                    multi: true,
+                                    search: true
+                                }
+                            }, {
+                                field: "proP_DESC",
+                                title: "Miêu tả",
+                                filterable: {
+                                    multi: true,
+                                    search: true
+                                }
+                            }, {
+                                field: "proP_ACTIVE",
+                                title: "Tình trạng",
+                                filterable: {
+                                    multi: true,
+                                    search: true
+                                }
+                            }, {
+                                field: "proP_ID",
+                                title: "Xem thông tin",
+                                headerAttributes: { style: "text-align:center" },
+                                attributes: { style: "text-align:center" },
+                                template: '<a href="/Admin/Properties/Edit/#=proP_ID#" class="btn btn-social btn-info btn-xs"><i class="fa fa-pencil" ></i> Xem chi tiết</a><a class="btn bg-red btn-xs" onclick="xoathuoctinh(#=proP_ID#)"><span class="glyphicon glyphicon-trash"></span>Xóa</a>',
+                                width: 200
+                            }]
+                    });
+                });
+
+                            $(function () {
+                                //select2 eklentimizin tanımı
+                                $('#select2').select2({
+                                    placeholder: "Lựa chọn bộ lọc",
+                                });
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <style type="text/css">
+        .customer-photo {
+            display: inline-block;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-size: 32px 35px;
+            background-position: center center;
+            vertical-align: middle;
+            line-height: 32px;
+            box-shadow: inset 0 0 1px #999, inset 0 0 10px rgba(0,0,0,.2);
+            margin-left: 5px;
+        }
+
+        .customer-name {
+            display: inline-block;
+            vertical-align: middle;
+            line-height: 32px;
+            padding-left: 3px;
+        }
+
+        .btn-social.btn-xs {
+            padding-left: 30px;
+            margin-right: 9px;
+        }
+    </style>
+
+}
+@*<div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+             Modal content
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Thêm mới hình ảnh</h4>
+                </div>
+                <div class="modal-body">
+                    @await Html.PartialAsync("AddNewsImages")
+                </div>
+            </div>
+
+        </div>
+    </div>*@

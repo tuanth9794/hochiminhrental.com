@@ -1,0 +1,252 @@
+﻿@model CoreCnice.Domain.ESHOP_PROPERTIES
+
+@{
+    ViewData["Title"] = "Thông tin đơn hàng -" + Model.PROP_NAME;
+    var defaultGridPageSize = 15;
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<style>
+    .radio {
+        float: left !important;
+        margin-right: 10px !important
+    }
+
+    .imagesLoad {
+        display: none;
+    }
+</style>
+@using (Html.BeginForm(FormMethod.Post, new { enctype = "multipart/form-data", data_ajax = "false" }))
+{
+
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+            Cập nhật thông tin - @Model.PROP_NAME
+            <small>
+                <i class="fa fa-arrow-circle-left"></i>
+                <a href="/Admin/Properties">Về danh sách</a>
+            </small>
+        </h1>
+        <div class="pull-right">
+            <button type="submit" name="save" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>
+                Lưu chỉnh sửa
+            </button>
+        </div>
+    </div>
+
+    <section class="content">
+        @if (!string.IsNullOrEmpty(ViewBag.Error))
+        {
+            <div class="callout callout-info">
+                <h4>Thông báo</h4>
+                <p>
+                    @Html.Raw(ViewBag.Error)
+                </p>
+            </div>
+        }
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="PROP_ID" value="@Model.PROP_ID" />
+        <div class="row">
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Thông tin liên hệ</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- form start -->
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Tên thuộc tinh</label>
+                            <input type="text" class="form-control" asp-for="PROP_NAME">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Tên tiếng anh</label>
+                            <input type="text" class="form-control" asp-for="PRO_NAME_EN">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Miêu tả thuộc tính</label>
+                            <textarea class="form-control" rows="2" id="catseokey" asp-for="PROP_DESC" style="height:172px"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Thứ tự</label>
+                            <input type="text" class="form-control" asp-for="PRO_ORDER" value="1">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-md-2 control-label">Kích hoạt</label>
+                            <div class="col-md-10">
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.PROP_ACTIVE, "0", new { id = 0, @checked = "checked", @class = "radio" })
+                                    Không sử dụng
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.PROP_ACTIVE, "1", new { id = 1, @class = "radio" })
+                                    Sử dụng tiện ích
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.PROP_ACTIVE, "2", new { id = 2, @class = "radio" })
+                                    Sử dụng bộ lọc
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-md-2 control-label">Loại Hình</label>
+                            <div class="col-md-10">
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.PRO_TYPE, "0", new { id = 0, @checked = "checked", @class = "radio" })
+                                    Thuộc tính
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.PRO_TYPE, "1", new { id = 1, @class = "radio" })
+                                    Giá ngày
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.PRO_TYPE, "2", new { id = 2, @class = "radio" })
+                                    Giá tháng
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-md-2 control-label">Hiện thị trang chủ</label>
+                            <div class="col-md-10">
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.PRO_TYPE_HOME, "0", new { id = 0, @checked = "checked", @class = "radio" })
+                                    Không
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.PRO_TYPE_HOME, "1", new { id = 1, @class = "radio" })
+                                    Hiển thị
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-md-2 control-label">Hình đại diện</label>
+                            <div class="col-md-10">
+                                <input type="file" asp-for="PRO_IMAGES">
+                                <input class="form-control imagesLoad" asp-for="PRO_IMAGES">
+                                @if (!string.IsNullOrEmpty(Model.PRO_IMAGES))
+                                {
+                                    string pathfodel = "~/UploadImages/Data/Properties/" + Model.PROP_ID + "/" + Model.PRO_IMAGES;
+                                    bool exists = System.IO.Directory.Exists(pathfodel);
+                                    if (!exists)
+                                    {
+                                        <img src="~/UploadImages/Data/Properties/@Model.PROP_ID/@Model.PRO_IMAGES" class="imgload" style="width: 100px;" />
+                                    }
+                                }
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Thuộc tính cha</label>
+                            <select asp-for="PROP_PARENT_ID" class="form-control" asp-items="@(new SelectList(ViewBag.ListCatPr,"PROP_ID","PROP_NAME"))"></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">
+                            Danh sách thuộc tính con
+                        </h3>
+                        <!-- tools box -->
+                        <div class="pull-right box-tools">
+                            <button type="button" class="btn btn-default btn-sm" data-widget="collapse" data-toggle="tooltip"
+                                    title="Collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                        <!-- /. tools -->
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div id="grid"></div>
+                        <script>
+                $(document).ready(function () {
+                    $("#grid").kendoGrid({
+                        dataSource: {
+                            type: "json",
+                            transport: {
+                                read: "/Admin/Properties/PropertiesList/@Model.PROP_ID"
+                            },
+                            pageSize: @(defaultGridPageSize)
+                        },
+                        groupable: true,
+                        sortable: true,
+                        selectable: true,
+                        navigatable: true,
+                         filterable: true,
+                        pageable: {
+                            refresh: true,
+                            pageSizes: true,
+                            buttonCount: 5
+                        },
+                        columns: [{
+                            field: "proP_ID",
+                            title: "Mã thuộc tính",
+                            filterable: {
+                                multi: true,
+                                search: true
+                            }
+                        }, {
+                                field: "proP_NAME",
+                            title: "Tên thuộc tính",
+                            filterable: {
+                                multi: true,
+                                search: true
+                            }
+                            }, {
+                                field: "proP_DESC",
+                                title: "Miêu tả",
+                                filterable: {
+                                    multi: true,
+                                    search: true
+                                }
+                        }, {
+                                field: "proP_ACTIVE",
+                            title: "Tình trạng",
+                            filterable: {
+                                multi: true,
+                                search: true
+                            }
+                            }, {
+                                field: "proP_ID",
+                    title: "Xem thông tin",
+                    headerAttributes: { style: "text-align:center" },
+                    attributes: { style: "text-align:center" },
+                                template: '<a href="/Admin/Properties/Edit/#=proP_ID#" class="btn btn-social btn-info btn-xs"><i class="fa fa-pencil" ></i> Xem chi tiết</a><a class="btn bg-red btn-xs" onclick="xoathuoctinh(#=proP_ID#)"><span class="glyphicon glyphicon-trash"></span>Xóa</a>',
+                    width:150
+                }]
+                    });
+                });
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
+}
+
+<script>
+    function xoathuoctinh(x) {
+        var getItemId = parseInt(x);
+        $.ajax({
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            url: '/Admin/Properties/DeletePro?id=' + getItemId,
+            data: "{ 'ItemId':' " + getItemId + "' }",
+            success: function (data) {
+                window.location.reload(true);
+            },
+            error: function (data) {
+                alert(data);
+            }
+        });
+    };
+</script>

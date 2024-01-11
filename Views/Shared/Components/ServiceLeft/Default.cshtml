@@ -1,0 +1,22 @@
+﻿@model IEnumerable<NewsModelCat>
+@using CoreCnice.Connect;
+@using CoreCnice.Domain;
+@using CoreCnice.Servicer;
+
+<ul class="list-unstyled">
+    @foreach (var category in Model.ToList().Take(8))
+    {
+        string LinkUrl = "";
+
+        if (!String.IsNullOrEmpty(category.NEWS_URL))
+        {
+            LinkUrl = category.NEWS_URL;
+        }
+        else
+        {
+            LinkUrl = category.CAT_SEO_URL + "/" + category.NEWS_SEO_URL;
+        }
+        <li> <a href="@LinkUrl"><span>@Html.Raw(category.NEWS_TITLE)</span></a> </li>      
+    }
+</ul>
+

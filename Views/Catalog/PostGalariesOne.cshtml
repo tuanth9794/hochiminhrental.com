@@ -1,0 +1,61 @@
+﻿@model CoreCnice.Domain.ESHOP_NEWS
+@using CoreCnice.UtilsCs;
+@{
+    Layout = "~/Views/Shared/_LayoutDetail.cshtml";
+    clsFormat cl = new clsFormat();
+    string linkimg = "";
+
+    if (!String.IsNullOrEmpty(Model.NEWS_IMAGE2))
+    {
+        linkimg = "/UploadImages/Data/News/" + Model.NEWS_ID + "/" + Model.NEWS_IMAGE2;
+    }
+    else
+    {
+        linkimg = "/images/noimg.jpg";
+    }
+
+    string alt = "";
+    if (!String.IsNullOrEmpty(ViewBag.Alt))
+    {
+        alt = ViewBag.Alt;
+    }
+    else
+    {
+        alt = ViewBag.Title;
+    }
+    string fileName = "wwwroot/UploadImages/Data/News/" + Model.NEWS_ID + "/" + Model.NEWS_FILEHTML;
+}
+<!-- Section: inner-header -->
+<section class="inner-header divider parallax layer-overlay overlay-white-8" data-bg-img="/global/img/bg_contact.jpg">
+    <div class="container pt-100 pb-100">
+        <!-- Section Content -->
+        <div class="section-content">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h2 class="title">@Model.NEWS_TITLE</h2>
+                    <ol class="breadcrumb text-center mt-10">
+                        <li><a href="/">Trang chủ</a></li>
+                        <li><a href="@ViewBag.UrlCat">@Html.Raw(ViewBag.NameCat)</a></li>
+                        <li><a href="@ViewBag.UrlCat">@Html.Raw(Model.NEWS_TITLE)</a></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Section:  -->
+<!-- Section:  -->
+<section>
+    <div class="container pb-sm-70">
+        <!-- Portfolio Gallery Grid -->
+        <div class="gallery-isotope default-animation-effect grid-4 masonry gutter-small clearfix" data-lightbox="gallery">
+            <!-- grid sizer for Masonry -->
+            <div class="gallery-item gallery-item-sizer"></div>
+            <!-- Portfolio Item Start -->
+            @await Component.InvokeAsync("ProductImages", new { catid = Model.NEWS_ID })
+            <!-- Portfolio Item End -->          
+        </div>
+        <!-- End Portfolio Gallery Grid -->
+    </div>
+</section>
+<!-- Section: -->

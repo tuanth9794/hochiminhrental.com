@@ -1,0 +1,169 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_NEWS>
+@using CoreCnice.UtilsCs;
+@{
+    int size = 51;
+    int count_size = Model.ToList().Count();
+    int page = count_size / size;
+    int pagedu = count_size % size;
+}
+<style>
+    .selectpage {
+        background: #000 !important;
+        color: #fff !important;
+    }
+</style>
+
+<ul class="pagination">
+    @if (pagedu == 1)
+    {
+        @if (page <= 1)
+        {
+
+
+        }
+        else
+        {
+            string classactive1 = "";
+            if (Utils.CIntDef(ViewBag.page) == 1)
+            {
+                classactive1 = "selectpage";
+            }
+
+            <li class="page-item"><a class="page-link" href="@ViewBag.Url" title="Về trang đầu tiên">«</a></li>
+            <li class="page-item"><a class="page-link" onclick="showSpinLoading(@ViewBag.pageDangchon)" title="Quay lại 1 trang">‹</a></li>
+            <li class="page-item"><a class="page-link @classactive1" href="@ViewBag.Url?page=1">1</a></li>
+            if (page <= 3)
+            {
+                for (int i = 1; i < page; i++)
+                {
+                    string classactive = "";
+                    if (Utils.CIntDef(ViewBag.page) == 0)
+                    {
+
+                    }
+                    else if (i + 1 == Utils.CIntDef(ViewBag.page))
+                    {
+                        classactive = "selectpage";
+                    }
+                    <li class="page-item"><a class="page-link @classactive" href="@ViewBag.Url?page=@(i + 1)">@(i + 1)</a></li>
+                }
+            }
+            else
+            {
+
+            }
+            <li class="page-item"><a class="page-link" href="@ViewBag.Url?page=@(page)" title="Tăng lên 1 trang">›</a></li>
+            <li class="page-item"><a class="page-link" href="@ViewBag.Url?page=@(page)" title="Đến trang cuối cùng">»</a></li>
+        }
+
+    }
+    else
+    {
+        page = page + 1;
+        @if (page <= 1)
+        {
+
+
+        }
+        else
+        {
+            string classactive1 = "";
+            if (Utils.CIntDef(ViewBag.page) == 1)
+            {
+                classactive1 = "selectpage";
+            }
+            if (Utils.CIntDef(ViewBag.page) == 1)
+            {
+
+            }
+            else
+            {
+                <li class="page-item"><a class="page-link" href="@ViewBag.Url" title="Về trang đầu tiên">«</a></li>
+                <li class="page-item"><a class="page-link" onclick="showSpinLoading(@ViewBag.pageDangchon)" title="Quay lại 1 trang">‹</a></li>
+            }
+
+            <li class="page-item"><a class="page-link @classactive1" href="@ViewBag.Url?page=1">1</a></li>
+            if (page < 7)
+            {
+                for (int i = 1; i < page; i++)
+                {
+                    string classactive = "";
+                    if (i + 1 == Utils.CIntDef(ViewBag.page))
+                    {
+                        classactive = "selectpage";
+                    }
+                    <li class="page-item"><a class="page-link @classactive" href="@ViewBag.Url?page=@(i + 1)">@(i + 1)</a></li>
+                }
+            }
+            else
+            {
+                for (int i = 1; i < page - 1; i++)
+                {
+                    string classactive = "";
+                    if (i + 1 == Utils.CIntDef(ViewBag.page))
+                    {
+                        classactive = "selectpage";
+                    }
+                    <li class="page-item"><a class="page-link @classactive" href="@ViewBag.Url?page=@(i + 1)">@(i + 1)</a></li>
+                }
+
+                string classactive11 = "";
+                if (Utils.CIntDef(ViewBag.page) == page)
+                {
+                    classactive11 = "selectpage";
+                }
+                <li class="page-item"><a class="page-link @classactive11" href="@ViewBag.Url?page=@(page)">@(page)</a></li>
+            }
+
+
+            if (Utils.CIntDef(ViewBag.page) == page)
+            {
+
+            }
+            else
+            {
+                <li class="page-item"><a class="page-link" onclick="showSpinLoadingNext(@ViewBag.pageDangchon,@(page))" title="Tăng lên 1 trang">›</a></li>
+                <li class="page-item"><a class="page-link" href="@ViewBag.Url?page=@(page)" title="Đến trang cuối cùng">»</a></li>
+            }
+        }
+    }
+</ul>
+
+<script>
+    function showSpinLoading(x) {
+        var getItemId = x;
+        if (getItemId == 0 || getItemId == 1) {
+
+        }
+        else {
+            window.location.href = "@ViewBag.Url" + "?page=" + (getItemId - 1);
+        }
+    };
+
+    function showSpinLoadingNext(x,y) {
+        var getItemId = x;
+        if (x == y) {
+
+        }
+        else {
+              window.location.href = "@ViewBag.Url" + "?page=" + (getItemId + 1);
+        }
+    };
+</script>
+<style>
+    .pagination li {
+        margin-right: 10px;
+    }
+
+    .page-link {
+        position: relative;
+        display: block;
+        padding: 7px 14px;
+        margin-left: -1px;
+        line-height: 1.25;
+        color: #000;
+        font-weight: bold;
+        background-color: #fff;
+        border: 1px solid #dee2e6;
+    }
+</style>

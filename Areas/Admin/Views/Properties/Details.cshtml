@@ -1,0 +1,49 @@
+﻿@model CoreCnice.Domain.ESHOP_PROPERTIES
+
+@{
+    ViewData["Title"] = "Details";
+     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ESHOP_PROPERTIES</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PROP_NAME)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PROP_NAME)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PROP_DESC)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PROP_DESC)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PROP_PARENT_ID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PROP_PARENT_ID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PROP_ACTIVE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PROP_ACTIVE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PROP_RANK)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PROP_RANK)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.PROP_ID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

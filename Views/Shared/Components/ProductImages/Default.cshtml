@@ -1,0 +1,38 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_NEWS_IMAGE>
+
+
+<div id="sync1" class="owl-carousel owl-theme">
+    @foreach (var category in Model.ToList().Where(x => x.NEWS_IMG_SHOWTYPE == 0))
+    {
+        <div class="item d-flex justify-content-center">
+            @Html.Raw(category.NEWS_IMG_DESC)
+        </div>
+    }
+    @foreach (var category in Model.ToList().Where(x => x.NEWS_IMG_SHOWTYPE == 1))
+    {
+        <div class="item d-flex justify-content-center">
+            <a href="/UploadImages/Data/News/@category.NEWS_ID/@category.NEWS_IMG_IMAGE1" class="img_popup d-flex justify-content-center">
+                <img src="/UploadImages/Data/News/@category.NEWS_ID/@category.NEWS_IMG_IMAGE1" title="@category.NEWS_IMG_IMAGE1" />
+            </a>
+        </div>
+    }
+</div>
+
+<div id="sync2" class="owl-carousel owl-theme">
+    @foreach (var category in Model.ToList().Where(x => x.NEWS_IMG_SHOWTYPE == 0))
+    {
+        <div class="item d-flex justify-content-center">
+            <a href="/UploadImages/Data/News/@category.NEWS_ID/@category.NEWS_IMG_IMAGE1" class="d-flex justify-content-center">
+                <img src="/UploadImages/Data/News/@category.NEWS_ID/@category.NEWS_IMG_IMAGE1" title="@category.NEWS_IMG_IMAGE1" />
+            </a>
+        </div>
+    }
+    @foreach (var category in Model.ToList().Where(x => x.NEWS_IMG_SHOWTYPE == 1))
+    {
+        <div class="item d-flex justify-content-center">
+            <a href="/UploadImages/Data/News/@category.NEWS_ID/@category.NEWS_IMG_IMAGE1" class="d-flex justify-content-center">
+                <img src="/UploadImages/Data/News/@category.NEWS_ID/@category.NEWS_IMG_IMAGE1" title="@category.NEWS_IMG_IMAGE1" />
+            </a>
+        </div>
+    }
+</div>

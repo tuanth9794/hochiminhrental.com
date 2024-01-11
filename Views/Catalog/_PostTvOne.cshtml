@@ -1,0 +1,158 @@
+﻿@model CoreCnice.Domain.ESHOP_NEWS
+@using CoreCnice.Connect;
+@{
+    BulSoftCmsConnectContext _context = new BulSoftCmsConnectContext();
+
+    string linkimg = "";
+
+    string linkurl = "";
+
+    string idModal = "";
+    string idModalPP = "";
+
+    var listCatID = (from item in _context.ESHOP_CATEGORIES
+                     join itemcat in _context.ESHOP_NEWS_CAT on item.CAT_ID equals itemcat.CAT_ID
+                     where itemcat.NEWS_ID == Model.NEWS_ID
+                     select new
+                     {
+                         item.CAT_SEO_URL
+                     }
+                );
+
+    if (Model.NEWS_URL != "")
+    {
+        linkurl = Model.NEWS_URL;
+    }
+    else
+    {
+        linkurl = "/vi/" + listCatID.ToList()[0].CAT_SEO_URL + "/" + Model.NEWS_SEO_URL;
+    }
+
+    if (!String.IsNullOrEmpty(Model.NEWS_IMAGE1))
+    {
+        linkimg = "/UploadImages/Data/News/" + Model.NEWS_ID + "/" + Model.NEWS_IMAGE1;
+    }
+    else
+    {
+        linkimg = "/images/noimg.jpg";
+    }
+
+    idModal = "#myModal" + Model.NEWS_ID;
+    idModalPP = "myModal" + Model.NEWS_ID;
+}
+<style>
+    .bodyn {
+        padding-top: 34px;
+        padding-bottom: 0px;
+    }
+
+    .textLpr {
+        width: 87%;
+        margin: 0 auto;
+        padding: 20px;
+        padding-top: 70px;
+        padding-bottom: 27px;
+        text-align: center;
+    }
+
+    .thumbnail:hover {
+        border: 1px solid #ff0000;
+        transition: color 0.5s;
+        cursor: pointer;
+    }
+
+    .owl-nav {
+        display: none !important;
+    }
+
+    .bgtuvanhocvien {
+        width: 259px;
+        height: 287px;
+        background: url(../Theme/MonDay/images/bgtv.png);
+        margin-bottom: 30px;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        margin: 0 auto;
+        background-size: cover;
+    }
+
+    .bgtuvanhocviendot {
+        width: 259px;
+        height: 287px;
+        background: url(../Theme/MonDay/images/bgtvdot.png);
+        margin-bottom: 30px;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        margin: 0 auto;
+        background-size: cover;
+    }
+</style>
+
+
+
+<div class="item col-12 col-md-4 px-4 text-center">
+    <div class="bgtuvanhocvien justify-content-center align-self-center rounded">
+        <a href="#" class="step" data-toggle="modal" data-target="@idModal">
+            <img src="@linkimg" style="width: 127px;" />
+        </a>
+    </div>
+    <div class="tuviendesc">
+        <p class="tvname">@Model.NEWS_TITLE</p>
+        <p style="margin-bottom: 0px;">@Model.NEWS_DESC</p>
+    </div>
+</div>
+
+<div class="modal" id="@idModalPP">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="infotv">
+                    <div class="container ">
+                        <div class="row">
+                            <div class="col-xs-3 col-md-3 bgyl text-center">
+                                <div class="bgtuvanhocvien justify-content-center align-self-center rounded bghocvienmb" style="margin-top: 15px; margin-bottom: 15px;width: 160px;
+    height: 160px;">
+                                    <img src="@linkimg" style="width: 119px;margin-bottom: 15px;border-radius: 100%;" />
+                                </div>
+                                <div class="name">
+                                    <p class="tvname">@Model.NEWS_TITLE</p>
+                                </div>
+                                <div class="text-center star">
+                                    <img src="~/Theme/Monday/images/start.png" class="imgstar" />
+                                    <img src="~/Theme/Monday/images/start.png" class="imgstar" />
+                                    <img src="~/Theme/Monday/images/start.png" class="imgstar" />
+                                    <img src="~/Theme/Monday/images/start.png" class="imgstar" />
+                                    <img src="~/Theme/Monday/images/start.png" class="imgstar" />
+                                </div>
+                                <div class="tuviendesc" style="border: none">
+                                    <p class="tvname"><img src="~/Theme/MonDay/images/Icon_Nha.png" style="width:30%;" /> @Model.NEWS_FIELD3</p>
+                                    <p style="margin-bottom: 0px;"><img src="~/Theme/MonDay/images/Icon_Toa.png" style="width:30%;" />@Model.NEWS_FIELD4</p>
+                                </div>
+                                <div class="logotv">
+                                    <img class="img-fluid rounded" src="~/Theme/Monday/images/logo.png">
+                                </div>
+                            </div>
+                            <div class="col-xs-3 col-md-9">
+                                <div class="text-center" style="width: 100%; padding: 20px; font-size: 25px; font-weight: bold;">
+                                    <h1 class="display-4 font-weight-normal cltext" style="font-size: 25px; border: 2px solid #fded52; margin: 0 auto; width: 50%; padding: 15px; border-radius: 20px;">CẢM NHẬN HỌC VIÊN</h1>
+                                </div>
+                                <div class="descghv">
+                                    <img src="~/Theme/Monday/images/iconnhaynext.png" style="width: 31px; position: absolute; left: 0px;" />
+                                    <div class="descghvspan" style="white-space: pre-line">
+                                        @Html.Raw(Model.NEWS_FILEHTML)
+                                    </div>
+                                    <img src="~/Theme/Monday/images/iconnhaypre.png" style="width: 31px; position: absolute; right: 0px; bottom: 1px;" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

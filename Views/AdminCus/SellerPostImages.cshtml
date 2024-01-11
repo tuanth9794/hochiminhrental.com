@@ -1,0 +1,434 @@
+﻿@using CoreCnice.UtilsCs;
+@model CoreCnice.Domain.ESHOP_NEWS_IMAGE
+@{
+    Layout = "~/Views/Shared/_LayoutSeller.cshtml";
+    clsFormat cl = new clsFormat();
+    int lang = Utils.CIntDef(1);
+    int tygia = Utils.CIntDef(ViewBag.USD);
+    int tien = Utils.CIntDef(ViewBag.Money);
+    string donvi = "";
+    string donviEn = "";
+}
+<link rel="stylesheet" href="~/Admin/bower_components/bootstrap/dist/css/bootstrap.css">
+<link rel="stylesheet" href="~/Admin/dist/css/skins/_all-skins.css">
+<link rel="stylesheet" href="~/Admin/css/BulSoftCustom.css">
+<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
+<style>
+    .radio {
+        float: left !important;
+        margin-right: 10px !important
+    }
+
+    .content-header {
+        display: block;
+    }
+
+    label {
+        display: inline-block;
+        max-width: 100%;
+        margin-bottom: 5px;
+        font-weight: bold;
+        font-size: 13px;
+        margin-bottom: 14px;
+    }
+
+    footer.main-footer {
+        bottom: inherit;
+    }
+
+    #filelist label {
+        font-size: 14px;
+    }
+</style>
+<section class="content-main">
+    <div class="row">
+        @using (Html.BeginForm(FormMethod.Post, new { enctype = "multipart/form-data", data_ajax = "false" }))
+        {
+            <div class="content-header clearfix">
+                <h1 class="pull-left" style="font-size: 25px;font-weight:bold">
+                    Danh sách hình ảnh của tin - @ViewBag.Title
+                </h1>
+            </div>
+
+            <section class="content">
+                @if (!string.IsNullOrEmpty(ViewBag.Error))
+                {
+                    <div class="callout callout-info">
+                        <h4>Thông báo</h4>
+                        <p>
+                            @Html.Raw(ViewBag.Error)
+                        </p>
+                    </div>
+                }
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" class="form-control" value="@ViewBag.NewsId">
+                @Html.AntiForgeryToken();
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- general form elements -->
+                        <div class="box box-primary">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Thông tin chung</h3>
+                            </div>
+                            <!-- /.box-header -->
+                            <!-- form start -->
+
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Mã Tin</label>
+                                    <input type="text" class="form-control" value="@ViewBag.Code" readonly="readonly">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Tên Tin</label>
+                                    <input type="text" class="form-control" value="@ViewBag.Title" readonly="readonly">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Miêu tả / Nhúng Video</label>
+                                    <input type="text" class="form-control" asp-for="NEWS_IMG_DESC">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Thứ tự hiển thị</label>
+                                    <input type="text" class="form-control" asp-for="NEWS_IMG_ORDER">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1" style="float: left;margin-top: 6px;margin-right: 100px;">Loại</label>
+                                    <div class="col-md-3">
+                                        @Html.RadioButtonFor(model => model.NEWS_IMG_SHOWTYPE, "0", new { id = 0, @checked = "checked", @class = "radio" })
+                                        <label class="textrb">Video</label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        @Html.RadioButtonFor(model => model.NEWS_IMG_SHOWTYPE, "1", new { id = 1, @class = "radio" })
+                                        <label class="textrb">Hình</label>
+                                    </div>
+                                </div>
+                                @*<div class="form-group">
+                            <label for="exampleInputPassword1">Upload Hình</label>
+                            <input type="file" asp-for="NEWS_IMG_IMAGE1">
+                            <input type="hidden" class="form-control" asp-for="NEWS_IMG_IMAGE1">
+                            </div>*@
+
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Upload Hình</label>
+                                    <input type="file" name="files" multiple class="form-control selectImage" id="images" />
+                                </div>
+                                <div class="form-group">
+                                    <div id="filelist">
+                                        <!--show proccessbar-->
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" name="submit" value="Lưu hình ảnh" class="btn btn-primary" />
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <style type="text/css">
+                .customer-photo {
+                    display: inline-block;
+                    width: 32px;
+                    height: 32px;
+                    border-radius: 50%;
+                    background-size: 32px 35px;
+                    background-position: center center;
+                    vertical-align: middle;
+                    line-height: 32px;
+                    box-shadow: inset 0 0 1px #999, inset 0 0 10px rgba(0,0,0,.2);
+                    margin-left: 5px;
+                }
+
+                .customer-name {
+                    display: inline-block;
+                    vertical-align: middle;
+                    line-height: 32px;
+                    padding-left: 3px;
+                }
+
+                .btn {
+                    margin-right: 10px;
+                }
+
+                .selectImage {
+                    padding: 0px;
+                    border: none;
+                }
+            </style>
+
+        }
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">
+                                Danh sách hình ảnh
+                            </h3>
+                            <!-- tools box -->
+                            <div class="pull-right box-tools">
+                                <button type="button" class="btn btn-default btn-sm" data-widget="collapse" data-toggle="tooltip"
+                                        title="Collapse">
+                                    <i class="fa fa-minus"></i>
+                                </button>
+                            </div>
+                            <!-- /. tools -->
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <div class="alert alert-success alert-dismissible" style="margin-bottom: 0px;padding: 5px 15px;">
+                                <p style="margin-bottom: 0px;">
+                                    <i class="icon fa fa-check"></i> <span class="thongbao"> Thông báo! </span>
+                                </p>
+                            </div>
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Hình</th>
+                                        <th style="width:50%">Alt hình</th>
+                                             <th>#</th>
+                                        <th>Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="load-list"></tbody>
+                            </table>
+                        </div>
+                        <div class="box-footer clearfix">
+                            <div class="pull-right">
+                                <ul class="pagination pagination-sm no-margin pull-right" id="load-pagination"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+<script>
+    function xoaimages(x) {
+        var getItemId = parseInt(x);
+        $.ajax({
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            url: '/AdminCus/DeleteListImages?id=' + getItemId,
+            data: "{ 'ItemId':' " + getItemId + "' }",
+            success: function(data) {
+                window.location.reload(false);
+            },
+            error: function(data) {
+                alert(data);
+            }
+        });
+    };
+    $(document).ready(function() {
+        /*create array image*/
+        var dataImage = [];
+        /*create array id processbar*/
+        var dataProcessBarID = [];
+        $(".selectImage").change(function() {
+            var processBar = "";
+            var totalfiles = document.getElementById('images').files.length;
+            if (totalfiles > 0) {
+                for (var i = 0; i < totalfiles; i++) {
+                    var nameFile = document.getElementById('images').files[i];
+                    dataImage[i] = nameFile;
+                    var processID = "processID_" + i;
+                    processBar += "<label class=\"label label-primary\" style='margin-right:10px'>File:" + nameFile.name + "</label>";
+                    dataProcessBarID[i] = processID;
+                }
+                $("#filelist").html(processBar);
+            }
+
+        });
+    });
+
+    var uploadFile = function(data, processId) {
+        if (data.name.match(/.(jpg|jpeg|png|gif|txt)$/i)) {
+            var form_data = new FormData();
+            /*add file image to form_data*/
+            form_data.append("files", data);
+            $.ajax({
+                type: 'POST',
+                url: "@Url.Action("UploadFile","Home")",
+                data: form_data,
+                contentType: false,
+                dataType: 'json',
+                processData: false,
+                cache: false,
+                xhr: function() {
+                    var xhr = new window.XMLHttpRequest();
+                    xhr.upload.addEventListener("progress", function(evt) {
+                        if (evt.lengthComputable) {
+                            var percentComplete = evt.loaded / evt.total;
+                            percentComplete = parseInt(percentComplete * 100);
+                            $("#" + processId).text(percentComplete + '%  Complete (success) ' + data.name);
+                            $("#" + processId).css('width', percentComplete + '%');
+                        }
+                    }, false);
+                    return xhr;
+                },
+                success: function(data) {
+                    console.log(data);
+                }
+
+            });
+        }
+        else {
+            $("#" + processId).removeClass(" progress-bar-success");
+            $("#" + processId).addClass(" progress-bar-danger");
+            $("#" + processId).text('0% (fail filname:)' + data.name);
+            $("#" + processId).css('width', '100%');
+        }
+
+
+    }
+
+    /* event submit form upload*/
+    $("#UploadFile").submit(function(event) {
+        event.preventDefault();
+        /*for array dataImage & dataProcessBarID*/
+        for (var k = 0; k < dataImage.length; k++) {
+            uploadFile(dataImage[k], dataProcessBarID[k]);
+        }
+    });
+
+
+</script>
+
+<script>
+    var count = 0;
+    var txt_class = "";
+    function load(txtSearch, page, status) {
+        count = 0;
+        txt_class = "";
+        $.ajax({
+            url: '/AdminCus/GetListImages',
+            type: "GET",
+            data: { id: txtSearch, page: page, trang: 30 },
+            dataType: 'json',
+            contentType: 'application/json;charset=utf-8',
+            success: function(result) {
+                console.log(result);
+                var str = "";
+                $.each(result.data, function(index, value) {
+                    txt_class = "period_order_" + value.newS_ID;
+                    var date = new Date(value.newS_PUBLISHDATE);
+                    count = count + 1;
+                    str += "<tr>";
+                    str += "<td><div class='customer-photo' style='background-image: url(/UploadImages/Data/News/" + value.newS_ID + "/" + value.newS_IMG_IMAGE1 + ");'></div> </td>";
+                    if (value.newS_IMG_SHOWTYPE == 1) {
+                        str += "<td> <a class='nameCode' href='/Admin/News/Edit/" + value.newS_ID + "'>" + value.newS_IMG_DESC + "</a></td>";
+                    }
+                    else {
+                        str += "<td> <a class='nameCode' href='/Admin/News/Edit/" + value.newS_ID + "'> Video </a></td>";
+                    }
+
+                    str += "<td><a href='/Admin/News/Edit/" + value.newS_ID + "' class='btn btn-social btn-info btn-xs'><i class='fa fa-pencil'></i> Xem chi tiết</a></td>";
+                    str += "<td><a data-id='" + value.newS_IMG_ID + "' class='btn bg-red btn-xs deleteNews'><i class='glyphicon glyphicon-trash'></i> Xóa</a></td>";
+                    str += "</tr>";
+                    //create pagination
+                    var pagination_string = "";
+                    var pageCurrent = result.pageCurrent;
+                    var numSize = result.numSize;
+                    //create button previous
+                    if (pageCurrent > 1) {
+                        var pagePrevious = pageCurrent - 1;
+                        pagination_string += '<li class="page-item"><a href="" class="page-link" data-page=' + pagePrevious + '>Previous</a></li>';
+                    }
+                    for (i = 1; i <= numSize; i++) {
+                        if (i == pageCurrent) {
+                            pagination_string += '<li class="page-item active"><a href="" class="page-link" data-page=' + i + '>' + pageCurrent + '</a></li>';
+                        } else {
+                            pagination_string += '<li class="page-item"><a href="" class="page-link" data-page=' + i + '>' + i + '</a></li>';
+                        }
+                    }
+                    //create button next
+                    if (pageCurrent > 0 && pageCurrent < numSize) {
+                        var pageNext = pageCurrent + 1;
+                        pagination_string += '<li class="page-item"><a href="" class="page-link"  data-page=' + pageNext + '>Next</a></li>';
+                    }
+                    //load pagination
+                    $("#load-pagination").html(pagination_string);
+                });
+                //load str to class="load-list"
+                $(".load-list").html(str);
+            }
+        });
+    };
+
+    $(document).ready(function() {
+        //function load pagination
+        $("body").on("click", ".pagination li a", function(event) {
+            event.preventDefault();
+            var page = $(this).attr('data-page');
+
+            //load event pagination
+            load(@ViewBag.NewsId, page, null);
+        });
+
+        $("body").on("click", ".deleteNews", function(event) {
+            event.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: "/AdminCus/DeleteListImages",
+                data: {
+                    id: $(this).attr("data-id"),
+                },
+                success: function(result) {
+                    if (result == "False") {
+                        $('.thongbao').html("Xóa không thành công . Liên hệ kỹ thuật kiểm tra chức năng");
+                        $('.alert').show(250).delay(2000).hide(250);
+                    }
+                    else if (result == "OK") {
+                        $('.thongbao').html("Xóa thông tin thành công");
+                        $('.alert').show(250).delay(2000).hide(250);
+                        load(@ViewBag.NewsId, 1, null);
+                    }
+                    else {
+                        alert(result);
+                    }
+                }
+            });
+        });
+
+        //load init
+        load(@ViewBag.NewsId, 1, null);
+    });
+
+
+</script>
+
+<style>
+    .alert {
+        display: none;
+    }
+
+    .content {
+        background: #ffffff;
+    }
+
+    .box-body {
+        float: left;
+        width: 100%;
+        margin-top: 16px;
+    }
+
+    .textrb {
+        margin-top: 3px;
+    }
+    .btn.btn-primary {
+    font-size: 14px;
+    font-weight: 500;
+    padding: 6px 40px;
+    color: #ffffff;
+    border: none;
+    background-color: hsl(33deg 70% 55%) !important;
+    border-radius: 4px;
+}
+.nameCode
+{
+    margin-top: 7px;
+    float: left;
+    font-size:15px;
+}
+</style>

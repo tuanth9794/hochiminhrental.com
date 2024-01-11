@@ -1,0 +1,204 @@
+﻿@model IEnumerable<CoreCnice.Models.NewsModelCat>
+@using CoreCnice.Connect;
+@using CoreCnice.UtilsCs;
+@*@await Component.InvokeAsync("CatBanner", new { Position = @ViewBag.Id })*@
+@{
+    Layout = "~/Views/Shared/_LayoutDetail.cshtml";
+    int lang = Utils.CIntDef(ViewBag.Langue);
+    int sapxep = Utils.CIntDef(ViewBag.SapXep);
+}
+
+<style>
+    .sapxep .dropdown-toggle::after {
+        display: inline-block;
+        width: 0;
+        height: 0;
+        margin-left: .255em;
+        vertical-align: .255em;
+        content: "";
+        right: 0px;
+        float: right;
+        margin-top: 9px;
+        border-top: .3em solid;
+        border-right: .3em solid hsl(0deg 0% 0% / 0%);
+        border-bottom: 0;
+        border-left: .3em solid hsl(0deg 0% 0% / 0%);
+    }
+
+    .newsfind .mb_40 {
+        margin-bottom: 0px
+    }
+</style>
+@if (lang == 1)
+{
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="@ViewBag.UrlCal">@Html.Raw(ViewBag.NAME)</a></li>
+            </ol>
+        </div><!-- End .container -->
+    </nav>
+}
+else
+{
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="@ViewBag.UrlCal">@Html.Raw(ViewBag.NAME)</a></li>
+            </ol>
+        </div><!-- End .container -->
+    </nav>
+}
+<div class="find-home newsfind" style="width: 100%; border-bottom: 1px solid hsl(233deg 15% 88%); padding: 0px; border-top: 1px solid hsl(233deg 15% 88%); background: hsl(0deg 0% 100%); ">
+    <div class="container">
+        @await Component.InvokeAsync("FilterCat", new { Cat = ViewBag.id })
+        @*@if (lang == 1)
+            {
+                <p class="default" id="idtimkiem" onclick="clickSearchTotal()" style="background: hsl(33deg 70% 55%) !important;font-weight: bold;margin-top: 5px;cursor:pointer;">
+                    Tìm kiếm theo lựa chọn
+                </p>
+            }
+            else
+            {
+                <p class="default" id="idtimkiem" onclick="clickSearchTotal()" style="background: hsl(33deg 70% 55%) !important;font-weight: bold;margin-top: 5px;cursor:pointer;">
+                    Search by selection
+                </p>
+            }*@
+    </div>
+</div>
+
+<div class="find-home" style="display:none">
+    <div class="container">
+        <div class="filter-items" style="margin-bottom: 10px;">
+            @if (lang == 1)
+            {
+                <h5>Lựa chọn bộ lọc : </h5>
+            }
+            else
+            {
+                <h5>Filter selection : </h5>
+            }
+            <div id="tieuchichon">
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<div class="agency_about_area d-flex bg_color">
+    <div class="container">
+        <div class="col-lg-12 col-md-12">
+            @if (lang == 1)
+            {
+                @Html.Raw(ViewBag.DescDai)
+            }
+            else
+            {
+                @Html.Raw(ViewBag.DescDai)
+            }
+        </div>
+    </div>
+</div>
+
+<div class="agency_about_area d-flex bg_color" style="padding:30px 0px">
+    <div class="container">
+        @if (lang == 1)
+        {
+            <div class="sec_title text-center mb_20">
+                <div class="row">
+                    <div class="col-lg-9">
+                        <h1 class="f_p f_size_30 l_height50 f_600 t_color" style="text-transform:uppercase;text-align: left;">Có @Model.ToList().Count sản phẩm @Html.Raw(ViewBag.NAME)</h1>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="dropdown sapxep" style="float: left;width:100%">
+                            @if (sapxep == 0)
+                            {
+                                <button class="btn_three btn_hover dropdown-toggle" type="button" id="dropdownMenuButtonSapXep" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-top: 6px;width: 100%;background: none;border: 1px solid #e3e3e3;color: #000;padding: 10px;">
+                                    Sắp xếp : Lựa chọn
+                                </button>
+                            }
+                            else if (sapxep == 1)
+                            {
+                                <button class="btn_three btn_hover dropdown-toggle" type="button" id="dropdownMenuButtonSapXep" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-top: 6px;width: 100%;background: none;border: 1px solid #e3e3e3;color: #000;padding: 10px;">
+                                    Sắp xếp : Giá giảm dần
+                                </button>
+                            }
+                            else if (sapxep == 2)
+                            {
+                                <button class="btn_three btn_hover dropdown-toggle" type="button" id="dropdownMenuButtonSapXep" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-top: 6px;width: 100%;background: none;border: 1px solid #e3e3e3;color: #000;padding: 10px;">
+                                    Sắp xếp : Giá tăng dần
+                                </button>
+                            }
+                            <div class="dropdown-menu el-popover" aria-labelledby="dropdownMenuButtonSapXep" style="margin-top: 10px;width: 100%;">
+                                <div class="input-group" style="padding-bottom: 4px;">
+                                    <a href="javascript:void(0)" style="width:100%;" onclick="GetSapXep(2)"><span class="form-control" style="border:none;border-bottom: 1px solid hsl(0deg 0% 89%);border-radius: 0px;">Giá tăng dần</span></a>
+                                </div>
+                                <div class="input-group" style="padding-bottom: 4px;">
+                                    <a href="javascript:void(0)" style="width:100%;" onclick="GetSapXep(1)"> <span class="form-control" style="border:none;border-radius: 0px;">Giá giảm dần</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="sec_title text-center mb_20">
+                <div class="row">
+                    <div class="col-lg-9">
+                        <h1 class="f_p f_size_30 l_height50 f_600 t_color" style="text-transform:uppercase;text-align: left;">THERE ARE @Model.ToList().Count PRODUCTS IN @Html.Raw(ViewBag.NAME)</h1>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="dropdown sapxep" style="float: left;width:100%">
+                            @if (sapxep == 0)
+                            {
+                                <button class="btn_three btn_hover dropdown-toggle" type="button" id="dropdownMenuButtonSapXep" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-top: 6px;width: 100%;background: none;border: 1px solid #e3e3e3;color: #000;padding: 10px;">
+                                    Arrangement: Selection
+                                </button>
+                            }
+                            else if (sapxep == 1)
+                            {
+                                <button class="btn_three btn_hover dropdown-toggle" type="button" id="dropdownMenuButtonSapXep" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-top: 6px;width: 100%;background: none;border: 1px solid #e3e3e3;color: #000;padding: 10px;">
+                                    Arrangement: Price descending
+                                </button>
+                            }
+                            else if (sapxep == 2)
+                            {
+                                <button class="btn_three btn_hover dropdown-toggle" type="button" id="dropdownMenuButtonSapXep" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-top: 6px;width: 100%;background: none;border: 1px solid #e3e3e3;color: #000;padding: 10px;">
+                                    Arrangement: Price increases gradually
+                                </button>
+                            }
+                            <div class="dropdown-menu el-popover" aria-labelledby="dropdownMenuButtonSapXep" style="margin-top: 10px;width: 100%;">
+                                <div class="input-group" style="padding-bottom: 4px;">
+                                    <a href="javascript:void(0)" style="width:100%;" onclick="GetSapXep(2)"><span class="form-control" style="border:none;border-bottom: 1px solid hsl(0deg 0% 89%);border-radius: 0px;">Price increases gradually</span></a>
+                                </div>
+                                <div class="input-group" style="padding-bottom: 4px;">
+                                    <a href="javascript:void(0)" style="width:100%;" onclick="GetSapXep(1)"> <span class="form-control" style="border:none;border-radius: 0px;">Price decreased gradually</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="productsp row">
+            @{
+                @foreach (var item in Model.ToList())
+                {
+                    @Html.Partial("~/Views/Catalog/_ProductOne.cshtml", item);
+                }
+            }
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-12 d-flex justify-content-center">
+                @await Component.InvokeAsync("PaginationCat", new { Position = ViewBag.id, URL = ViewBag.URL })
+            </div>
+        </div>
+    </div>
+</div>
+

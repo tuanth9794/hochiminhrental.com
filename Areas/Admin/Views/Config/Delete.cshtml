@@ -1,0 +1,136 @@
+﻿@model CoreCnice.Domain.ESHOP_CONFIG
+
+@{
+    ViewData["Title"] = "Delete";
+     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>ESHOP_CONFIG</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CONFIG_TITLE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CONFIG_TITLE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CONFIG_KEYWORD)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CONFIG_KEYWORD)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CONFIG_DESCRIPTION)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CONFIG_DESCRIPTION)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CONFIG_HITCOUNTER)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CONFIG_HITCOUNTER)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CONFIG_FAVICON)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CONFIG_FAVICON)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CONFIG_ORDER)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CONFIG_ORDER)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CONFIG_LANGUAGE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CONFIG_LANGUAGE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CONFIG_EMAIL)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CONFIG_EMAIL)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CONFIG_SMTP)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CONFIG_SMTP)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CONFIG_PORT)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CONFIG_PORT)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CONFIG_PASSWORD)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CONFIG_PASSWORD)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CONFIG_NAME)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CONFIG_NAME)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CONFIG_ADD)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CONFIG_ADD)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CONFIG_FACEBOOK)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CONFIG_FACEBOOK)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CONFIG_GOOGLE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CONFIG_GOOGLE)
+        </dd>
+        @*<dt>
+            @Html.DisplayNameFor(model => model.AD_ITEM_LANGUAGE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AD_ITEM_LANGUAGE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AD_ITEM_FIELD1)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AD_ITEM_FIELD1)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AD_ITEM_FIELD2)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AD_ITEM_FIELD2)
+        </dd>*@
+        <dt>
+            @Html.DisplayNameFor(model => model.CONFIG_NAME_US)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CONFIG_NAME_US)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="CONFIG_ID" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

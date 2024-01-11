@@ -1,0 +1,123 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_CATEGORIES>
+@using CoreCnice.Servicer;
+@using CoreCnice.Domain;
+@using CoreCnice.UtilsCs;
+@using CoreCnice.Connect;
+@{
+    CategoryServices ct = new CategoryServices();
+    BulSoftCmsConnectContext _context = new BulSoftCmsConnectContext();
+    int lang = Utils.CIntDef(ViewBag.Langue);
+}
+
+@foreach (var category in Model.ToList())
+{
+    <section class="payment_features_two sec_pad">
+        <div class="container">
+            <div class="sec_title text-center mb_5 mt_2">
+                @if (lang == 1)
+                {
+                    <h2 class="f_p f_size_30 l_height50 f_700 t_color  blod">@Html.Raw(category.CAT_NAME)</h2>
+                }
+                else
+                {
+                    <h2 class="f_p f_size_30 l_height50 f_700 t_color  blod">@Html.Raw(category.CAT_NAME_EN)</h2>
+                }
+            </div>
+            <div class="row blog_grid_info botll">
+                @{
+                    var listNew = (from c in _context.ESHOP_CATEGORIES
+                                   where c.CAT_PARENT_ID == category.CAT_ID
+                                   orderby c.CAT_PERIOD
+                                   select c);
+
+                    foreach (var itemn in listNew.ToList())
+                    {
+                        string LinkUrl = "";
+
+                        if (lang == 1)
+                        {
+                            if (String.IsNullOrEmpty(itemn.CAT_URL) == true)
+                            {
+                                LinkUrl = "/" + itemn.CAT_SEO_URL;
+                            }
+                            else
+                            {
+                                LinkUrl = itemn.CAT_URL;
+                            }
+                        }
+                        else
+                        {
+                            if (String.IsNullOrEmpty(itemn.CAT_URL) == true)
+                            {
+                                LinkUrl = "/" + itemn.CAT_SEO_URL_EN;
+                            }
+                            else
+                            {
+                                LinkUrl = itemn.CAT_URL;
+                            }
+                        }
+
+                        if (lang == 1)
+                        {
+                            <div class="col-6 col-md-3">
+                                <div class="blog_list_item blog_list_item_two">
+                                    <a href="@LinkUrl">
+                                        <img class="img-fluid" src="/UploadImages/Data/Cats/@itemn.CAT_ID/@itemn.CAT_IMAGE1" alt="">
+                                    </a>
+                                    <div class="blog_content" style="padding: 10px;height: auto;">
+                                        <a href="@LinkUrl">
+                                            <h5 class="blog_title">@itemn.CAT_NAME</h5>
+                                        </a>
+                                        <div class="mieuta">@itemn.CAT_DESC</div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-6 col-md-3">
+                                <div class="blog_list_item blog_list_item_two">
+                                    <a href="@LinkUrl">
+                                        <img class="img-fluid" src="/UploadImages/Data/Cats/@itemn.CAT_ID/@itemn.CAT_IMAGE1" alt="">
+                                    </a>
+                                    <div class="blog_content" style="padding: 10px;height: auto;">
+                                        <a href="@LinkUrl">
+                                            <h5 class="blog_title">@itemn.CAT_NAME_EN</h5>
+                                        </a>
+                                        <div class="mieuta">@itemn.CAT_DESC_JS</div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                }
+            </div>
+        </div>
+    </section>
+}
+
+<style>
+    .botll .blog_title {
+        color: hsl(0deg 0% 0%);
+        font-size: 17px !important;
+        margin-bottom: 0px;
+        height: auto !important;
+    }
+
+    .blog_list_item_two a img {
+        border-radius: 0px;
+    }
+
+    .blog_content .mieuta {
+        color: hsl(0deg 0% 0%);
+        font-size: 15px;
+        text-align: justify;
+        line-height: 20px;
+    }
+
+    /*.botll .blog_content {
+        background: hsl(240, 33%, 99%);
+        height: 107px !important;
+        overflow: hidden;
+    }*/
+</style>

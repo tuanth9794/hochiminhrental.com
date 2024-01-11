@@ -1,0 +1,350 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_CATEGORIES>
+@using CoreCnice.Connect;
+@using CoreCnice.Domain;
+@using CoreCnice.Servicer;
+@using CoreCnice.UtilsCs
+@{
+    BulSoftCmsConnectContext _context = new BulSoftCmsConnectContext();
+    clsFormat cl = new clsFormat();
+    int lang = Utils.CIntDef(ViewBag.Langue);
+    int tygia = Utils.CIntDef(ViewBag.USD);
+    int tien = Utils.CIntDef(ViewBag.Money);
+    string donvi = "";
+    string donviEn = "";
+
+
+}
+
+@foreach (var category in Model.ToList())
+{
+    string LinkUrl = "";
+
+    if (lang == 1)
+    {
+        if (String.IsNullOrEmpty(category.CAT_URL) == true)
+        {
+            LinkUrl = "/" + category.CAT_SEO_URL;
+        }
+        else
+        {
+            LinkUrl = category.CAT_URL;
+        }
+    }
+    else
+    {
+        if (String.IsNullOrEmpty(category.CAT_URL) == true)
+        {
+            LinkUrl = "/" + category.CAT_SEO_URL_EN;
+        }
+        else
+        {
+            LinkUrl = category.CAT_URL;
+        }
+    }
+
+    <section class="payment_features_two sec_pad bgcol" style="background:none !important;">
+        <div class="container">
+            <div class="sec_title text-center mb_5 mt_2">
+                @if (lang == 1)
+                {
+                    <h2 class="f_p f_size_30 l_height50 f_700 t_color  blod">@Html.Raw(category.CAT_NAME)</h2>
+                }
+                else
+                {
+                    <h2 class="f_p f_size_30 l_height50 f_700 t_color  blod">@Html.Raw(category.CAT_NAME_EN)</h2>
+                }
+            </div>
+            <div class="row productsp">
+                @{
+                    var listNew = (from n in _context.ESHOP_NEWS
+                                   join c in _context.ESHOP_NEWS_CAT on n.NEWS_ID equals c.NEWS_ID
+                                   join cat in _context.ESHOP_CATEGORIES on c.CAT_ID equals cat.CAT_ID
+                                   where c.CAT_ID == category.CAT_ID && n.NEWS_PERIOD == 1
+                                   orderby n.NEWS_PUBLISHDATE descending
+                                   select new
+                                   {
+                                       n.NEWS_ID,
+                                       n.NEWS_TITLE,
+                                       n.NEWS_URL,
+                                       n.NEWS_SEO_URL,
+                                       n.NEWS_IMAGE1,
+                                       n.NEWS_DESC,
+                                       cat.CAT_SEO_URL,
+                                       cat.CAT_NAME,
+                                       n.NEWS_PUBLISHDATE,
+                                       n.NEWS_CODE,
+                                       n.NEWS_FIELD4,
+                                       n.NEWS_TYPE,
+                                       n.NEWS_HTML_EN3,
+                                       n.NEWS_HTML_EN2,
+                                       n.NEWS_HTML_EN1,
+                                       n.NEWS_PRICE1,
+                                       n.NEWS_TITLE_EN,
+                                       n.NEWS_PRICE2,
+                                       n.NEWS_TITLE_JS,
+                                       n.NEWS_SHOWTYPE,
+                                       n.NEWS_SEO_URL_EN,
+                                       n.NEWS_UPDATE,
+                                       n.NEWS_TIME_AVALBLE,
+                                       cat.CAT_SEO_URL_EN
+                                   }).Take(6);
+                    //int countloop = 0;
+                    //int counttt = listNew.ToList().Count;
+                    foreach (var itemn in listNew.ToList())
+                    {
+                        string linkurl = "";
+
+                        if (lang == 1)
+                        {
+                            if (!String.IsNullOrEmpty(itemn.NEWS_URL))
+                            {
+                                linkurl = itemn.NEWS_URL;
+                            }
+                            else
+                            {
+                                linkurl = "/" + itemn.CAT_SEO_URL + "/" + itemn.NEWS_SEO_URL.Replace("/", "");
+
+                            }
+                        }
+                        else
+                        {
+                            if (!String.IsNullOrEmpty(itemn.NEWS_URL))
+                            {
+                                linkurl = itemn.NEWS_URL;
+                            }
+                            else
+                            {
+                                if (!String.IsNullOrEmpty(itemn.NEWS_SEO_URL_EN))
+                                {
+                                    linkurl = "/" + itemn.CAT_SEO_URL_EN + "/" + itemn.NEWS_SEO_URL_EN.Replace("/", "");
+                                }
+                                else
+                                {
+                                    linkurl = "/" + itemn.CAT_SEO_URL_EN + "/" + itemn.NEWS_SEO_URL_EN;
+                                }
+                            }
+                        }
+
+                        string linkimg = "";
+                        string linkimgNews = "";
+                        if (!String.IsNullOrEmpty(itemn.NEWS_IMAGE1))
+                        {
+                            linkimg = "/UploadImages/Data/News/" + itemn.NEWS_ID + "/" + itemn.NEWS_IMAGE1;
+                            linkimgNews = "/UploadImages/Data/News/" + itemn.NEWS_ID + "/thumb-" + itemn.NEWS_IMAGE1;
+                            if (Utils.checkfileExit(linkimgNews) == true)
+                            {
+                                linkimg = linkimgNews;
+                            }
+                        }
+                        else
+                        {
+                            linkimg = "/images/noimg.jpg";
+                        }
+                        if (lang == 1)
+                        {
+                            donvi = " / Tháng";
+                        }
+                        else
+                        {
+                            donvi = " / Month";
+                        }
+                        //if (itemn.NEWS_TYPE == 3)
+                        //{
+                        //    donvi = " / Ngày";
+                        //    donviEn = " / Day";
+
+                        //}
+                        //else
+                        //{
+                        //    donvi = " / Tháng";
+                        //    donviEn = " / Month";
+                        //}
+                        string tinhtrang = "";
+                        if (lang == 1)
+                        {
+                            if (itemn.NEWS_SHOWTYPE == 0)
+                            {
+                                tinhtrang = "Đã thuê";
+                            }
+                            else
+                            {
+                                tinhtrang = "Có sẵn";
+                            }
+                        }
+                        else
+                        {
+                            if (itemn.NEWS_SHOWTYPE == 0)
+                            {
+                                tinhtrang = "Rented";
+                            }
+                            else
+                            {
+                                tinhtrang = "Available";
+                            }
+                        }
+                        <div class="col-lg-4 col-md-4">
+                            <div class="item">
+                                @if (lang == 1)
+                                {
+                                    <div class="e_team_img">
+                                        <a href="@linkurl">
+                                            <img src="@linkimg" alt="@Html.Raw(itemn.NEWS_TITLE_EN)" style="border-radius:inherit">
+                                        </a>
+                                        <ul class="list-unstyled">
+                                            <li><a href="#"><i class="social_twitter"></i></a></li>
+                                            <li><a href="#"><i class="social_facebook"></i></a></li>
+                                            <li><a href="#"><i class="social_linkedin"></i></a></li>
+                                        </ul>
+                                        <div class="docquyen">@tinhtrang</div>                                     
+                                         <div class="timeshow">
+                                            @if (itemn.NEWS_SHOWTYPE == 0)
+                                            {
+                                                if (itemn.NEWS_TIME_AVALBLE != null)
+                                                {
+                                                    <p class="updatetime">Ngày trống : @Html.Raw(itemn.NEWS_TIME_AVALBLE)</p>
+                                                }
+                                            }
+                                            @if (itemn.NEWS_UPDATE != null)
+                                            {
+                                                <p class="updatetime">Cập nhật : @Html.Raw(itemn.NEWS_UPDATE.Value.ToString("dd/MM/yyyy"))</p>
+                                            }
+                                        </div>
+                                        <div class="likeicon">
+                                            <a href="javascript:;" id="@Html.Raw(itemn.NEWS_ID)" onclick="Addlike(@Html.Raw(itemn.NEWS_ID))"><i class="social_twitter"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="bodyNew">
+
+                                        <a href="@linkurl" title="@Html.Raw(itemn.NEWS_TITLE)"><h4>@Html.Raw(itemn.NEWS_TITLE)</h4></a>
+                                        <div class="address"><span class="codepro">@itemn.NEWS_CODE</span> <i class="fa fa-map-marker"></i><span>@Html.Raw(itemn.NEWS_FIELD4)</span></div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="e_team_img">
+                                        <a href="@linkurl">
+                                            <img src="@linkimg" alt="@Html.Raw(itemn.NEWS_TITLE_EN)" style="border-radius:inherit">
+                                        </a>
+                                        <ul class="list-unstyled">
+                                            <li><a href="#"><i class="social_twitter"></i></a></li>
+                                            <li><a href="#"><i class="social_facebook"></i></a></li>
+                                            <li><a href="#"><i class="social_linkedin"></i></a></li>
+                                        </ul>
+                                        <div class="docquyen">@tinhtrang</div>
+
+                                          <div class="timeshow">
+                                            @if (itemn.NEWS_SHOWTYPE == 0)
+                                            {
+                                                if (itemn.NEWS_TIME_AVALBLE != null)
+                                                {
+                                                    <p class="updatetime">Available : @Html.Raw(itemn.NEWS_TIME_AVALBLE)</p>
+                                                }
+                                            }
+                                            @if (itemn.NEWS_UPDATE != null)
+                                            {
+                                                <p class="updatetime">Update : @Html.Raw(itemn.NEWS_UPDATE.Value.ToString("dd/MM/yyyy"))</p>
+                                            }
+                                        </div>
+
+                             
+                                       
+                                        <div class="likeicon">
+                                            <a href="javascript:;" id="@Html.Raw(itemn.NEWS_ID)" onclick="Addlike(@Html.Raw(itemn.NEWS_ID))"><i class="social_twitter"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="bodyNew">
+
+                                        <a href="@linkurl" title="@Html.Raw(itemn.NEWS_TITLE_EN)"><h4>@Html.Raw(itemn.NEWS_TITLE_EN)</h4></a>
+                                        <div class="address"><span class="codepro">@itemn.NEWS_CODE</span> <i class="fa fa-map-marker"></i><span>@Html.Raw(itemn.NEWS_TITLE_JS)</span></div>
+                                    </div>
+
+                                }
+                                <div class="propepty" style="margin-top:20px">
+                                    <ul class="details-list">
+                                        @if (!String.IsNullOrEmpty(itemn.NEWS_HTML_EN1))
+                                        {
+                                            <li>
+                                                <i class="fas fa-bed"></i>
+                                                <span>@Utils.CIntDef(itemn.NEWS_HTML_EN1)</span>
+                                            </li>
+                                        }
+                                        @if (!String.IsNullOrEmpty(itemn.NEWS_HTML_EN2))
+                                        {
+                                            <li>
+                                                <i class="fa fa-bath"></i>
+                                                <span>@Utils.CIntDef(itemn.NEWS_HTML_EN2)</span>
+                                            </li>
+                                        }
+                                        @if (!String.IsNullOrEmpty(itemn.NEWS_HTML_EN3))
+                                        {
+                                            if (lang == 1)
+                                            {
+                                                <li>
+                                                    <img src="~/images/dt_icon.png" style="width: 16px;margin-right: 9px;" />
+                                                    <span>@itemn.NEWS_HTML_EN3 m <b class="m2">2</b></span>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li>
+                                                    <img src="~/images/dt_icon.png" style="width: 16px;margin-right: 9px;" />
+                                                    <span>@itemn.NEWS_HTML_EN3 sqm</span>
+                                                </li>
+                                            }
+                                        }
+                                        <li style="width: 42%;float:right">
+                                            @if (tien == 1)
+                                            {
+                                                if (Utils.CDecDef(itemn.NEWS_PRICE1.ToString()) == 0)
+                                                {
+                                                    <ins><span class="woocommerce-Price-amount amount" style="color:hsl(30, 100%, 50%)"><span class="woocommerce-Price-currencySymbol"></span>@Html.Raw("Liên hệ") @donvi</span></ins>
+                                                }
+                                                else
+                                                {
+                                                    if (lang == 1)
+                                                    {
+                                                        <ins><span class="woocommerce-Price-amount amount" style="color:hsl(30, 100%, 50%)"><span class="woocommerce-Price-currencySymbol"></span>@cl.DocTien(Utils.CDecDef(itemn.NEWS_PRICE1)) @donvi</span></ins>
+                                                    }
+                                                    else
+                                                    {
+                                                        <ins><span class="woocommerce-Price-amount amount" style="color:hsl(30, 100%, 50%)"><span class="woocommerce-Price-currencySymbol"></span>@cl.DocTienEn(Utils.CDecDef(itemn.NEWS_PRICE1)) @donvi</span></ins>
+                                                    }
+
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (Utils.CDecDef(itemn.NEWS_PRICE1.ToString()) == 0)
+                                                {
+                                                    <ins><span class="woocommerce-Price-amount amount" style="color:hsl(30, 100%, 50%)"><span class="woocommerce-Price-currencySymbol"></span>@Html.Raw("Contact")</span></ins>
+                                                }
+                                                else
+                                                {
+                                                    <ins><span class="woocommerce-Price-amount amount" style="color:hsl(30, 100%, 50%)"><span class="woocommerce-Price-currencySymbol"></span>@cl.Dola(Utils.CDecDef(itemn.NEWS_PRICE1), Utils.CDecDef(tygia)) @donvi</span></ins>
+                                                }
+                                            }
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+                }
+            </div>
+            <div class="elementor-element elementor-element-276c75c elementor-align-center elementor-widget elementor-widget-button">
+                <div class="elementor-widget-container">
+                    <div class="elementor-button-wrapper">
+                        <a href="@LinkUrl" class="elementor-button-link elementor-button elementor-size-sm" role="button">
+                            <span class="elementor-button-content-wrapper">
+                                <span class="elementor-button-icon elementor-align-icon-right"> <i aria-hidden="true" class="fas fa-search-location"></i> </span>
+                                <span class="elementor-button-text">View All</span>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+

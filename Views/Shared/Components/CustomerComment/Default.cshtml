@@ -1,0 +1,45 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_CATEGORIES>
+@using CoreCnice.Connect;
+@using CoreCnice.Domain;
+@using CoreCnice.Servicer;
+@*@model List<CoreCnice.Domain.ESHOP_AD_ITEM>*@
+@{
+    BulSoftCmsConnectContext _context = new BulSoftCmsConnectContext();
+}
+
+@foreach (var category in Model.ToList())
+{
+    <div class="col-xs-12 col-md-4">
+        <div class="sec-heading-area p_0_15" style="margin-top: 32px; text-align: CENTER;">
+            <h2 class="section-heading">@category.CAT_NAME</h2>
+        </div>
+        <div class="row">
+            @{
+                var listNew = (from n in _context.ESHOP_NEWS
+                               join c in _context.ESHOP_NEWS_CAT on n.NEWS_ID equals c.NEWS_ID
+                               where c.CAT_ID == category.CAT_ID
+                               select n);
+                <div class="col-xs-12 col-md-12">
+
+                    @foreach (var itemn1 in listNew.ToList().Skip(0).Take(5))
+                    {
+                        <div class="product">
+                            <div class="image" style="float: left; margin-right: 10px">
+                                <div class="">
+                                    <a href="#" title="@itemn1.NEWS_TITLE">
+                                        <img src="~/UploadImages/Data/News/@itemn1.NEWS_IMAGE1" alt="" style="width: 80px; height: 80px">
+                                    </a>
+                                </div>
+                            </div>
+                            <p>@itemn1.NEWS_DESC</p>
+                            <h3 style="text-align: left; margin: 0px"><a style="color: #4a4a4a; font-size: 12px;" href="#" title="@itemn1.NEWS_TITLE">@itemn1.NEWS_TITLE</a></h3>
+                        </div>                       
+                    }
+                </div>
+            }
+        </div>
+    </div>
+
+
+}
+

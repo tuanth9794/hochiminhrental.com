@@ -1,0 +1,75 @@
+﻿@model CoreCnice.Domain.ESHOP_CATEGORIES
+@using CoreCnice.Connect;
+@using CoreCnice.UtilsCs;
+
+@{
+    Layout = "~/Views/Shared/_LayoutDetail.cshtml";
+    int typeCat = ViewBag.Type;
+    string linkimg = "";
+    string alt = "";
+
+    if (!String.IsNullOrEmpty(Model.CAT_IMAGE3))
+    {
+        linkimg = "/UploadImages/Data/Cats/" + Model.CAT_ID + "/" + Model.CAT_IMAGE3;
+    }
+    else
+    {
+        if (!String.IsNullOrEmpty(ViewBag.IMAGE2))
+        {
+            linkimg = "/UploadImages/Data/Cats/" + Model.CAT_ID + "/" + Model.CAT_IMAGE2;
+        }
+        else
+        {
+            linkimg = "";
+        }
+    }
+    if (!String.IsNullOrEmpty(ViewBag.Alt))
+    {
+        alt = ViewBag.Alt;
+    }
+    else
+    {
+        alt = ViewBag.Title;
+    }
+}
+
+<style>
+    .blog_list_item_two .blog_content {
+        padding: 10px;
+    }
+
+    .blog_list_item img {
+        width: 100%;
+        height: 246px;
+    }
+
+    .blog_content h5 {
+        font-size: 15px;
+        line-height: 23px;
+        min-height: 45px;
+    }
+</style>
+
+<section class="page_title ls s-py-50 corner-title ls invise overflow-visible">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h4>@Html.Raw(ViewData["Title"])</h4>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="/">Trang chủ</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="@ViewBag.Url">@Html.Raw(ViewData["Title"])</a>
+                    </li>
+                </ol>
+                <div class="divider-15 d-none d-xl-block"></div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="portfolio_area sec_pad bg_color">
+    <div class="container">
+        @await Component.InvokeAsync("GalariesTab", new { Position = Model.CAT_ID })      
+    </div>
+</section>

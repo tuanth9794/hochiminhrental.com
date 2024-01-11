@@ -1,0 +1,255 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_PROPERTIES>
+@using CoreCnice.Connect;
+@using CoreCnice.UtilsCs;
+@using CoreCnice.Servicer;
+@{
+    CategoryServices ct = new CategoryServices();
+    //int id = ViewBag.Id;
+    string cl = "";
+    string w = "";
+    int lang = Utils.CIntDef(ViewBag.Langue);
+    int countCon = 0;
+    string ConAdd = "";
+}
+<style>
+    .btn_three {
+        margin-right: 10px;
+        padding: 20px 21px;
+        margin-top: 0;
+    }
+
+    .inputsearch {
+        padding-left: 50px;
+        padding-right: 59px;
+    }
+
+    .elementor-field {
+        min-height: 50px;
+    }
+</style>
+@if (ViewBag.IdPe == 2460)
+{
+    @*<style>
+            #dropdownMenuButton-94 {
+                display: none;
+            }
+        </style>*@
+}
+
+<div class="saas_signup_form row mb_40">
+    <div class="col-lg-12 col-md-12 d-flex justify-content-center inputsearch">
+        <div class="elementor-field-group elementor-column form-group elementor-field-group-79ff965 elementor-col-40" style="width:100%;">
+            <input type="text" size="1" name="keyword" id="keysearch" class="elementor-field form-control elementor-size-sm elementor-field-textual houzez-keyword-autocomplete" placeholder="Enter an address, street, Id...">
+        </div>
+    </div>
+    <div class="col-lg-12 col-md-12 d-flex justify-content-center">
+        @foreach (var category in Model.ToList())
+        {
+            string linkimg = "";
+            if (!String.IsNullOrEmpty(category.PRO_IMAGES))
+            {
+                linkimg = "/UploadImages/Data/Properties/" + category.PROP_ID + "/" + category.PRO_IMAGES;
+            }
+            else
+            {
+                linkimg = "/images/noimg.jpg";
+            }
+            int count = Utils.CIntDef(await ct.getIconDrop(category.PROP_ID));
+            if (count > 0)
+            {
+                cl = "dropdown-toggle";
+            }
+            else
+            {
+                cl = "";
+            }
+            if (category.PRO_TYPE == 1)
+            {
+                w = "min-width: 274px;";
+            }
+            else
+            {
+                w = "min-width: 200px;";
+            }
+            countCon = await ct.GetProCon(category.PROP_ID);
+            if (countCon != 0)
+            {
+                ConAdd = "data-toggle=dropdown aria-haspopup=true aria-expanded=false";
+            }
+            else
+            {
+                ConAdd = "onclick=clickSearch(" + category.PROP_ID + ")";
+            }
+            <div class="dropdown keep-inside-clicks-open" style="float: left;">
+                @if (lang == 1)
+                {
+                    <button class="btn_three btn_hover @cl" type="button" id="dropdownMenuButton-@category.PROP_ID" @ConAdd>
+                        <span class="iconfilter"> <img class="svg-icon" src="@linkimg" title="@category.PROP_NAME" /> </span>@category.PROP_NAME
+                    </button>
+                }
+                else
+                {
+                    <button class="btn_three btn_hover @cl" type="button" id="dropdownMenuButton-@category.PROP_ID" @ConAdd>
+                        <span class="iconfilter"> <img class="svg-icon" src="@linkimg" title="@category.PRO_NAME_EN" /> </span>@category.PRO_NAME_EN
+                    </button>
+                }
+                @if (count > 0)
+                {
+                    <div class="dropdown-menu el-popover" aria-labelledby="dropdownMenuButton-@category.PROP_ID" style="margin-top: 10px;@w">
+                        @await Component.InvokeAsync("FilterItem", new { PropId = category.PROP_ID })
+                        @*@if (category.PRO_TYPE == 1 || category.PRO_TYPE == 2)
+                            {
+                                <div class="row" style="margin-left:-2px;margin-top:15px;padding-top:10px;border-top:1px solid #e3e3e3;margin-right:2px">
+                                    @await Component.InvokeAsync("RangePrice", new { minPrice = Utils.CDecDef(0), maxPrice = Utils.CDecDef(1000) })
+                                </div>
+                                <div class="row" style="margin-left:-2px;margin-top:0px;padding-top:10px;border-top:1px solid #e3e3e3;margin-right:2px">
+                                    <div class="text--right">
+                                        <span class="c-filter-clear mr--12">
+                                            Xoá
+                                        </span> <button class="btn btn--primary btn--radius btn--xs" style="background-image: linear-gradient(90deg,hsl(12deg 91% 59%) 0,hsl(26deg 91% 59%) 51%,hsl(12deg 91% 59%));background-size: 500% auto;padding: 2px 13px;color: #fff;margin-left: 23px;background:#00a29a">
+                                            Áp dụng
+                                        </button>
+                                    </div>
+                                </div>
+                            }*@
+                    </div>
+                }
+            </div>
+        }
+        @if (lang == 1)
+        {
+            <div class="dropdown keep-inside-clicks-open" style="float: left;">
+                <button class="btn_three" type="button" style="background: hsl(33deg 70% 55%) !important;color:#fff;height:auto;" onclick="clickSearchTotal()">
+                    TÌM KIẾM
+                </button>
+            </div>
+        }
+        else
+        {
+            <div class="dropdown keep-inside-clicks-open" style="float: left;">
+                <button class="btn_three" type="button" style="background: hsl(33deg 70% 55%) !important; color: #fff; height: auto; " onclick="clickSearchTotal()">
+                    SEARCH
+                </button>
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    .svg-icon {
+        display: inline-block;
+        width: 17px;
+        margin-top: -3px;
+        height: auto;
+        font-weight: bold;
+        color: inherit;
+        vertical-align: middle;
+        fill: none;
+        stroke: currentColor;
+    }
+
+    .input-group-text {
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-align: center;
+        align-items: center;
+        margin-top: 5px;
+        padding: 0px 10px;
+        margin-bottom: 0;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1;
+        color: hsl(210deg 9% 31%);
+        text-align: center;
+        white-space: inherit;
+        background-color: hsl(0deg 0% 0% / 0%);
+        border: none;
+        border-radius: 0px;
+    }
+
+    .saas_signup_form .input-group .form-control {
+        color: hsl(0deg 0% 0%);
+        padding: 1px;
+    }
+
+    .dropdown-menu {
+        border-radius: 0px;
+    }
+
+    .el-popover {
+        background: hsl(0deg 0% 100%);
+        min-width: 150px;
+        border-radius: 4px;
+        border: 1px solid hsl(222deg 33% 94%);
+        padding: 12px;
+        z-index: 2000;
+        color: hsl(0deg 0% 13%);
+        line-height: 1.4;
+        text-align: justify;
+        font-size: 16px;
+        box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+        min-width: 220px;
+    }
+
+        .el-popover:before {
+            content: "";
+            top: -5px;
+            right: 4px;
+            transform: rotate(45deg);
+            height: 1rem;
+            width: 1rem;
+            /* margin-top: -20px; */
+            /* float: left; */
+            /* border-top-left-radius: 3px; */
+            /* box-shadow: 0 0 0 1px rgba(6,44,82,.1), 0 2px 16px rgba(33,43,54,.08); */
+            background: hsl(0deg 0% 100%);
+            content: "";
+            position: absolute;
+            bottom: 0px;
+            left: 6px;
+            border-left: 7px solid hsl(0deg 0% 0% / 0%);
+            border-right: 7px solid hsl(0deg 0% 0% / 0%);
+            border-bottom: 7px solid hsl(0deg 0% 100%);
+            border-top: 7px solid hsl(0deg 0% 0% / 0%);
+        }
+
+    .text--right {
+        text-align: right;
+        width: 100%;
+    }
+</style>
+
+<div class="find-home" style="display:none">
+    <div class="container">
+        <div class="filter-items" style="margin-bottom: 10px;">
+            @if (lang == 1)
+            {
+                <h5>Lựa chọn bộ lọc : </h5>
+            }
+            else
+            {
+                <h5>Filter selection : </h5>
+            }
+            <div id="tieuchichon">
+                @*<p class="default" style="color:#000;font-weight:bold">
+                        Xóa tất cả <span onclick="location.href=window.location.pathname;return false;">
+                            <i class="fas fa-times"></i>
+                        </span>
+                    </p>*@
+
+                @if (lang == 1)
+                {
+                    <p class="default" id="idtimkiem" onclick="clickSearchTotal()" style="background: hsl(33deg 70% 55%) !important;font-weight: bold;margin-top: 5px;cursor:pointer;">
+                        Tìm kiếm theo lựa chọn
+                    </p>
+                }
+                else
+                {
+                    <p class="default" id="idtimkiem" onclick="clickSearchTotal()" style="background: hsl(33deg 70% 55%) !important;font-weight: bold;margin-top: 5px;cursor:pointer;">
+                        Search by selection
+                    </p>
+                }
+            </div>
+        </div>
+    </div>
+</div>

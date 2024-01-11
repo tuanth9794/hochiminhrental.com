@@ -1,0 +1,102 @@
+﻿@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>@ViewData["Title"]</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    @*<environment include="Development">*@
+        <!-- Bootstrap 3.3.7 -->
+        <link rel="stylesheet" href="~/Admin/bower_components/bootstrap/dist/css/bootstrap.css">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="~/Admin/bower_components/font-awesome/css/font-awesome.css">
+        <!-- Ionicons -->
+        <link rel="stylesheet" href="~/Admin/bower_components/Ionicons/css/ionicons.css">
+        <link rel="stylesheet" href="~/Admin/bootstrap-wysihtml5/bootstrap3-wysihtml5.css">
+        <!-- Theme style -->
+        <link rel="stylesheet" href="~/Admin/dist/css/AdminLTE.css">
+        <link rel="stylesheet" href="~/Admin/dist/css/skins/_all-skins.css">
+        <!-- bootstrap datepicker -->
+        <link rel="stylesheet" href="~/Admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.css">
+        <!--css custom-->
+        <link rel="stylesheet" href="~/Admin/css/BulSoftCustom.css">
+        <link rel="stylesheet" href="~/lib/kendo/2014.1.318/kendo.common.min.css" />
+        <link rel="stylesheet" href="~/lib/kendo/2014.1.318/kendo.blueopal.min.css" />
+        <link rel="stylesheet" href="~/lib/kendo/2014.1.318/kendo.blueopal.mobile.min.css" />
+        <!-- jQuery 3 -->
+        <script src="~/Admin/bower_components/jquery/dist/jquery.js"></script>
+
+        <script src="~/lib/kendo/2014.1.318/kendo.all.min.js"></script>
+        <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
+    @*</environment>*@
+    @Html.Raw(JavaScriptSnippet.FullScript)
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+        @await Html.PartialAsync("_Header")
+        <aside class="main-sidebar">
+            <section class="sidebar">
+                <!-- Sidebar user panel -->
+                <div class="user-panel">
+                    <div class="pull-left image">
+                        <img src="~/Admin/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                    </div>
+                    <div class="pull-left info">
+                        <p>Admin Quản Trị</p>
+                        <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                    </div>
+                </div>
+                <!-- menu left-->
+                @await Html.PartialAsync("_MenuItem")
+            </section>
+        </aside>
+        <div class="content-wrapper">
+            @RenderBody()
+        </div>
+        @await Html.PartialAsync("_Footer")
+    </div>
+    @*<environment include="Development">*@
+        <!-- Bootstrap 3.3.7 -->
+        <script src="~/Admin/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+        <!-- FastClick -->
+        <script src="~/Admin/bower_components/fastclick/lib/fastclick.js"></script>
+        <!-- AdminLTE App -->
+        <script src="~/Admin/dist/js/adminlte.min.js"></script>
+        <!-- bootstrap datepicker -->
+        <script src="~/Admin/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
+        <!-- AdminLTE for demo purposes -->
+        <script src="~/Admin/dist/js/demo.js"></script>
+        @*<script src="~/Admin/bower_components/ckeditor/ckeditor.js"></script>
+        <script type="text/javascript" src="~/ckfinder/ckfinder.js"></script>*@
+        <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+        @*<script src="~/Admin/bower_components/ckfinder/ckfinder.js"></script>*@
+        <!-- Bootstrap WYSIHTML5 -->
+        @*<script src="~/Admin/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>*@
+    @*</environment>*@
+    @*<script>
+        $(function () {
+            // Replace the <textarea id="editor1"> with a CKEditor
+            // instance, using default configuration.
+            //CKEDITOR.replace('editor1')
+            //bootstrap WYSIHTML5 - text editor
+            //$('.textarea').wysihtml5()
+            CKEDITOR.replace("editor");
+            CKFinder.setupCKEditor(null, '/ckfinder');
+        })
+    </script>*@
+    @*<script type="text/javascript">
+        function BrowseServer() {
+            var finder = new CKFinder();
+            finder.basePath = "/ckfinder";
+            finder.selectActionFunction = SetFileField;
+            finder.popup();
+        }
+        function SetFileField(fileUrl) {
+            document.getElementById('xFilePath').value = fileUrl;
+        }
+    </script>*@
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

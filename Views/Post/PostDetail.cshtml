@@ -1,0 +1,50 @@
+﻿@model CoreCnice.Domain.ESHOP_NEWS
+@{
+    string linkimg = "";
+
+    if (!String.IsNullOrEmpty(ViewBag.Img))
+    {
+        linkimg = "/UploadImages/" + ViewBag.Img;
+    }
+    else
+    {
+        linkimg = "/images/slider_cm.jpg";
+
+    }
+}
+<style>
+    .tongsanpham .col-md-3 {
+        width: 20%;
+    }
+
+
+    .main .container {
+        width: 100%;
+        max-width: 66%;
+    }
+</style>
+<section class="main">
+    <div class="container">
+        <div class="col-xs-12 col-md-12 clearleft clearright">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">TRANG CHỦ</a></li>
+                <li class="breadcrumb-item"><a href="#">@ViewBag.Title</a></li>
+                <li class="breadcrumb-item active">@Model.NEWS_TITLE</li>
+            </ol>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-12">
+                <article class="artrating">
+                    @Model.NEWS_FILEHTML
+                    <h5 class="titlerelate">Bài viết liên quan</h5>
+                </article>
+                <div class="productad">
+                    <div class="row">
+                        @await Component.InvokeAsync("NewsRelation", new { catid = ViewBag.CatId })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

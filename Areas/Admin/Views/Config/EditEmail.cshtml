@@ -1,0 +1,79 @@
+﻿@model CoreCnice.Domain.ESHOP_EMAIL
+
+@{
+    ViewData["Title"] = "Chỉnh sửa " + Model.EMAIL_DESC;
+     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<style>
+    .radio {
+        float: left !important;
+        margin-right: 10px !important
+    }
+</style>
+@using (Html.BeginForm())
+{
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+            Chỉnh sửa thông tin - <span style="color:#0026ff"> @Model.EMAIL_DESC</span>          
+        </h1>
+        <div class="pull-right">
+            <button type="submit" name="save" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>
+                Lưu chỉnh sửa
+            </button>
+        </div>
+    </div>
+    <section class="content">
+        @if (!string.IsNullOrEmpty(ViewBag.Error))
+        {
+            <div class="callout callout-info">
+                <h4>Thông báo</h4>
+                <p>
+                    @Html.Raw(ViewBag.Error)
+                </p>
+            </div>
+        }
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" class="form-control" asp-for="EMAIL_ID">
+        @*<input type="hidden" asp-for="NEWS_ID" value="@Model.NEWS_ID" />*@
+        <div class="row">
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Thông tin cấu hình</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- form start -->
+
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">STT</label>
+                            <input type="text" class="form-control" asp-for="EMAIL_STT">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Miêu tả</label>
+                            <input type="text" class="form-control" asp-for="EMAIL_DESC">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Gửi tới (Email to)</label>
+                            <input type="text" class="form-control" asp-for="EMAIL_TO">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Đồng gửi (Email Bcc)</label>
+                            <input type="text" class="form-control" asp-for="EMAIL_CC">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Gửi bản sao</label>
+                            <input type="text" class="form-control" asp-for="EMAIL_BCC">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

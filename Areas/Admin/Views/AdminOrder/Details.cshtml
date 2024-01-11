@@ -1,0 +1,109 @@
+﻿@model CoreCnice.Domain.ESHOP_ORDER
+
+@{
+    ViewData["Title"] = "Details";
+     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ESHOP_ORDER</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CUSTOMER_ID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CUSTOMER_ID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ORDER_CODE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ORDER_CODE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ORDER_TOTAL_ALL)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ORDER_TOTAL_ALL)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ORDER_PUBLISHDATE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ORDER_PUBLISHDATE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ORDER_UPDATE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ORDER_UPDATE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RECEIVER_FULLNAME)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RECEIVER_FULLNAME)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RECEIVER_ADDRESS)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RECEIVER_ADDRESS)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RECEIVER_PHONE1)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RECEIVER_PHONE1)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RECEIVER_EMAIL)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RECEIVER_EMAIL)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ORDER_DESC)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ORDER_DESC)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ORDER_STATUS)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ORDER_STATUS)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ORDER_DAY)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ORDER_DAY)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ORDER_MONTH)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ORDER_MONTH)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ORDER_YEAR)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ORDER_YEAR)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ORDER_IP)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ORDER_IP)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ORDER_ID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

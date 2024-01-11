@@ -1,0 +1,80 @@
+﻿@model IEnumerable<CoreCnice.Models.NewsModelCat>
+@using CoreCnice.Connect;
+@using CoreCnice.UtilsCs;
+@*@await Component.InvokeAsync("CatBanner", new { Position = @ViewBag.Id })*@
+@{
+    Layout = "~/Views/Shared/_LayoutDetail.cshtml";
+    int typeCat = ViewBag.Type;
+    string linkimg = "";
+    string alt = "";
+
+    if (!String.IsNullOrEmpty(ViewBag.IMAGE3))
+    {
+        linkimg = "/UploadImages/Data/Cats/" + ViewBag.Id + "/" + ViewBag.IMAGE3;
+    }
+    else
+    {
+        if (!String.IsNullOrEmpty(ViewBag.IMAGE2))
+        {
+            linkimg = "/UploadImages/Data/Cats/" + ViewBag.Id + "/" + ViewBag.IMAGE2;
+        }
+        else
+        {
+            linkimg = "";
+        }
+    }
+    if (!String.IsNullOrEmpty(ViewBag.Alt))
+    {
+        alt = ViewBag.Alt;
+    }
+    else
+    {
+        alt = ViewBag.Title;
+    }
+}
+
+<style>
+    .ex_team_item .hover_content, .ex_team_item .team_content {
+        position: relative;
+    }
+
+    .ex_team_item .hover_content {
+        display: none;
+    }
+</style>
+<section class="page_title ls s-py-50 corner-title ls invise overflow-visible">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h4>@Html.Raw(ViewData["Title"])</h4>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="/">Trang chủ</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="@ViewBag.Url">@Html.Raw(ViewData["Title"])</a>
+                    </li>
+                </ol>
+                <div class="divider-15 d-none d-xl-block"></div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="experts_team_area sec_pad">
+    <div class="container">
+        <div class="sec_title text-center mb_70">
+           @Html.Raw(ViewBag.DESC)
+        </div>
+        <div class="row">
+            @{
+                if (typeCat == 4)
+                {
+                    @foreach (var item in Model.ToList())
+                    {
+                        @Html.Partial("~/Views/Catalog/_CustomerOne.cshtml", item);
+                    }
+                }
+            }
+        </div>
+    </div>
+</section>

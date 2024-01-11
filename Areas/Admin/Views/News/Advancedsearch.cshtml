@@ -1,0 +1,262 @@
+﻿@model CoreCnice.Areas.Admin.Models.AdvancedsearchModel;
+@using CoreCnice.Domain;
+@{
+    ViewData["Title"] = "Tìm kiếm nâng cao";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+    .form-group {
+        float: left;
+        width: 100%;
+        margin-top: 5px;
+        margin-bottom: 15px;
+    }
+
+    .radio {
+        float: left !important;
+        margin-right: 10px !important
+    }
+</style>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+<style>
+    .jstree-default-large > .jstree-container-ul > .jstree-node {
+        margin-left: 0;
+        margin-right: 0;
+        width: 100% !important;
+        float: left !important;
+    }
+
+
+    /*.jstree-default-large > .jstree-no-dots .jstree-node .jstree-children li {
+        width: 25% !important;
+        float: left !important;
+    }*/
+
+    .jstree-default .jstree-wholerow-clicked {
+        background: none;
+    }
+</style>
+
+@using (Html.BeginForm(FormMethod.Post, new { enctype = "multipart/form-data", data_ajax = "false" }))
+{
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+            Thông tin tìm kiếm
+            <small>
+                <i class="fa fa-arrow-circle-left"></i>
+                <a href="/Admin/News">Về danh sách sản phẩm</a>
+            </small>
+        </h1>
+    </div>
+    <section class="content">
+        @if (!string.IsNullOrEmpty(ViewBag.Error))
+        {
+            <div class="callout callout-info">
+                <h4>Thông báo</h4>
+                <p>
+                    @Html.Raw(ViewBag.Error)
+                </p>
+            </div>
+        }
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <h3 class="box-title">Thông tin tìm kiếm</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Danh sách chuyên mục</label>
+                            <select asp-for="SEARCHCATID" class="form-control" asp-items="@(new SelectList(ViewBag.ListCatPr,"CAT_ID","CAT_NAME"))"></select>
+                            @*<select name="Employee[]" id="select2" multiple="multiple" class="form-control" asp-items="ViewBag.Cats"></select>*@
+                        </div>
+                        <!-- /.form-group -->
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Nội dung tìm kiếm</label>
+                            <input type="text" class="form-control" asp-for="SEARCHNAME">
+                        </div>
+                        <!-- /.form-group -->
+                    </div>
+                    <!-- /.col -->
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Phòng ngủ</label>
+                            <input type="text" class="form-control" id="catlienket" asp-for="SEARCHBATHROOM">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Phòng tắm</label>
+                            <input type="text" class="form-control" id="catlienket" asp-for="SEARCHBEDROOM">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Diện tích</label>
+                            <input type="text" class="form-control" id="catlienket" asp-for="SEARCHACREAGE">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Giá Min</label>
+                            <input type="text" class="form-control" id="catlienket" asp-for="SEARCHPRICEMIN">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Giá Max</label>
+                            <input type="text" class="form-control" id="catlienket" asp-for="SEARCHPRICEMAX">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-md-2 control-label">Loại tin</label>
+                        <div class="col-md-10">
+                            <div class="col-md-3">
+                                @Html.RadioButtonFor(model => model.SEARCHSTATUS, "1", new { id = 1, @class = "radio" })
+                                Sản phẩm
+                            </div>
+                            <div class="col-md-3">
+                                @Html.RadioButtonFor(model => model.SEARCHSTATUS, "2", new { id = 2, @class = "radio" })
+                                Sản phẩm độc quyền
+                            </div>
+                            <div class="col-md-3">
+                                @Html.RadioButtonFor(model => model.SEARCHSTATUS, "3", new { id = 3, @class = "radio" })
+                                Thuê theo ngày
+                            </div>
+                            <div class="col-md-3">
+                                @Html.RadioButtonFor(model => model.SEARCHSTATUS, "4", new { id = 4, @class = "radio" })
+                                Không chọn
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+            </div>
+            <div class="box-footer">
+                <input type="submit" name="CLICK" value="Tìm kiếm" class="btn btn-info pull-right" />
+            </div>
+            <!-- /.box-body -->
+
+        </div>
+        @if (ViewBag.NEWSLIST != null)
+        {
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Thông tin tìm kiếm</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="row">
+
+                        <ul>
+                            @foreach (var person in ViewBag.NEWSLIST)
+                            {
+                                <li style="list-style:none;color:#000;padding-bottom:5px;">@person.NEWS_TITLE</li>
+                            }
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        }
+        @if (ViewBag.NEWSLIST != null)
+        {
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Lựa chọn tiện ích</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="form-group">
+                        <div id="jstree">
+                        </div>
+                        <input type="hidden" name="selectedItems" id="selectedItems" />
+                    </div>
+                </div>
+                <div class="box-footer">
+                    @*<input type="submit" name="CLICK" value="Loại bỏ thuộc tính" class="btn btn-info pull-right" />*@
+                    <input type="submit" name="CLICK" value="Thêm thuộc tính" class="btn btn-info pull-right" />
+                </div>
+            </div>
+        }
+    </section>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        <script>
+            $(function () {
+                //select2 eklentimizin tanımı
+                $('#select2').select2({
+                    placeholder: "Lựa chọn danh mục",
+                });
+            });
+        </script>
+        <script type="text/javascript">
+        $(function () {
+            $('#jstree').on('changed.jstree', function (e, data) {
+                var i, j;
+                var selectedItems = [];
+                for(i = 0, j = data.selected.length; i < j; i++) {
+
+                    //Fetch the Id.
+                    var id = data.selected[i];
+
+                    //Remove the ParentId.
+                    if(id.indexOf('-') != -1){
+                        id = id.split("-")[1];
+                    }
+
+                    //Add the Node to the JSON Array.
+                    selectedItems.push({
+                        text: data.instance.get_node(data.selected[i]).text,
+                        id: id,
+                        parent: data.node.parents[0]
+                    });
+                }
+
+                //Serialize the JSON Array and save in HiddenField.
+                $('#selectedItems').val(JSON.stringify(selectedItems));
+            }).jstree({
+                "core": {
+                    "themes": {
+                        "variant": "large"
+                    },
+                    "data": @Html.Raw(ViewBag.Json)
+                    },
+                "checkbox": {
+                    "keep_selected_style": true
+                },
+                "plugins": ["wholerow", "checkbox"],
+            });
+        });
+        </script>
+    }
+}
+

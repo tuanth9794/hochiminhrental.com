@@ -1,0 +1,376 @@
+﻿@using CoreCnice.UtilsCs;
+@{
+    int lang = Utils.CIntDef(ViewBag.Langue); 
+}
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="content-language" content="vn">
+    <link rel="icon" href="/UploadImages/Data/@Html.Raw(ViewData["FAVICON"])">
+    <title>@Html.Raw(ViewData["Title"])</title>
+    <meta name="description" content="@Html.Raw(ViewData["Desc"])" />
+    <meta name="keywords" content="@Html.Raw(ViewData["Key"])" />
+    <!-- Bootstrap CSS -->
+    <link href="~/AdminCus/assets/css/main.css?v=1.1" rel="stylesheet" type="text/css" />
+
+    <link rel="stylesheet" href="~/css/savistahouse.css">
+    <link href="~/AdminCus/css/csscustomer.css" rel="stylesheet" type="text/css" />
+</head>
+<body class="">
+
+    <div class="screen-overlay"></div>
+    @await Html.PartialAsync("_HeaderCus")
+
+    <main class="main-wrap">
+        <header class="main-header navbar">
+            <div class="col-search">
+                <form class="searchform">
+                    <div class="input-group">
+                        <input list="search_terms" type="text" class="form-control" placeholder="Search term" />
+                        <button class="btn btn-light bg" style="background:#3BB77E" type="button"><i class="material-icons md-search"></i></button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-nav">
+                <button class="btn btn-icon btn-mobile me-auto" data-trigger="#offcanvas_aside"><i class="material-icons md-apps"></i></button>
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link btn-icon" href="/AdminCus/ProjectList">
+                            <i class="material-icons md-notifications animation-shake"></i>
+                            <span class="badge rounded-pill notification">0</span>
+                        </a>
+                    </li>
+                    <li class="dropdown nav-item">
+                        <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownAccount" aria-expanded="false"> <img class="img-xs rounded-circle" src="~/AdminCus/assets/imgs/people/avatar-2.png" alt="User" /></a>
+                      @if(lang == 1)
+                        {
+                               <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownAccount">
+                            <a class="dropdown-item" href="/AdminCus/CustomerSetting"><i class="material-icons md-perm_identity"></i>Chỉnh sửa tài khoản</a>
+                            <a class="dropdown-item" href="/"><i class="material-icons md-settings"></i>Về trang chủ</a>
+                            <a class="dropdown-item" href="#"><i class="material-icons md-help_outline"></i>Video hỗ trợ</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-danger" href="/sellernet/trang-dang-nhap"><i class="material-icons md-exit_to_app"></i>Thoát</a>
+                            </div>
+                        }
+                        else
+                        {
+                              <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownAccount">
+                            <a class="dropdown-item" href="/AdminCus/CustomerSetting"><i class="material-icons md-perm_identity"></i>Edit account</a>
+                            <a class="dropdown-item" href="/"><i class="material-icons md-settings"></i>On the homepage</a>
+                            <a class="dropdown-item" href="#"><i class="material-icons md-help_outline"></i>Support video</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-danger" href="/sellernet/trang-dang-nhap"><i class="material-icons md-exit_to_app"></i>Exit</a>
+                            </div>
+                        }
+
+                    </li>
+                </ul>
+            </div>
+        </header>
+        @RenderBody()
+        <!-- content-main end// -->
+        <footer class="main-footer font-xs">
+            <div class="row pb-30 pt-15">
+                <div class="col-sm-6">
+                    ©
+                    <script>
+                        document.write(new Date().getFullYear());
+                    </script>
+                    COPYRIGHT EUREKA REAL ESTATE
+                </div>
+                <div class="col-sm-6">
+                    <div class="text-sm-end">. ALL RIGHTS RESERVED.</div>
+                </div>
+            </div>
+        </footer>
+    </main>
+    <script src="~/AdminCus/assets/js/vendors/jquery-3.6.0.min.js"></script>
+    <script src="~/AdminCus/assets/js/vendors/bootstrap.bundle.min.js"></script>
+    <script src="~/AdminCus/assets/js/vendors/select2.min.js"></script>
+    <script src="~/AdminCus/assets/js/vendors/perfect-scrollbar.js"></script>
+    <script src="~/AdminCus/assets/js/vendors/jquery.fullscreen.min.js"></script>
+    <script src="~/AdminCus/assets/js/vendors/chart.js"></script>
+    <!-- Main Script -->
+    <script src="~/AdminCus/assets/js/main.js?v=1.1" type="text/javascript"></script>
+    <script src="~/AdminCus/assets/js/custom-chart.js" type="text/javascript"></script>
+    @RenderSection("Scripts", required: false)
+
+    <script>
+        $(document).ready(function() {
+            $('.divCart').hide();
+            $('.modal').modal('show');
+
+            $(".btndangkyLienHe").click(function() {
+                var x = document.getElementById("snackbar");
+                x.className = "show";
+                var phoneRegEx = "/\\(?\\d{3}\\)?[-\\/\\.\\s]?\\d{3}[-\\/\\.\\s]?/";
+                var hovaten = $(".name").val();
+                var sodienthoai = $(".sodt").val();
+                var emailthongtin = $('.emailkhach').val();
+                var quocTich = $('.quoctich').val();
+                var duan = $('.duanname').val();
+                var pn = $('.sopn').val();
+                var dientich = $('.dientich').val();
+                var ngansach = $('.ngansach').val();
+                var thoigianvao = $('.thoigiandonvao').val();
+                var thoihanthue = $('.thoihanthua').val();
+                var mota = $(".mota").val();
+                console.log("duan ", duan);
+                var check = 0;
+
+                if ($('.checkbox').prop('checked')) {
+                    check = 1;
+                }
+                if (hovaten == "") {
+                    $('#snackbar').html("Vui lòng nhập họ và tên");
+                    setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
+                    $('.name').focus();
+                }
+                else if (sodienthoai == "") {
+                    $('#snackbar').html("Vui lòng nhập số điện thoại")
+                    setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
+                    $('.sodt').focus();
+                }
+                else if (sodienthoai.match(phoneRegEx)) {
+                    $('#snackbar').html("Số điện thoại không chính xác vui lòng kiểm tra lại !")
+                    setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
+                    $('.sodt').focus();
+                }
+                else if (sodienthoai.length != 10) {
+                    $('#snackbar').html("Số điện thoại không chính xác vui lòng kiểm tra lại !")
+                    setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
+                    $('.sodt').focus();
+                }
+                else if (emailthongtin == "") {
+                    $('#snackbar').html("Vui lòng nhập Email !")
+                    setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
+                    $('.emailkhach').focus();
+                }
+                else if (quocTich == "") {
+                    $('#snackbar').html("Vui lòng nhập quốc tịch !")
+                    setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
+                    $('.quoctich').focus();
+                }
+                else if (duan == "") {
+                    $('#snackbar').html("Vui lòng nhập tên dự án !")
+                    setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
+                    $('.duanname').focus();
+                }
+                else if (pn == "") {
+                    $('#snackbar').html("Vui lòng nhập dữ liệu !")
+                    setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
+                    $('.sopn').focus();
+                }
+                else if (dientich == "") {
+                    $('#snackbar').html("Vui lòng nhập dữ liệu !")
+                    setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
+                    $('.dientich').focus();
+                }
+                else if (ngansach == "") {
+                    $('#snackbar').html("Vui lòng nhập dữ liệu !")
+                    setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
+                    $('.ngansach').focus();
+                }
+                else if (thoigianvao == "") {
+                    $('#snackbar').html("Vui lòng nhập dữ liệu !")
+                    setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
+                    $('.thoigiandonvao').focus();
+                }
+                else {
+                    $('.bgxuly').show();
+                    $.ajax({
+                        url: '/api/Cascading/PostNewsCus',
+                        type: 'GET',
+                        contentType: "application/json; charset=utf-8",
+                        dataType: 'json',
+                        data: { Hoten: hovaten, sodienthoai: sodienthoai, quoctich: quocTich, duan: duan, phongngu: pn, dientich: dientich, ngansach: ngansach, thoigiandonvao: thoigianvao, thoihanthu: thoihanthue, mota: mota, check: check, diachiemail: $('.emailkhach').attr('value'), },
+                        success: function(d) {
+                            $('.bgxuly').hide();
+                            $('#snackbar').html("Gửi thông tin thành công !")
+                            setTimeout(function() {
+                                x.className = x.className.replace("show", "");
+                                window.location.href = "/danh-sach-gui-yeu-cau";
+                            }, 3000);
+                        },
+                        error: function() {
+                            $('.bgxuly').hide();
+                            alert('Error!');
+                        }
+                    });
+                }
+            });
+
+              $(".btndangkyLienHePub").click(function() {
+                var x = document.getElementById("snackbar");
+                x.className = "show";
+                var phoneRegEx = "/\\(?\\d{3}\\)?[-\\/\\.\\s]?\\d{3}[-\\/\\.\\s]?/";
+                var hovaten = $(".name").val();
+                var sodienthoai = $(".sodt").val();
+                var emailthongtin = $('.emailkhach').val();
+                var quocTich = $('.quoctich').val();
+                var duan = $('.duanname').val();
+                var pn = $('.sopn').val();
+                var dientich = $('.dientich').val();
+                var ngansach = $('.ngansach').val();
+                var thoigianvao = $('.thoigiandonvao').val();
+                var thoihanthue = $('.thoihanthua').val();
+                var mota = $(".mota").val();
+                console.log("duan ", duan);
+                var check = 0;
+
+                if ($('.checkbox').prop('checked')) {
+                    check = 1;
+                }
+                if (hovaten == "") {
+                    $('#snackbar').html("Vui lòng nhập họ và tên");
+                    setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
+                    $('.name').focus();
+                }
+                else if (sodienthoai == "") {
+                    $('#snackbar').html("Vui lòng nhập số điện thoại")
+                    setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
+                    $('.sodt').focus();
+                }
+                else if (sodienthoai.match(phoneRegEx)) {
+                    $('#snackbar').html("Số điện thoại không chính xác vui lòng kiểm tra lại !")
+                    setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
+                    $('.sodt').focus();
+                }
+                else if (sodienthoai.length != 10) {
+                    $('#snackbar').html("Số điện thoại không chính xác vui lòng kiểm tra lại !")
+                    setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
+                    $('.sodt').focus();
+                }
+                else if (emailthongtin == "") {
+                    $('#snackbar').html("Vui lòng nhập Email !")
+                    setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
+                    $('.emailkhach').focus();
+                }
+                else if (quocTich == "") {
+                    $('#snackbar').html("Vui lòng nhập quốc tịch !")
+                    setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
+                    $('.quoctich').focus();
+                }
+                else if (duan == "") {
+                    $('#snackbar').html("Vui lòng nhập tên dự án !")
+                    setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
+                    $('.duanname').focus();
+                }
+                else if (pn == "") {
+                    $('#snackbar').html("Vui lòng nhập dữ liệu !")
+                    setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
+                    $('.sopn').focus();
+                }
+                else if (dientich == "") {
+                    $('#snackbar').html("Vui lòng nhập dữ liệu !")
+                    setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
+                    $('.dientich').focus();
+                }
+                else if (ngansach == "") {
+                    $('#snackbar').html("Vui lòng nhập dữ liệu !")
+                    setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
+                    $('.ngansach').focus();
+                }
+                else if (thoigianvao == "") {
+                    $('#snackbar').html("Vui lòng nhập dữ liệu !")
+                    setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
+                    $('.thoigiandonvao').focus();
+                }
+                else {
+                    $('.bgxuly').show();
+                    $.ajax({
+                        url: '/api/Cascading/PostNewsCus',
+                        type: 'GET',
+                        contentType: "application/json; charset=utf-8",
+                        dataType: 'json',
+                        data: { Hoten: hovaten, sodienthoai: sodienthoai, quoctich: quocTich, duan: duan, phongngu: pn, dientich: dientich, ngansach: ngansach, thoigiandonvao: thoigianvao, thoihanthu: thoihanthue, mota: mota, check: check, diachiemail: $('.emailkhach').attr('value'), },
+                        success: function(d) {
+                            $('.bgxuly').hide();
+                            $('#snackbar').html("Gửi thông tin thành công !")
+                            setTimeout(function() {
+                                x.className = x.className.replace("show", "");
+                                window.location.href = "/danh-sach-gui-yeu-cau";
+                            }, 3000);
+                        },
+                        error: function() {
+                            $('.bgxuly').hide();
+                            alert('Error!');
+                        }
+                    });
+                }
+            });
+            
+            getCount();
+        });
+
+         function getCount() {    
+            $.ajax({
+                url: '/api/Cascading/CounterNotification',
+                type: 'GET',
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                data: {  },
+                success: function(d) {                  
+                    $('.notification').html(d.response);                
+                },
+                error: function() {                   
+                    alert('Error!');
+                }
+            });          
+        }
+
+        function myFunction($param, $active) {
+            var x = document.getElementById("snackbar");
+            x.className = "show";
+            var idRequest = $('.idqt').val();
+
+            var idCustomer = $('.idcustomer').val();
+
+            var idNew = $param;
+
+            $.ajax({
+                url: '/api/Cascading/CustomerCform',
+                type: 'GET',
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                data: { IdRequest: idRequest, IdNew: idNew, CustomerId: idCustomer, Status: $active },
+                success: function(d) {
+                    $('.bgxuly').hide();
+                    $('#snackbar').html("Xử lý thành công !");
+                    $(".xacnhan-" + $param).prop("disabled", true);
+                    setTimeout(function() {
+                        x.className = x.className.replace("show", "");
+                    }, 2000);
+                },
+                error: function() {
+                    $('.bgxuly').hide();
+                    alert('Error!');
+                }
+            });
+
+            console.log('idCustomer', idCustomer);
+        }
+
+    </script>
+
+    <div class="bgxuly">
+        <span style="margin-top: 100px;color:#fff;font-weight:bold;font-size:25px;line-height: 300px;padding-top: 203px;">Thông tin liên hệ của bạn đang được xử lý gửi đi</span>
+    </div>
+    <style>
+        .bgxuly {
+            width: 100%;
+            height: 1000px;
+            text-align: center;
+            background: hsl(0deg 0% 0% / 61%);
+            position: fixed;
+            top: 10px;
+            z-index: 9999999999;
+            display: none;
+        }
+    </style>
+
+</body>
+</html>

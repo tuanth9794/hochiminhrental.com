@@ -1,0 +1,36 @@
+﻿@model IEnumerable<CoreCnice.Models.NewsModelCat>
+@using CoreCnice.Connect;
+@using CoreCnice.Domain;
+@using CoreCnice.Servicer;
+@using CoreCnice.UtilsCs;
+@{
+    int lang = Utils.CIntDef(ViewBag.Langue);
+}
+<section class="shop_grid_area mt_30">
+    <div class="container">
+        <div class="sec_title text-center mb_20">
+            @if (lang == 1)
+            {
+                <h2 class="f_p f_size_30 l_height50 f_600">Có thể bạn sẽ thích</h2>
+            }
+            else
+            {
+                <h2 class="f_p f_size_30 l_height50 f_600">You may like it</h2>
+            }
+        </div>
+        <div class="row mb_30">
+            <div class="event_team_slider owl-carousel goiycss">
+                @foreach (var category in Model.ToList())
+                {
+                    @Html.Partial("~/Views/Catalog/_ProductRelationOne.cshtml", category);
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .event_team_slider .owl-dots {
+        display: none !important;
+    }
+</style>

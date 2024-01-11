@@ -1,0 +1,25 @@
+﻿@using CoreCnice.UtilsCs;
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@await Html.PartialAsync("_Slider")
+
+@await Component.InvokeAsync("CatHomeCatOne", new { Position = 1 })
+
+@await Component.InvokeAsync("CatHomeCatTwo", new { Position = 2 })
+
+@await Component.InvokeAsync("ProductHome", new { Position = 3 })
+
+@await Component.InvokeAsync("CatHomeCatThree", new { Position = 11 })
+
+@await Component.InvokeAsync("ProductHomeOne", new { Position = 4 })
+
+@await Component.InvokeAsync("CustomerTalk", new { Position = 5 })
+
+@*@await Component.InvokeAsync("BannerHome", new { Position = 7 })
+
+    @await Component.InvokeAsync("CustomerTalk", new { Position = 6 })
+
+    @await Component.InvokeAsync("ServiceHome", new { Position = 1 })
+
+    @await Component.InvokeAsync("Partner", new { Position = 5 })*@

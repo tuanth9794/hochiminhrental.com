@@ -1,0 +1,66 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_AD_ITEM>
+@using CoreCnice.UtilsCs;
+@{
+    int lang = Utils.CIntDef(ViewBag.Langue);
+}
+
+<section class="pos_banner_area">
+    <div class="pos_slider owl-carousel">
+        @foreach (var category in Model.ToList())
+        {
+            <div class="pos_banner_item" style="background: url('/UploadImages/Data/Banner/@category.AD_ITEM_FILENAME');"></div>
+        }
+    </div>
+    <div class="container">
+        <div class="section_intro">
+            <div class="section_container" style="height:500px;">
+                <div class="intro">
+                    <div class="intro_content" style="top:150px">
+                        <!--<h1 class="f_700 f_size_50 w_color f_p" style="font-weight:normal">Tìm kiếm sản phẩm yêu thích</h1>-->
+                        @await Component.InvokeAsync("FilterCatHome", new { Cat = 1 })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@*<div class="job_listing Cus_jobli" style="text-align: left;">
+    <div id="job_filter" class="job_list_tab">
+        @if (lang == 1)
+        {
+            <div data-filter="*" class="list_item_tab active">Căn hộ chung cư</div>
+            <div data-filter=".lon" class="list_item_tab">Căn hộ dịch vụ</div>
+            <div data-filter=".lon" class="list_item_tab">Khác</div>
+        }
+        else
+        {
+            <div data-filter="*" class="list_item_tab active">Condo Apartment</div>
+            <div data-filter=".lon" class="list_item_tab">Service Apartment</div>
+            <div data-filter=".lon" class="list_item_tab">Other</div>
+        }
+    </div>
+    <div class="listing_tab" id="tab_filter" style="position: relative; height: 861px;">
+        <div class="item lon new" style="width: 100%;">
+            <div class="list_item">
+                <div class="mailchimp">
+                    <div class="input-group subcribes">
+                        @if (lang == 1)
+                        {
+                            <input type="text" name="EMAIL" id="textS" class="form-control memail" placeholder="Hồ chí minh" onkeydown="search();">
+                            <button class="btn btn_submit f_size_15 f_500" type="button" id="searchClick">Tìm kiếm</button>
+                        }
+                        else
+                        {
+                            <input type="text" name="EMAIL" id="textS" class="form-control memail" placeholder="Ho Chi Minh City" onkeydown="search();">
+                            <button class="btn btn_submit f_size_15 f_500" type="button" id="searchClick">Search</button>
+                        }
+                    </div>
+                    <p class="mchimp-errmessage" style="display: none;"></p>
+                    <p class="mchimp-sucmessage" style="display: none;"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>*@

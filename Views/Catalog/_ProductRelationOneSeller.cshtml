@@ -1,0 +1,246 @@
+﻿@model CoreCnice.Models.NewsModelCat;
+@using CoreCnice.Connect;
+@using CoreCnice.UtilsCs;
+
+@{
+    clsFormat cl = new clsFormat();
+    string linkimg = "";
+
+    string linkurl = "";
+    int lang = Utils.CIntDef(ViewBag.Langue);
+    if (lang == 1)
+    {
+        if (!String.IsNullOrEmpty(Model.NEWS_URL))
+        {
+            linkurl = Model.NEWS_URL;
+        }
+        else
+        {
+            linkurl = "/" + Model.CAT_SEO_URL + "/" + Model.NEWS_SEO_URL.Replace("/", "");
+
+        }
+    }
+    else
+    {
+        if (!String.IsNullOrEmpty(Model.NEWS_URL))
+        {
+            linkurl = Model.NEWS_URL;
+        }
+        else
+        {
+            if (!String.IsNullOrEmpty(Model.NEWS_SEO_URL_EN))
+            {
+                linkurl = "/" + Model.CAT_SEO_URL_EN + "/" + Model.NEWS_SEO_URL_EN.Replace("/", "");
+            }
+            else
+            {
+                linkurl = "/" + Model.CAT_SEO_URL_EN + "/" + Model.NEWS_SEO_URL_EN;
+            }
+        }
+    }
+
+
+    string linkimgNews = "";
+    if (!String.IsNullOrEmpty(Model.NEWS_IMAGE1))
+    {
+        linkimg = "/UploadImages/Data/News/" + Model.NEWS_ID + "/" + Model.NEWS_IMAGE1;
+        linkimgNews = "/UploadImages/Data/News/" + Model.NEWS_ID + "/thumb-" + Model.NEWS_IMAGE1;
+        if (Utils.checkfileExit(linkimgNews) == true)
+        {
+            linkimg = linkimgNews;
+        }
+    }
+    else
+    {
+        linkimg = "/images/noimg.jpg";
+    }
+    //int lang = Utils.CIntDef(ViewBag.Langue);
+    int tygia = Utils.CIntDef(ViewBag.USD);
+    int tien = Utils.CIntDef(ViewBag.Money);
+    string donvi = "Tháng";
+    if (Model.NEWS_TYPE == 3)
+    {
+        if (lang == 1)
+        {
+            donvi = "Ngày";
+        }
+        else
+        {
+            donvi = "Day";
+        }
+    }
+    else
+    {
+        if (lang == 1)
+        {
+            donvi = "Tháng";
+        }
+        else
+        {
+            donvi = "Month";
+        }
+    }
+    string tinhtrang = "";
+    if (lang == 1)
+    {
+        if (Model.NEWS_SHOWTYPE == 0)
+        {
+            tinhtrang = "Đã thuê";
+        }
+        else
+        {
+            tinhtrang = "Có sẵn";
+        }
+    }
+    else
+    {
+        if (Model.NEWS_SHOWTYPE == 0)
+        {
+            tinhtrang = "Rented";
+        }
+        else
+        {
+            tinhtrang = "Available";
+        }
+    }
+}
+<div class="item" style="border: 1px solid #e3e3e3;padding:5px;position:relative">
+    @if (lang == 1)
+    {
+        <div class="e_team_img">
+            <a href="@linkurl">
+                <img src="@linkimg" alt="@Html.Raw(Model.NEWS_TITLE)" style="border-radius:inherit">
+            </a>
+            @*<ul class="list-unstyled">
+        <li><a href="#"><i class="social_twitter"></i></a></li>
+        <li><a href="#"><i class="social_facebook"></i></a></li>
+        <li><a href="#"><i class="social_linkedin"></i></a></li>
+        </ul>*@
+            <div class="docquyen">@tinhtrang</div>
+        </div>
+        <div class="bodyNew">
+            <a href="@linkurl" title="@Html.Raw(Model.NEWS_TITLE)"><h4>@Html.Raw(Model.NEWS_TITLE)</h4></a>
+            <div class="address"><span class="codepro">@Model.NEWS_CODE</span> <i class="fa fa-map-marker"></i><span>@Html.Raw(Model.NEWS_FIELD4)</span></div>
+        </div>
+    }
+    else
+    {
+        <div class="e_team_img">
+            <a href="@linkurl">
+                <img src="@linkimg" alt="@Html.Raw(Model.NEWS_TITLE_EN)" style="border-radius:inherit">
+            </a>
+            @*<ul class="list-unstyled">
+        <li><a href="#"><i class="social_twitter"></i></a></li>
+        <li><a href="#"><i class="social_facebook"></i></a></li>
+        <li><a href="#"><i class="social_linkedin"></i></a></li>
+        </ul>*@
+            <div class="docquyen">@tinhtrang</div>
+        </div>
+        <div class="bodyNew">
+            <a href="@linkurl" title="@Html.Raw(Model.NEWS_TITLE_EN)"><h4>@Html.Raw(Model.NEWS_TITLE_EN)</h4></a>
+            <div class="address"><span class="codepro">@Model.NEWS_CODE</span> <i class="fa fa-map-marker"></i><span>@Html.Raw(Model.NEWS_FIELD4)</span></div>
+        </div>
+
+    }
+    <div class="propepty" style="margin-top:20px">
+        <ul class="details-list">
+            @if (!String.IsNullOrEmpty(Model.NEWS_HTML_EN1))
+            {
+                <li>
+                    <i class="fas fa-bed"></i>
+                    <span>@Utils.CIntDef(Model.NEWS_HTML_EN1)</span>
+                </li>
+            }
+            @if (!String.IsNullOrEmpty(Model.NEWS_HTML_EN2))
+            {
+                <li>
+                    <i class="fa fa-bath"></i>
+                    <span>@Utils.CIntDef(Model.NEWS_HTML_EN2)</span>
+                </li>
+            }
+            @if (!String.IsNullOrEmpty(Model.NEWS_HTML_EN3))
+            {
+                if (lang == 1)
+                {
+                    <li>
+                        <img src="~/images/dt_icon.png" style="width: 16px;margin-right: 9px;" />
+                        <span>@Model.NEWS_HTML_EN3 m <b class="m2">2</b></span>
+                    </li>
+                }
+                else
+                {
+                    <li>
+                        <img src="~/images/dt_icon.png" style="width: 16px;margin-right: 9px;" />
+                        <span>@Model.NEWS_HTML_EN3 sqm</span>
+                    </li>
+                }
+            }
+            <li style="width: 42%;float: right;">
+                @if (tien == 1)
+                {
+                    if (Utils.CDecDef(Model.NEWS_PRICE1.ToString()) == 0)
+                    {
+                        <ins><span class="woocommerce-Price-amount amount" style="color:hsl(30, 100%, 50%)"><span class="woocommerce-Price-currencySymbol"></span>@Html.Raw("Liên hệ")/@donvi</span></ins>
+                    }
+                    else
+                    {
+                        if (lang == 1)
+                        {
+                            <ins><span class="woocommerce-Price-amount amount" style="color:hsl(30, 100%, 50%)"><span class="woocommerce-Price-currencySymbol"></span>@cl.DocTien(Utils.CDecDef(Model.NEWS_PRICE1)) / @donvi</span></ins>
+                        }
+                        else
+                        {
+                            <ins><span class="woocommerce-Price-amount amount" style="color:hsl(30, 100%, 50%)"><span class="woocommerce-Price-currencySymbol"></span>@cl.DocTienEn(Utils.CDecDef(Model.NEWS_PRICE1)) / @donvi</span></ins>
+                        }
+                    }
+                }
+                else
+                {
+                    if (Utils.CDecDef(Model.NEWS_PRICE1.ToString()) == 0)
+                    {
+                        <ins><span class="woocommerce-Price-amount amount" style="color:hsl(30, 100%, 50%)"><span class="woocommerce-Price-currencySymbol"></span>@Html.Raw("Contact")/@donvi</span></ins>
+                    }
+                    else
+                    {
+                        <ins><span class="woocommerce-Price-amount amount" style="color:hsl(30, 100%, 50%)"><span class="woocommerce-Price-currencySymbol"></span>@cl.Dola(Utils.CDecDef(Model.NEWS_PRICE1), Utils.CDecDef(tygia))/@donvi</span></ins>
+                    }
+                }
+            </li>
+        </ul>
+    </div>
+    @if (cl.CheckApprove(Model.NEWS_ID, 0) != true)
+    {
+        @if (lang == 1)
+        {
+            <button name="save" class="btn btn-sm bg-green xacnhan-@Model.NEWS_ID" style="width:100%;text-align:center;color:#ffffff;display: flex;justify-content: center;" onclick="myFunction(@Model.NEWS_ID)">
+                <i class="fa fa-fw fa-file-picture-o"></i>
+                Gợi ý khách hàng
+            </button>
+        }
+        else
+        {
+            <button name="save" class="btn btn-sm bg-green xacnhan-@Model.NEWS_ID" style="width:100%;text-align:center;color:#ffffff;display: flex;justify-content: center;" onclick="myFunction(@Model.NEWS_ID)">
+                <i class="fa fa-fw fa-file-picture-o"></i>
+                Customer Suggestions
+            </button>
+        }
+    }
+    else
+    {
+         @if (lang == 1)
+        {
+            <button name="save" class="btn btn-sm bg-green xacnhan-@Model.NEWS_ID" style="width:100%;text-align:center;color:#ffffff;display: flex;justify-content: center;" disabled>
+                <i class="fa fa-fw fa-file-picture-o"></i>
+              Đã gợi ý
+            </button>
+        }
+        else
+        {
+            <button name="save" class="btn btn-sm bg-green xacnhan-@Model.NEWS_ID" style="width:100%;text-align:center;color:#ffffff;display: flex;justify-content: center;" disabled>
+                <i class="fa fa-fw fa-file-picture-o"></i>
+               Suggested
+            </button>
+        }
+    }
+
+</div>

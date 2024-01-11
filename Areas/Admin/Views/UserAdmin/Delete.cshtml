@@ -1,0 +1,82 @@
+﻿@model CoreCnice.Domain.ESHOP_USER
+
+@{
+    ViewData["Title"] = "Delete";
+     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>ESHOP_USER</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.USER_NAME)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.USER_NAME)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.USER_UN)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.USER_UN)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.USER_PW)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.USER_PW)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.GROUP_ID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.GROUP_ID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.USER_TYPE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.USER_TYPE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.USER_ACTIVE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.USER_ACTIVE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SALT)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SALT)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.USER_PUBLISHDATE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.USER_PUBLISHDATE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.USER_START_WORK)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.USER_START_WORK)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.USER_END_WORK)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.USER_END_WORK)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="USER_ID" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

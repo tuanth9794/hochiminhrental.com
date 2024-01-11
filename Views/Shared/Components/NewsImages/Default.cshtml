@@ -1,0 +1,14 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_NEWS_IMAGE>
+@using CoreCnice.Connect;
+@using CoreCnice.Domain;
+
+
+@foreach (var category in Model.ToList())
+{
+    <li>
+        <a class="fancybox" href="/UploadImages/@category.NEWS_IMG_IMAGE1" data-fancybox-group="gallery" title="@category.NEWS_IMG_DESC">
+            <img src="/UploadImages/@category.NEWS_IMG_IMAGE1" style="width: 100%" alt="@category.NEWS_IMG_DESC">
+        </a>
+    </li>
+}
+

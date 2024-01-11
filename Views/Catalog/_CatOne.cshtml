@@ -1,0 +1,43 @@
+﻿@model CoreCnice.Domain.ESHOP_CATEGORIES
+@using CoreCnice.Connect;
+@using CoreCnice.UtilsCs;
+@{
+    BulSoftCmsConnectContext _context = new BulSoftCmsConnectContext();
+    clsFormat cl = new clsFormat();
+
+    string linkimg = "";
+
+    string linkurl = "";   
+
+    if (!String.IsNullOrEmpty(Model.CAT_URL))
+    {
+        linkurl = Model.CAT_URL;
+    }
+    else
+    {
+        linkurl = "/" + Model.CAT_SEO_URL;
+
+    }
+
+    if (!String.IsNullOrEmpty(Model.CAT_IMAGE2))
+    {
+        linkimg = "/UploadImages/Data/Cats/" + Model.CAT_ID + "/" + Model.CAT_IMAGE2;
+    }
+    else
+    {
+        linkimg = "/images/noimg.jpg";
+    }
+}
+<div class="col-12 col-md-4 px-4">
+    <div class="thumbnail" style="width:100%;">
+        <a href="@linkurl">
+            <img class="group list-group-image" src="@linkimg" alt="" />
+            <div class="caption">
+                <h3 class="group inner list-group-item-heading">@Html.Raw(Model.CAT_NAME)</h3>              
+                <p class="group inner list-group-item-text">
+                    @Html.Raw(cl.GetProductName(Model.CAT_DESC, 100))
+                </p>
+            </div>
+        </a>
+    </div>
+</div>

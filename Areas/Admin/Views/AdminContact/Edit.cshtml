@@ -1,0 +1,104 @@
+﻿@model CoreCnice.Domain.ESHOP_CONTACT
+
+
+@{
+    ViewData["Title"] = "Chỉnh sửa thông tin -" + Model.CONTACT_TITLE;
+     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+    .radio {
+        float: left !important;
+        margin-right: 10px !important
+    }
+</style>
+@using (Html.BeginForm(FormMethod.Post, new { enctype = "multipart/form-data", data_ajax = "false" }))
+{
+
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+            Chỉnh sửa thông tin - @Model.CONTACT_TITLE
+            <small>
+                <i class="fa fa-arrow-circle-left"></i>
+                <a href="/Admin/AdminContact">Về danh sách</a>
+            </small>
+        </h1>
+        <div class="pull-right">
+            <button type="submit" name="save" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>
+                Lưu chỉnh sửa
+            </button>
+        </div>
+    </div>
+
+    <section class="content">
+        @if (!string.IsNullOrEmpty(ViewBag.Error))
+        {
+            <div class="callout callout-info">
+                <h4>Thông báo</h4>
+                <p>
+                    @Html.Raw(ViewBag.Error)
+                </p>
+            </div>
+        }
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="CONTACT_ID" value="@Model.CONTACT_ID" />
+        <div class="row">
+            <div class="col-md-6">
+                <!-- general form elements -->
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Thông tin chung</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- form start -->
+
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Tên Liên hệ</label>
+                            <input type="text" class="form-control" asp-for="CONTACT_NAME">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Địa chỉ Email</label>
+                            <input type="text" class="form-control" asp-for="CONTACT_ADDRESS">
+                        </div>                     
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Thời gian liên hệ</label>
+                            <input type="text" class="form-control" asp-for="CONTACT_PUBLISHDATE">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Số điện thoại</label>
+                            <input type="text" class="form-control" id="catseotitle" asp-for="CONTACT_PHONE">
+                        </div>                       
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Nội dung liên hệ</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- form start -->
+
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Tiêu đề</label>
+                            <input type="text" class="form-control" id="catseotitle" asp-for="CONTACT_TITLE">
+                        </div>
+                      
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Nội dung</label>
+                            <textarea class="textarea" asp-for="CONTACT_CONTENT" placeholder="Place some text here" style="width: 100%; height: 373px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>         
+        </div>
+    </section>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
+}
+

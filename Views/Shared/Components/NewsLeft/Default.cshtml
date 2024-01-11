@@ -1,0 +1,109 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_CATEGORIES>
+@using CoreCnice.Connect;
+@using CoreCnice.UtilsCs
+@{
+    BulSoftCmsConnectContext _context = new BulSoftCmsConnectContext();
+    clsFormat cl = new clsFormat();
+    int lang = Utils.CIntDef(ViewBag.Langue);
+}
+
+@foreach (var category in Model.ToList())
+{
+    string LinkUrl = "";
+
+    if (String.IsNullOrEmpty(category.CAT_URL) == true)
+    {
+        LinkUrl = "/" + category.CAT_SEO_URL;
+    }
+    else
+    {
+        LinkUrl = category.CAT_URL;
+    }
+    <div class="widget sidebar_widget widget_recent_post mt_30">
+        @if (lang == 1)
+        {
+            <div class="widget_title">
+                <h3 class="f_p f_size_20 t_color3">@Html.Raw(category.CAT_NAME)</h3>
+                <div class="border_bottom"></div>
+            </div>
+        }
+        else
+        {
+            <div class="widget_title">
+                <h3 class="f_p f_size_20 t_color3">@Html.Raw(category.CAT_NAME_EN)</h3>
+                <div class="border_bottom"></div>
+            </div>
+        }
+
+        @{
+            var listNew = (from n in _context.ESHOP_NEWS
+                           join c in _context.ESHOP_NEWS_CAT on n.NEWS_ID equals c.NEWS_ID
+                           join cat in _context.ESHOP_CATEGORIES on c.CAT_ID equals cat.CAT_ID
+                           where c.CAT_ID == category.CAT_ID
+                           orderby n.NEWS_PUBLISHDATE descending
+                           select new
+                           {
+                               n.NEWS_ID,
+                               n.NEWS_TITLE,
+                               n.NEWS_URL,
+                               n.NEWS_SEO_URL,
+                               n.NEWS_IMAGE1,
+                               n.NEWS_DESC,
+                               cat.CAT_SEO_URL,
+                               n.NEWS_PUBLISHDATE,
+                               n.NEWS_TITLE_EN
+                           }).Take(10);
+            //int countloop = 0;
+            //int counttt = listNew.ToList().Count;
+            foreach (var itemn in listNew.ToList())
+            {
+                string linkurl = "";
+
+                if (!String.IsNullOrEmpty(linkurl))
+                {
+                    linkurl = itemn.NEWS_URL;
+                }
+                else
+                {
+                    linkurl = "/" + itemn.CAT_SEO_URL + "/" + itemn.NEWS_SEO_URL;
+                }
+
+                string linkimg = "";
+                string linkimgNews = "";
+                if (!String.IsNullOrEmpty(itemn.NEWS_IMAGE1))
+                {
+                    linkimg = "/UploadImages/Data/News/" + itemn.NEWS_ID + "/" + itemn.NEWS_IMAGE1;
+                    linkimgNews = "/UploadImages/Data/News/" + itemn.NEWS_ID + "/thumb-" + itemn.NEWS_IMAGE1;
+                    if (Utils.checkfileExit(linkimgNews) == true)
+                    {
+                        linkimg = linkimgNews;
+                    }
+                }
+                else
+                {
+                    linkimg = "/images/noimg.jpg";
+                }
+                <div class="media post_item">
+                    <img src="~/UploadImages/Data/News/@itemn.NEWS_ID/@itemn.NEWS_IMAGE1" alt="" style="width:90px">
+                    @if (lang == 1)
+                    {
+                        <div class="media-body">
+                            <a href="@LinkUrl">
+                                <h3 class="f_size_16 f_p f_400">@Html.Raw(itemn.NEWS_TITLE)</h3>
+                            </a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="media-body">
+                            <a href="@LinkUrl">
+                                <h3 class="f_size_16 f_p f_400">@Html.Raw(itemn.NEWS_TITLE_EN)</h3>
+                            </a>
+                        </div>
+                    }
+                </div>
+            }
+        }
+    </div>
+}
+

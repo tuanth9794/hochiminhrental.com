@@ -1,0 +1,109 @@
+﻿@model CoreCnice.Domain.ESHOP_ONLINE
+
+@{
+    ViewData["Title"] = "Details";
+     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ESHOP_ONLINE</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ONLINE_NICKNAME)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ONLINE_NICKNAME)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ONLINE_DESC)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ONLINE_DESC)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ONLINE_ORDER)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ONLINE_ORDER)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ONLINE_TYPE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ONLINE_TYPE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CUS_ID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CUS_ID)
+        </dd>
+        @*<dt>
+            @Html.DisplayNameFor(model => model.NEWS_ID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NEWS_ID)
+        </dd>*@
+        <dt>
+            @Html.DisplayNameFor(model => model.ONLINE_OUT_DATE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ONLINE_OUT_DATE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ONLINE_START_BEGIN_DATE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ONLINE_START_BEGIN_DATE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ONLINE_DESC_EN)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ONLINE_DESC_EN)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ONLINE_IP)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ONLINE_IP)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ONLINE_LOCATION)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ONLINE_LOCATION)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ONLINE_COMBACK)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ONLINE_COMBACK)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ONLINE_LINK)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ONLINE_LINK)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ONLINE_ACTIVE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ONLINE_ACTIVE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ONLINE_GUID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ONLINE_GUID)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ONLINE_ID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

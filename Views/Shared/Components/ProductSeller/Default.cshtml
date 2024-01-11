@@ -1,0 +1,24 @@
+﻿@model IEnumerable<CoreCnice.Models.NewsModelCat>
+@using CoreCnice.Connect;
+@using CoreCnice.Domain;
+@using CoreCnice.Servicer;
+@using CoreCnice.UtilsCs;
+@{
+    int lang = Utils.CIntDef(ViewBag.Langue);
+}
+
+
+<div class="row mb_30">
+    @foreach (var category in Model.ToList())
+    {
+        <div class="col-lg-4 col-sm-6">
+            @Html.Partial("~/Views/Catalog/_ProductRelationOneSeller.cshtml", category)            
+        </div>
+    }
+</div>
+
+<style>
+    .event_team_slider .owl-dots {
+        display: none !important;
+    }
+</style>

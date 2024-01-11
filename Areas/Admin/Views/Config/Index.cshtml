@@ -1,0 +1,126 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_CONFIG>
+
+@{
+    ViewData["Title"] = "Index";
+     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.CONFIG_TITLE)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CONFIG_KEYWORD)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CONFIG_DESCRIPTION)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CONFIG_HITCOUNTER)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CONFIG_FAVICON)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CONFIG_ORDER)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CONFIG_LANGUAGE)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CONFIG_EMAIL)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CONFIG_SMTP)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CONFIG_PORT)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CONFIG_PASSWORD)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CONFIG_NAME)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CONFIG_ADD)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CONFIG_FACEBOOK)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CONFIG_GOOGLE)
+                </th>         
+                <th>
+                    @Html.DisplayNameFor(model => model.CONFIG_NAME_US)
+                </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CONFIG_TITLE)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CONFIG_KEYWORD)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CONFIG_DESCRIPTION)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CONFIG_HITCOUNTER)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CONFIG_FAVICON)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CONFIG_ORDER)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CONFIG_LANGUAGE)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CONFIG_EMAIL)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CONFIG_SMTP)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CONFIG_PORT)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CONFIG_PASSWORD)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CONFIG_NAME)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CONFIG_ADD)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CONFIG_FACEBOOK)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CONFIG_GOOGLE)
+            </td>          
+            <td>
+                @Html.DisplayFor(modelItem => item.CONFIG_NAME_US)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.CONFIG_ID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.CONFIG_ID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.CONFIG_ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,132 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_CATEGORIES>
+@using CoreCnice.Connect;
+@using CoreCnice.UtilsCs;
+@using CoreCnice.Servicer;
+@{
+    Layout = "~/Views/Shared/_LayoutDetail.cshtml";
+    BulSoftCmsConnectContext _context = new BulSoftCmsConnectContext();
+    CategoryServices ct = new CategoryServices();
+    int typeCat = ViewBag.Type;
+    string linkimg = "";
+    string alt = "";
+    int lang = Utils.CIntDef(ViewBag.Langue);
+}
+
+
+@if (lang == 1)
+{
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="@ViewBag.UrlCal">@Html.Raw(ViewBag.NAME)</a></li>
+            </ol>
+        </div><!-- End .container -->
+    </nav>
+}
+else
+{
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="@ViewBag.UrlCal">@Html.Raw(ViewBag.NAME)</a></li>
+            </ol>
+        </div><!-- End .container -->
+    </nav>
+}
+
+@foreach (var item in Model.ToList())
+{
+    var listmenucon = ct.MenuCatChAD(item.CAT_ID);
+    <div class="payment_features_two sec_pad">
+        <div class="container">
+            @if (lang == 1)
+            {
+                <div class="sec_title text-center mb_5 mt_2">
+                    <h2 class="f_p f_size_30 l_height50 f_700 t_color  blod">@Html.Raw(item.CAT_NAME)</h2>
+                </div>
+            }
+            else
+            {
+                <div class="sec_title text-center mb_5 mt_2">
+                    <h2 class="f_p f_size_30 l_height50 f_700 t_color  blod">@Html.Raw(item.CAT_NAME_EN)</h2>
+                </div>
+            }
+            @{
+                if (listmenucon.ToList().Count > 0)
+                {
+                    <div class="row">
+                        <div class="bg_row_dt goiycss owl-carousel owl-theme">
+                            @{
+                                if (listmenucon.ToList().Count > 0)
+                                {
+                                    @foreach (var itemCatChild in listmenucon.ToList())
+                                    {
+                                        string LinkUrl = "";
+
+                                        if (lang == 1)
+                                        {
+                                            if (String.IsNullOrEmpty(item.CAT_URL) == true)
+                                            {
+                                                LinkUrl = "/" + item.CAT_SEO_URL;
+                                            }
+                                            else
+                                            {
+                                                LinkUrl = item.CAT_URL;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (String.IsNullOrEmpty(item.CAT_URL) == true)
+                                            {
+                                                LinkUrl = "/" + item.CAT_SEO_URL_EN;
+                                            }
+                                            else
+                                            {
+                                                LinkUrl = item.CAT_URL;
+                                            }
+                                        }
+
+                                        if (lang == 1)
+                                        {
+                                            <div class="item">
+                                                <div class="listing-cat">
+                                                    <a href="@LinkUrl" title="@itemCatChild.CAT_NAME">
+                                                        <div class="overlay" style="background-color: rgba(0, 0, 0, 0.79); "></div>
+                                                        <div class="lc-background" style="background-image: url('/UploadImages/Data/Cats/@itemCatChild.CAT_ID/@itemCatChild.CAT_IMAGE1');"></div>
+                                                        <div class="lc-info">
+                                                            <h4 class="case27-secondary-text">@Html.Raw(itemCatChild.CAT_NAME)</h4>
+                                                            <h6>@await ct.getCountNews(itemCatChild.CAT_ID) danh sách</h6>
+                                                        </div>
+                                                        <div class="lc-icon"> <i class="icon-location-pin-4" style=""></i></div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="item">
+                                                <div class="listing-cat">
+                                                    <a href="@LinkUrl" title="@itemCatChild.CAT_NAME_EN">
+                                                        <div class="overlay" style="background-color: rgba(0, 0, 0, 0.79); "></div>
+                                                        <div class="lc-background" style="background-image: url('/UploadImages/Data/Cats/@itemCatChild.CAT_ID/@itemCatChild.CAT_IMAGE1');"></div>
+                                                        <div class="lc-info">
+                                                            <h4 class="case27-secondary-text">@Html.Raw(itemCatChild.CAT_NAME_EN)</h4>
+                                                            <h6>@await ct.getCountNews(itemCatChild.CAT_ID) listings</h6>
+                                                        </div>
+                                                        <div class="lc-icon"> <i class="icon-location-pin-4" style=""></i></div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                }
+                            }
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+}

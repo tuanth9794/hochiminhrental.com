@@ -1,0 +1,152 @@
+﻿@using CoreCnice.UtilsCs;
+@model IEnumerable<CoreCnice.Domain.Customer_Request>
+@{
+    Layout = "~/Views/Shared/_LayoutCus.cshtml";
+    clsFormat cl = new clsFormat();
+    int lang = Utils.CIntDef(ViewBag.Langue);
+    int tygia = Utils.CIntDef(ViewBag.USD);
+    int tien = Utils.CIntDef(ViewBag.Money);
+    string donvi = "";
+    string donviEn = "";
+}
+
+<style>
+    .form-control, .form-select {
+        border: 1px solid #c3c4c8 !important;
+    }
+</style>
+
+@{
+    if (lang == 1)
+    {
+        <section class="content-main">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h4>Danh sách gửi yêu cầu</h4>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Tên khách</th>
+                                        <th>Số điện thoại</th>
+                                        <th>Dự án</th>
+                                        <th>Phòng Ngủ</th>
+                                        <th>Diện tích</th>
+                                        <th>Ngân sách</th>
+                                        <th>Ngày thuê</th>
+                                        <th class="text-end">#</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        if (Model.ToList().Count > 0)
+                                        {
+                                            @foreach (var itemCatChild in Model.ToList())
+                                            {
+                                                <tr>
+                                                    <td width="40%">
+                                                        @itemCatChild.Customer_Name
+                                                    </td>
+                                                    <td>
+                                                     *********
+                                                    </td>
+                                                    <td>
+                                                        @itemCatChild.Customer_DuAn
+                                                    </td>
+                                                    <td>
+                                                        @itemCatChild.Customer_PB
+                                                    </td>
+                                                    <td>
+                                                        @itemCatChild.Customer_Dt
+                                                    </td>
+                                                    <td>
+                                                        @itemCatChild.Customer_Ns
+                                                    </td>
+                                                    <td>
+                                                        @itemCatChild.Customer_TimeAv.Value.ToShortDateString()
+                                                    </td>
+                                                    <td>
+                                                        <a href="/AdminCus/PostNewsCusEdit/@itemCatChild.Customer_request_id" class="btn btn-sm btn-brand rounded font-sm">Xem</a>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+    else
+    {
+        <section class="content-main">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h4>Inquiry submission list</h4>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Phone</th>
+                                        <th>Project</th>
+                                        <th>Bed room</th>
+                                        <th>Area</th>
+                                        <th>Budget</th>
+                                        <th>Date of hire</th>
+                                        <th class="text-end">#</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        if (Model.ToList().Count > 0)
+                                        {
+                                            @foreach (var itemCatChild in Model.ToList())
+                                            {
+                                                <tr>
+                                                    <td width="40%">
+                                                        @itemCatChild.Customer_Name
+                                                    </td>
+                                                    <td>
+                                                    *********
+                                                    </td>
+                                                    <td>
+                                                        @itemCatChild.Customer_DuAn
+                                                    </td>
+                                                    <td>
+                                                        @itemCatChild.Customer_PB
+                                                    </td>
+                                                    <td>
+                                                        @itemCatChild.Customer_Dt
+                                                    </td>
+                                                    <td>
+                                                        @itemCatChild.Customer_Ns
+                                                    </td>
+                                                    <td>
+                                                        @itemCatChild.Customer_TimeAv.Value.ToShortDateString()
+                                                    </td>
+                                                    <td>
+                                                        <a href="/AdminCus/PostNewsCusEdit/@itemCatChild.Customer_request_id" class="btn btn-sm btn-brand rounded font-sm">Views</a>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+}

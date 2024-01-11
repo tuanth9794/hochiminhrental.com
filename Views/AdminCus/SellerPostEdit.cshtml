@@ -1,0 +1,759 @@
+﻿@using CoreCnice.UtilsCs;
+@model CoreCnice.Domain.ESHOP_NEWS
+@{
+    Layout = "~/Views/Shared/_LayoutSeller.cshtml";
+    clsFormat cl = new clsFormat();
+    int lang = Utils.CIntDef(1);
+    int tygia = Utils.CIntDef(ViewBag.USD);
+    int tien = Utils.CIntDef(ViewBag.Money);
+    string donvi = "";
+    string donviEn = "";
+}
+@*<link rel="stylesheet" href="~/Admin/bower_components/bootstrap/dist/css/bootstrap.css">*@
+<script src="~/Admin/tinymce/js/tinymce/tinymce.js"></script>
+<link rel="stylesheet" href="~/Admin/dist/css/skins/_all-skins.css">
+<link rel="stylesheet" href="~/Admin/css/BulSoftCustom.css">
+<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
+<style>
+    .radio {
+        float: left !important;
+        margin-right: 10px !important
+    }
+
+    .content-header {
+        display: block;
+    }
+
+    label {
+        display: inline-block;
+        max-width: 100%;
+        margin-bottom: 5px;
+        font-weight: bold;
+        font-size: 13px;
+        margin-bottom: 14px;
+    }
+
+    footer.main-footer {
+        bottom: inherit;
+    }
+</style>
+
+<link rel="stylesheet" href="~/Admin/dist/css/AdminLTE.css">
+<link rel="stylesheet" href="~/Admin/bower_components/Ionicons/css/ionicons.css">
+@*<link rel="stylesheet" href="~/Admin/bootstrap-wysihtml5/bootstrap3-wysihtml5.css">*@
+
+
+@using (Html.BeginForm(FormMethod.Post, new { enctype = "multipart/form-data", data_ajax = "false" }))
+{
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+            Thông tin đăng dự án
+        </h1>
+        <div class="pull-right">
+            <a href="/AdminCus/SellerPostImages/@Model.NEWS_ID" name="save" class="btn btn-sm bg-green">
+                <i class="fa fa-fw fa-file-picture-o"></i>
+                Thêm mới hình ảnh
+            </a>
+            <a href="/AdminCus/SellerPosProCheck/@Model.NEWS_ID" name="save" class="btn btn-sm bg-blue-active">
+                <i class="fa fa-fw fa-file-picture-o"></i>
+                Thêm mới tiện ích
+            </a>
+            <button type="submit" name="save" class="btn btn-sm bg-blue">
+                <i class="fa fa-floppy-o"></i>
+                Lưu chỉnh sửa
+            </button>
+        </div>
+    </div>
+    <section class="content">
+        @if (!string.IsNullOrEmpty(ViewBag.Error))
+        {
+            <div class="callout callout-info">
+                <h4>Thông báo</h4>
+                <p>
+                    @Html.Raw(ViewBag.Error)
+                </p>
+            </div>
+        }
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        @*<input type="hidden" asp-for="NEWS_ID" value="@Model.NEWS_ID" />*@
+        <div class="row">
+            <div class="col-md-6">
+                <!-- general form elements -->
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Thông tin chung</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- form start -->
+
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Mã Tin</label>
+                            <input type="text" class="form-control" asp-for="NEWS_CODE">
+                        </div>
+                        <div class="form-group">
+                            <label>Danh sách chuyên mục</label>
+                            <select name="Employee[]" id="select2" multiple="multiple" class="form-control" asp-items="ViewBag.Cats"></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Tên Tin</label>
+                            <input type="text" class="form-control" asp-for="NEWS_TITLE">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Tên Tin TA</label>
+                            <input type="text" class="form-control" asp-for="NEWS_TITLE_EN">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Miêu tả ngắn</label>
+                            <textarea class="form-control" rows="3" id="catdesc" asp-for="NEWS_DESC"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Cấu hình</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- form start -->
+
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Miêu tả ngắn TA</label>
+                            <textarea class="form-control" rows="3" id="catdesc" asp-for="NEWS_DESC_EN"></textarea>
+                        </div>
+                        <div class="form-group" hidden>
+                            <label for="exampleInputEmail1">Liên kết tĩnh</label>
+                            <input type="text" class="form-control" id="catlienket" asp-for="NEWS_URL">
+                        </div>
+                        <div class="form-group" hidden>
+                            <label for="exampleInputEmail1">Liên kết tĩnh EN</label>
+                            <input type="text" class="form-control" id="catlienket" asp-for="NEWS_LIENKET_EN">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Link Video</label>
+                            <input type="text" class="form-control" id="catseotitle" asp-for="NEWS_FIELD1">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Ngày trả</label>
+                            <input type="text" class="form-control" asp-for="NEWS_TIME_AVALBLE">
+                        </div>
+                        <div class="form-group" hidden>
+                            <label for="exampleInputPassword1">Số lượng xem tin</label>
+                            <input type="text" class="form-control" id="catseotitle" asp-for="NEWS_COUNT">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Hotline Sản phẩm</label>
+                            <input type="text" class="form-control" id="catseotitle" asp-for="NEWS_FIELD3">
+                        </div>
+                        <div class="form-group" hidden>
+                            <label for="exampleInputPassword1">Seo title</label>
+                            <input type="text" class="form-control" id="catseotitle" asp-for="NEWS_SEO_TITLE">
+                        </div>
+                        <div class="form-group" hidden>
+                            <label for="exampleInputPassword1">Seo title En</label>
+                            <input type="text" class="form-control" asp-for="NEWS_TARGET">
+                        </div>
+                        <div class="form-group" hidden>
+                            <label for="exampleInputPassword1">Seo Url</label>
+                            <input type="text" class="form-control" asp-for="NEWS_SEO_URL">
+                        </div>
+                        <div class="form-group" hidden>
+                            <label for="exampleInputPassword1">Seo Url EN</label>
+                            <input type="text" class="form-control" asp-for="NEWS_SEO_URL_EN">
+                        </div>
+                        <div class="form-group" hidden>
+                            <label for="exampleInputPassword1">SEO Keyword</label>
+                            <textarea class="form-control" rows="2" id="catseokey" asp-for="NEWS_SEO_KEYWORD"></textarea>
+                        </div>
+                        <div class="form-group" hidden>
+                            <label for="exampleInputPassword1">SEO Des</label>
+                            <textarea class="form-control" rows="2" id="catseokey" asp-for="NEWS_SEO_DESC"></textarea>
+                        </div>
+                        <div class="form-group" hidden>
+                            <label for="exampleInputPassword1">SEO Des EN</label>
+                            <textarea class="form-control" rows="2" id="catseokey" asp-for="NEWS_SEO_META_DESC_EN"></textarea>
+                        </div>
+                        <div class="form-group" hidden>
+                            <label for="exampleInputPassword1">SEO canonical</label>
+                            <input type="text" class="form-control" id="catseotitle" asp-for="NEWS_IMAGE4">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">SEO canonical EN</label>
+                            <input type="text" class="form-control" id="catseotitle" asp-for="NEWS_SEO_META_CANONICAL">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">
+                            Mô tả sản phẩm cơ bản
+                        </h3>
+                        <!-- tools box -->
+                        <div class="pull-right box-tools">
+                            <button type="button" class="btn btn-default btn-sm" data-widget="collapse" data-toggle="tooltip"
+                                title="Collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                        <!-- /. tools -->
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Địa chỉ hiển thị</label>
+                            <input type="text" class="form-control" id="catlienket" asp-for="NEWS_FIELD4">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Địa tiếng anh</label>
+                            <input type="text" class="form-control" id="catlienket" asp-for="NEWS_TITLE_JS">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Địa chỉ chính  xác</label>
+                            <input type="text" class="form-control" id="catlienket" asp-for="NEWS_SEO_DESC_JS">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">
+                            Thông số cơ bản
+                        </h3>
+                        <!-- tools box -->
+                        <div class="pull-right box-tools">
+                            <button type="button" class="btn btn-default btn-sm" data-widget="collapse" data-toggle="tooltip"
+                                title="Collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                        <!-- /. tools -->
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Giá cho thuê</label>
+                            <input type="text" class="form-control" id="catlienket" asp-for="NEWS_PRICE1">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Giá khuyến mãi</label>
+                            <input type="text" class="form-control" id="catlienket" asp-for="NEWS_PRICE2">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Phòng ngủ</label>
+                            <input type="text" class="form-control" id="catlienket" asp-for="NEWS_HTML_EN1">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">
+                            Thông số cơ bản
+                        </h3>
+                        <!-- tools box -->
+                        <div class="pull-right box-tools">
+                            <button type="button" class="btn btn-default btn-sm" data-widget="collapse" data-toggle="tooltip"
+                                title="Collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                        <!-- /. tools -->
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Diện tích</label>
+                            <input type="text" class="form-control" id="catlienket" asp-for="NEWS_HTML_EN3">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Phòng tắm</label>
+                            <input type="text" class="form-control" id="catlienket" asp-for="NEWS_HTML_EN2">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Loại Phòng</label>
+                            <select asp-for="NEWS_SEO_URL_JS" style="height:27px;padding:0px" class="form-control" asp-items="@(new SelectList(ViewBag.OrderStatusList, "id", "value"))"></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">
+                            Thông tin hiển thị
+                        </h3>
+                        <!-- tools box -->
+                        <div class="pull-right box-tools">
+                            <button type="button" class="btn btn-default btn-sm" data-widget="collapse" data-toggle="tooltip"
+                                title="Collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                        <!-- /. tools -->
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-md-2 control-label">Loại tin</label>
+                            <div class="col-md-10">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        @Html.RadioButtonFor(model => model.NEWS_TYPE, "1", new { id = 1, @class = "radio" })
+                                        <label class="textrb">Sản phẩm</label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        @Html.RadioButtonFor(model => model.NEWS_TYPE, "2", new { id = 2, @class = "radio" })
+                                        <label class="textrb"> Sản phẩm độc quyền</label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        @Html.RadioButtonFor(model => model.NEWS_TYPE, "3", new { id = 3, @class = "radio" })
+                                        <label class="textrb">Thuê theo ngày</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="line" hidden />
+                        <div class="form-group" hidden>
+                            <label for="inputEmail3" class="col-md-2 control-label">Cho phép phản hồi</label>
+                            <div class="col-md-10">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        @Html.RadioButtonFor(model => model.NEWS_FEEDBACKTYPE, "0", new { id = 0, @checked = "checked", @class = "radio" })
+                                        <label class="textrb">Không</label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        @Html.RadioButtonFor(model => model.NEWS_FEEDBACKTYPE, "1", new { id = 1, @checked = "checked", @class = "radio" })
+                                        <label class="textrb">Có</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="line" hidden />
+                        <div class="form-group" hidden>
+                            <label for="inputEmail3" class="col-md-2 control-label">Hiển thị trang chủ</label>
+                            <div class="col-md-10">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        @Html.RadioButtonFor(model => model.NEWS_PERIOD, "0", new { id = 0, @checked = "checked", @class = "radio" })
+                                        <label class="textrb">Không</label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        @Html.RadioButtonFor(model => model.NEWS_PERIOD, "1", new { id = 1, @class = "radio" })
+                                        <label class="textrb">Hiển thị</label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        @Html.RadioButtonFor(model => model.NEWS_PERIOD, "5", new { id = 5, @class = "radio" })
+                                        <label class="textrb">Hiển thị trang chủ</label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        @Html.RadioButtonFor(model => model.NEWS_PERIOD, "6", new { id = 6, @class = "radio" })
+                                        <label class="textrb">Mục tiêu đề ra</label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        @Html.RadioButtonFor(model => model.NEWS_PERIOD, "7", new { id = 7, @class = "radio" })
+                                        <label class="textrb">Banner Trang chủ</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="line" hidden />
+                        <div class="form-group" hidden>
+                            <label for="inputEmail3" class="col-md-2 control-label">Hiển thị (giới thiệu , tư vấn)</label>
+                            <div class="col-md-10">
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.NEWS_SHOWINDETAIL, "0", new { id = 0, @checked = "checked", @class = "radio" })
+                                    <label class="textrb">Không</label>
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.NEWS_SHOWINDETAIL, "1", new { id = 1, @class = "radio" })
+                                    <label class="textrb">Vị trí 1</label>
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.NEWS_SHOWINDETAIL, "2", new { id = 2, @class = "radio" })
+                                    <label class="textrb">Vị trí 2</label>
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.NEWS_SHOWINDETAIL, "3", new { id = 3, @class = "radio" })
+                                    <label class="textrb">Vị trí 3</label>
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.NEWS_SHOWINDETAIL, "4", new { id = 4, @class = "radio" })
+                                    <label class="textrb">Vị trí 4</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="line" />
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-md-2 control-label">Tình trạng căn hộ</label>
+                            <div class="col-md-10">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        @Html.RadioButtonFor(model => model.NEWS_SHOWTYPE, "0", new { id = 0, @checked = "checked", @class = "radio" })
+                                        <label class="textrb">Đã thuê</label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        @Html.RadioButtonFor(model => model.NEWS_SHOWTYPE, "1", new { id = 1, @checked = "checked", @class = "radio" })
+                                        <label class="textrb">Có sẵn</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="line" hidden />
+                        <div class="form-group" hidden>
+                            <label for="inputEmail3" class="col-md-2 control-label">Ẩn hiện</label>
+                            <div class="col-md-10">
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.NEWS_PRINTTYPE, "0", new { id = 0, @checked = "checked", @class = "radio" })
+                                    <label class="textrb">Ẩn</label>
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.NEWS_PRINTTYPE, "1", new { id = 1, @checked = "checked", @class = "radio" })
+                                    <label class="textrb">Hiện</label>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="line" hidden />
+                        <div class="form-group form-horizontal " hidden>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="inputEmail3" class="col-md-5 control-label textalginleft">Thứ tự hiển thị trang chủ</label>
+                                    <div class="col-md-7">
+                                        <input type="text" class="form-control " id="catseotitle" asp-for="NEWS_ORDER_PERIOD">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="inputEmail3" class="col-md-5 control-label textalginleft">Thứ tự hiển thị danh sách</label>
+                                    <div class="col-md-7">
+                                        <input type="text" class="form-control " id="catseotitle" asp-for="NEWS_ORDER">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="box box-info">
+                    <div class="box-header">
+                        <h3 class="box-title">
+                            Miêu tả dài
+                        </h3>
+                        <!-- tools box -->
+                        <div class="pull-right box-tools">
+                            <button type="button" class="btn btn-info btn-sm" data-widget="collapse" data-toggle="tooltip"
+                                title="Collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                        <!-- /. tools -->
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body pad">
+                        <textarea class="textarea" asp-for="NEWS_FILEHTML" placeholder="Nhập miêu tả dài" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="box box-info">
+                    <div class="box-header">
+                        <h3 class="box-title">
+                            Miêu tả dài tiếng anh
+                        </h3>
+                        <!-- tools box -->
+                        <div class="pull-right box-tools">
+                            <button type="button" class="btn btn-info btn-sm" data-widget="collapse" data-toggle="tooltip"
+                                title="Collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                        <!-- /. tools -->
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body pad">
+                        <textarea class="textarea" asp-for="NEWS_FILEHTML_EN" placeholder="Nhập miêu tả dài" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="box box-info">
+                    <div class="box-header">
+                        <h3 class="box-title">
+                            Bản đồ tiện ích
+                        </h3>
+                        <!-- tools box -->
+                        <div class="pull-right box-tools">
+                            <button type="button" class="btn btn-info btn-sm" data-widget="collapse" data-toggle="tooltip"
+                                title="Collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                        <!-- /. tools -->
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body pad">
+                        <textarea class="textarea" asp-for="NEWS_FIELD2" placeholder="Nhập miêu tả dài" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12" hidden>
+                <div class="box box-info">
+                    <div class="box-header">
+                        <h3 class="box-title">
+                            Thẻ tiêu đề
+                        </h3>
+                        <!-- tools box -->
+                        <div class="pull-right box-tools">
+                            <button type="button" class="btn btn-info btn-sm" data-widget="collapse" data-toggle="tooltip"
+                                title="Collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                        <!-- /. tools -->
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body pad">
+                        <textarea asp-for="NEWS_FIELD5" placeholder="Nhập miêu tả dài" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="box box-info">
+                    <div class="box-header">
+                        <h3 class="box-title">
+                            Hình ảnh đại diện
+                        </h3>
+                        <!-- tools box -->
+                        <div class="pull-right box-tools">
+                            <button type="button" class="btn btn-info btn-sm" data-widget="collapse" data-toggle="tooltip"
+                                title="Collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                        <!-- /. tools -->
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body pad">
+                        <div class="form-group form-horizontal ">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="inputEmail3" class="col-md-5 control-label textalginleft">Hình hiển thị</label>
+                                    <div class="col-md-7">
+                                        <div class="demo-section k-content">
+                                            <input name="files" id="filesTh" type="file" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="inputEmail3" class="col-md-5 control-label textalginleft">Hình banner</label>
+                                    <div class="col-md-7">
+                                        <div class="demo-section k-content">
+                                            <input name="files" id="filesBn" type="file" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    @section Scripts {
+    @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+        <script>
+            $(document).ready(function() {
+                $("#NEWS_TITLE").focusout(function() {
+                    var str = $("#NEWS_TITLE").val();// lấy chuỗi dữ liệu nhập vào từ form có tên title
+                    var str123 = $("#NEWS_TITLE").val();
+                    str = str.toLowerCase();// chuyển chuỗi sang chữ thường để xử lý
+                    /* tìm kiếm và thay thế tất cả các nguyên âm có dấu sang không dấu*/
+                    str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+                    str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+                    str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+                    str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+                    str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+                    str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+                    str = str.replace(/đ/g, "d");
+                    str = str.replace(/!|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'| |\"|\&|\#|\[|\]|~|$|_/g, "-");
+                    /* tìm và thay thế các kí tự đặc biệt trong chuỗi sang kí tự - */
+                    str = str.replace(/-+-/g, "-"); //thay thế 2- thành 1-
+                    str = str.replace(/^\-+|\-+$/g, "");//cắt bỏ ký tự - ở đầu và cuối chuỗi
+                    $("#NEWS_SEO_URL").val(str);// xuất kết quả xữ lý ra
+                });
+                //CKEDITOR.replace('textarea');
+
+                $("#NEWS_TITLE_EN").focusout(function() {
+                    var str = $("#NEWS_TITLE_EN").val();// lấy chuỗi dữ liệu nhập vào từ form có tên title
+                    var str123 = $("#NEWS_TITLE_EN").val();
+                    str = str.toLowerCase();// chuyển chuỗi sang chữ thường để xử lý
+                    /* tìm kiếm và thay thế tất cả các nguyên âm có dấu sang không dấu*/
+                    str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+                    str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+                    str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+                    str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+                    str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+                    str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+                    str = str.replace(/đ/g, "d");
+                    str = str.replace(/!|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'| |\"|\&|\#|\[|\]|~|$|_/g, "-");
+                    /* tìm và thay thế các kí tự đặc biệt trong chuỗi sang kí tự - */
+                    str = str.replace(/-+-/g, "-"); //thay thế 2- thành 1-
+                    str = str.replace(/^\-+|\-+$/g, "");//cắt bỏ ký tự - ở đầu và cuối chuỗi
+                    $("#NEWS_SEO_URL_EN").val(str);// xuất kết quả xữ lý ra
+                });
+            });
+            tinymce.init({
+                selector: 'textarea.textarea',  // change this value according to your HTML
+                plugins: [
+                    'advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker',
+                    'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+                    'save table contextmenu directionality emoticons template paste textcolor toc'
+                ],
+                a_plugin_option: true,
+                //toolbar: [
+                //    'undo redo | styleselect | bold italic | link image | alignleft aligncenter alignright',
+                //    'newdocument, undo, redo, visualaid, cut, copy, paste, selectall, bold, italic, underline, strikethrough, subscript, superscript, removeformat, formats'
+                //],
+                toc_header: "div",
+                toc_class: "our-toc",
+                toolbar: 'undo redo toc | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | ltr rtl',
+                autosave_ask_before_unload: true,
+                autosave_interval: "30s",
+                autosave_prefix: "{path}{query}-{id}-",
+                autosave_restore_when_empty: false,
+                autosave_retention: "2m",
+                image_advtab: true,
+                //file_browser_callback: 'myFileBrowser',
+                a_configuration_option: 400,
+                template_cdate_format: '[Date Created (CDATE): %m/%d/%Y : %H:%M:%S]',
+                template_mdate_format: '[Date Modified (MDATE): %m/%d/%Y : %H:%M:%S]',
+                height: 400,
+                image_caption: true,
+                quickbars_selection_toolbar: 'bold italic | quicklink h2 h3 blockquote quickimage quicktable',
+                noneditable_noneditable_class: "mceNonEditable",
+                toolbar_drawer: 'sliding',
+                spellchecker_dialog: true,
+                spellchecker_whitelist: ['Ephox', 'Moxiecode'],
+                tinycomments_mode: 'embedded',
+                content_style: ".mymention{ color: gray; }",
+                contextmenu: "link image imagetools table configurepermanentpen",
+                //images_upload_url: '/Areas/Admin/api/UploadService',
+                //automatic_uploads: false,
+                //images_reuse_filename: true,
+                //images_upload_base_path: '/UploadImages/UploadService/'
+                //image_advtab: true,
+                //external_filemanager_path: "/Admin/responsive_filemanager/filemanager/",
+                //filemanager_title: "Trình quản lý thư viện",
+                //external_plugins: { "filemanager": "/Admin/responsive_filemanager/filemanager/plugin.min.js" }
+                file_browser_callback: RoxyFileBrowser
+            });
+
+            $(function() {
+                //select2 eklentimizin tanımı
+                $('#select2').select2({
+                    placeholder: "Lựa chọn danh mục",
+                });
+            });
+
+            function RoxyFileBrowser(field_name, url, type, win) {
+                var roxyFileman = '/lib/fileman/index.html';
+                if (roxyFileman.indexOf("?") < 0) {
+                    roxyFileman += "?type=" + type;
+                }
+                else {
+                    roxyFileman += "&type=" + type;
+                }
+                roxyFileman += '&input=' + field_name + '&value=' + win.document.getElementById(field_name).value;
+                if (tinyMCE.activeEditor.settings.language) {
+                    roxyFileman += '&langCode=' + tinyMCE.activeEditor.settings.language;
+                }
+                tinyMCE.activeEditor.windowManager.open({
+                    file: roxyFileman,
+                    title: 'Roxy Fileman',
+                    width: 850,
+                    height: 650,
+                    resizable: "yes",
+                    plugins: "media",
+                    inline: "yes",
+                    close_previous: "no"
+                }, { window: win, input: field_name });
+                return false;
+            }
+        </script>
+
+        }
+}
+
+
+<style>
+    .form-control, .form-select {
+        border: 1px solid #c3c4c8 !important;
+        font-size: 13px;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        padding-left: 20px;
+        color: #000000;
+        width: 100%;
+        border-radius: 4px;
+        height: 41px;
+    }
+
+    .form-group {
+        float: left;
+        width: 100%;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+    .box-header.with-border {
+        border-bottom: 1px solid #f4f4f4;
+    }
+
+    .box-header {
+        color: #444;
+        display: block;
+        padding: 10px;
+        position: relative;
+    }
+
+    .box-body {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 3px;
+        border-bottom-left-radius: 3px;
+        padding: 10px;
+    }
+
+    .select2-selection {
+        padding: 8px;
+        border-radius: 5px;
+    }
+
+    .select2-container--default .select2-selection--multiple .select2-selection__rendered {
+        box-sizing: border-box;
+        list-style: none;
+        margin: 0;
+        padding: 0 5px;
+        width: 100%;
+        font-size: 14px;
+    }
+
+  .textrb {
+      float: left;
+    font-size: 15px;
+    font-weight: normal;
+    margin-top: -3px;
+}
+</style>

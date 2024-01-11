@@ -1,0 +1,229 @@
+﻿@using CoreCnice.UtilsCs;
+@model CoreCnice.Domain.ESHOP_PROPERTIES
+@{
+    Layout = "~/Views/Shared/_LayoutSeller.cshtml";
+    clsFormat cl = new clsFormat();
+    int lang = Utils.CIntDef(1);
+    int tygia = Utils.CIntDef(ViewBag.USD);
+    int tien = Utils.CIntDef(ViewBag.Money);
+    string donvi = "";
+    string donviEn = "";
+    IQueryable<CoreCnice.Models.ESHOP_PRO_MODEL> nq = null;
+    if (ViewBag.ListAdd != null)
+    {
+        nq = ViewBag.ListAdd;
+    }
+    else
+    {
+
+
+    }
+}
+<link rel="stylesheet" href="~/Admin/bower_components/bootstrap/dist/css/bootstrap.css">
+<link rel="stylesheet" href="~/Admin/bower_components/Ionicons/css/ionicons.css">
+<link rel="stylesheet" href="~/Admin/dist/css/skins/_all-skins.css">
+<link rel="stylesheet" href="~/Admin/dist/css/AdminLTE.css">
+<link rel="stylesheet" href="~/Admin/css/BulSoftCustom.css">
+<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
+
+
+
+<style>
+    .radio {
+        float: left !important;
+        margin-right: 10px !important
+    }
+
+    .content-header {
+        display: block;
+    }
+
+    label {
+        display: inline-block;
+        max-width: 100%;
+        margin-bottom: 5px;
+        font-weight: bold;
+        font-size: 13px;
+        margin-bottom: 14px;
+    }
+
+    footer.main-footer {
+        bottom: inherit;
+    }
+
+    #filelist label {
+        font-size: 14px;
+    }
+</style>
+<section class="content-main">
+    <div class="row">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+        <style>
+            .jstree-default-large > .jstree-container-ul > .jstree-node {
+                margin-left: 0;
+                margin-right: 0;
+                width: 100% !important;
+                float: left !important;
+            }
+
+
+            /*.jstree-default-large > .jstree-no-dots .jstree-node .jstree-children li {
+                    width: 25% !important;
+                    float: left !important;
+                }*/
+
+            .jstree-default .jstree-wholerow-clicked {
+                background: none;
+            }
+        </style>
+        @using (Html.BeginForm(FormMethod.Post, new { enctype = "multipart/form-data", data_ajax = "false" }))
+        {
+            <div class="content-header clearfix">
+                <h1 class="pull-left" style="font-size: 25px;font-weight:bold">
+                    @ViewBag.Title                  
+                </h1>
+                <div class="pull-right">
+                    <button type="submit" name="save" class="btn bg-green">
+                        <i class="fa fa-floppy-o"></i>
+                        Lưu chỉnh sửa
+                    </button>
+                </div>
+            </div>
+            <section class="content">
+                @if (!string.IsNullOrEmpty(ViewBag.Error))
+                {
+                    <div class="callout callout-info">
+                        <h4>Thông báo</h4>
+                        <p>
+                            @Html.Raw(ViewBag.Error)
+                        </p>
+                    </div>
+                }
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" class="form-control" value="@ViewBag.NewsId">
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- general form elements -->
+                        <div class="box box-primary">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Thông tin chung</h3>
+                            </div>
+                            <!-- /.box-header -->
+                            <!-- form start -->
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Mã Tin</label>
+                                    <input type="text" class="form-control" value="@ViewBag.Code" readonly="readonly">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Tên Tin</label>
+                                    <input type="text" class="form-control" value="@ViewBag.Title" readonly="readonly">
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <!-- general form elements -->
+                        <div class="box box-primary">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Lựa chọn tiện ích</h3>
+                            </div>
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <div id="jstree">
+                                    </div>
+                                    <input type="hidden" name="selectedItems" id="selectedItems" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <script type="text/javascript">
+                    $(function() {
+                        $('#jstree').on('changed.jstree', function(e, data) {
+                            var i, j;
+                            var selectedItems = [];
+                            for (i = 0, j = data.selected.length; i < j; i++) {
+
+                                //Fetch the Id.
+                                var id = data.selected[i];
+
+                                //Remove the ParentId.
+                                if (id.indexOf('-') != -1) {
+                                    id = id.split("-")[1];
+                                }
+
+                                //Add the Node to the JSON Array.
+                                selectedItems.push({
+                                    text: data.instance.get_node(data.selected[i]).text,
+                                    id: id,
+                                    parent: data.node.parents[0]
+                                });
+                            }
+
+                            //Serialize the JSON Array and save in HiddenField.
+                            $('#selectedItems').val(JSON.stringify(selectedItems));
+                        }).jstree({
+                            "core": {
+                                "themes": {
+                                    "variant": "large"
+                                },
+                                "data": @Html.Raw(ViewBag.Json)
+                                        },
+                            "checkbox": {
+                                "keep_selected_style": true
+                            },
+                            "plugins": ["wholerow", "checkbox"],
+                        });
+                    });
+                </script>
+            </section>
+        }
+    </div>
+</section>
+<style>
+    .alert {
+        display: none;
+    }
+
+    .content {
+        background: #ffffff;
+    }
+
+    .box-body {
+        float: left;
+        width: 100%;
+        margin-top: 16px;
+    }
+
+    .textrb {
+        margin-top: 3px;
+    }
+    .btn.btn-primary {
+    font-size: 14px;
+    font-weight: 500;
+    padding: 6px 40px;
+    color: #ffffff;
+    border: none;
+    background-color: hsl(33deg 70% 55%) !important;
+    border-radius: 4px;
+}
+.nameCode
+{
+    margin-top: 7px;
+    float: left;
+    font-size:15px;
+}
+.jstree-default-large .jstree-anchor {
+    line-height: 32px;
+    height: 32px;
+    font-size: 14px;
+    font-weight: bold;
+}
+</style>

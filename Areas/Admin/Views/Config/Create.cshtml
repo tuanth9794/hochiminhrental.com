@@ -1,0 +1,124 @@
+﻿@model CoreCnice.Domain.ESHOP_CONFIG
+
+@{
+    ViewData["Title"] = "Create";
+     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Create</h2>
+
+<h4>ESHOP_CONFIG</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="CONFIG_TITLE" class="control-label"></label>
+                <input asp-for="CONFIG_TITLE" class="form-control" />
+                <span asp-validation-for="CONFIG_TITLE" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CONFIG_KEYWORD" class="control-label"></label>
+                <input asp-for="CONFIG_KEYWORD" class="form-control" />
+                <span asp-validation-for="CONFIG_KEYWORD" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CONFIG_DESCRIPTION" class="control-label"></label>
+                <input asp-for="CONFIG_DESCRIPTION" class="form-control" />
+                <span asp-validation-for="CONFIG_DESCRIPTION" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CONFIG_HITCOUNTER" class="control-label"></label>
+                <input asp-for="CONFIG_HITCOUNTER" class="form-control" />
+                <span asp-validation-for="CONFIG_HITCOUNTER" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CONFIG_FAVICON" class="control-label"></label>
+                <input asp-for="CONFIG_FAVICON" class="form-control" />
+                <span asp-validation-for="CONFIG_FAVICON" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CONFIG_ORDER" class="control-label"></label>
+                <input asp-for="CONFIG_ORDER" class="form-control" />
+                <span asp-validation-for="CONFIG_ORDER" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CONFIG_LANGUAGE" class="control-label"></label>
+                <input asp-for="CONFIG_LANGUAGE" class="form-control" />
+                <span asp-validation-for="CONFIG_LANGUAGE" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CONFIG_EMAIL" class="control-label"></label>
+                <input asp-for="CONFIG_EMAIL" class="form-control" />
+                <span asp-validation-for="CONFIG_EMAIL" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CONFIG_SMTP" class="control-label"></label>
+                <input asp-for="CONFIG_SMTP" class="form-control" />
+                <span asp-validation-for="CONFIG_SMTP" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CONFIG_PORT" class="control-label"></label>
+                <input asp-for="CONFIG_PORT" class="form-control" />
+                <span asp-validation-for="CONFIG_PORT" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CONFIG_PASSWORD" class="control-label"></label>
+                <input asp-for="CONFIG_PASSWORD" class="form-control" />
+                <span asp-validation-for="CONFIG_PASSWORD" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CONFIG_NAME" class="control-label"></label>
+                <input asp-for="CONFIG_NAME" class="form-control" />
+                <span asp-validation-for="CONFIG_NAME" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CONFIG_ADD" class="control-label"></label>
+                <input asp-for="CONFIG_ADD" class="form-control" />
+                <span asp-validation-for="CONFIG_ADD" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CONFIG_FACEBOOK" class="control-label"></label>
+                <input asp-for="CONFIG_FACEBOOK" class="form-control" />
+                <span asp-validation-for="CONFIG_FACEBOOK" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CONFIG_GOOGLE" class="control-label"></label>
+                <input asp-for="CONFIG_GOOGLE" class="form-control" />
+                <span asp-validation-for="CONFIG_GOOGLE" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+                <label asp-for="AD_ITEM_LANGUAGE" class="control-label"></label>
+                <input asp-for="AD_ITEM_LANGUAGE" class="form-control" />
+                <span asp-validation-for="AD_ITEM_LANGUAGE" class="text-danger"></span>
+            </div>*@
+            @*<div class="form-group">
+                <label asp-for="AD_ITEM_FIELD1" class="control-label"></label>
+                <input asp-for="AD_ITEM_FIELD1" class="form-control" />
+                <span asp-validation-for="AD_ITEM_FIELD1" class="text-danger"></span>
+            </div>*@
+            @*<div class="form-group">
+                <label asp-for="AD_ITEM_FIELD2" class="control-label"></label>
+                <input asp-for="AD_ITEM_FIELD2" class="form-control" />
+                <span asp-validation-for="AD_ITEM_FIELD2" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <label asp-for="CONFIG_NAME_US" class="control-label"></label>
+                <input asp-for="CONFIG_NAME_US" class="form-control" />
+                <span asp-validation-for="CONFIG_NAME_US" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

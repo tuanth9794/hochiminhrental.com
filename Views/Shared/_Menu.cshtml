@@ -1,0 +1,454 @@
+﻿@using CoreCnice.Domain;
+@using CoreCnice.Servicer;
+@using CoreCnice.UtilsCs;
+
+@{
+    CategoryServices ct = new CategoryServices();
+    clsFormat cl = new clsFormat();
+    var listmenu = await ct.MenuHome(1);
+    int lang = Utils.CIntDef(ViewBag.Langue);
+    int tien = Utils.CIntDef(ViewBag.Money);
+    string vnd = "VND";
+    string usd = "USD";
+    string clwidth = "";
+    int count = 0;
+    int _count1 = 1;
+    string divopen = "";
+    string divcloser = "";
+}
+
+<ul class="navbar-nav menu navbar-nav menu d-flex justify-content-end">
+    @if (listmenu.ToList().Count > 0)
+    {
+        foreach (var item in listmenu.ToList())
+        {
+            string LinkUrl = "";
+
+            if (lang == 1)
+            {
+                if (String.IsNullOrEmpty(item.CAT_URL) == true)
+                {
+                    LinkUrl = "/" + item.CAT_SEO_URL;
+                }
+                else
+                {
+                    LinkUrl = item.CAT_URL;
+                }
+            }
+            else
+            {
+                if (String.IsNullOrEmpty(item.CAT_URL) == true)
+                {
+                    LinkUrl = "/" + item.CAT_SEO_URL_EN;
+                }
+                else
+                {
+                    LinkUrl = item.CAT_URL;
+                }
+            }
+            <li class="dropdown submenu nav-item">
+                @if (lang == 1)
+                {
+                    <a class="nav-link dropdown-toggle" href="@LinkUrl">
+                        @Html.Raw(item.CAT_NAME)
+                    </a>
+                }
+                else
+                {
+                    <a class="nav-link dropdown-toggle" href="@LinkUrl">
+                        @Html.Raw(item.CAT_NAME_EN)
+                    </a>
+                }
+                @{
+                    var listmenucon = ct.MenuCatCh(item.CAT_ID);
+                    if (listmenucon.ToList().Count > 0)
+                    {
+                        <ul role="menu" class=" dropdown-menu">
+                            @foreach (var itemCatChild in listmenucon.ToList())
+                            {
+                                count = 0;
+                                _count1 = 1;
+                                string LinkUrlCon = "";
+
+                                if (lang == 1)
+                                {
+                                    if (!String.IsNullOrEmpty(itemCatChild.CAT_URL))
+                                    {
+                                        LinkUrlCon = "/" + itemCatChild.CAT_URL;
+                                    }
+                                    else
+                                    {
+                                        LinkUrlCon = "/" + itemCatChild.CAT_SEO_URL;
+                                    }
+                                }
+                                else
+                                {
+                                    if (!String.IsNullOrEmpty(itemCatChild.CAT_URL))
+                                    {
+                                        LinkUrlCon = "/" + itemCatChild.CAT_URL;
+                                    }
+                                    else
+                                    {
+                                        LinkUrlCon = "/" + itemCatChild.CAT_SEO_URL_EN;
+                                    }
+                                }
+
+                                var listmenuconCon = ct.MenuCatCh(itemCatChild.CAT_ID);
+
+                                <li class="dropdown submenu nav-item">
+                                    @{
+                                        if (lang == 1)
+                                        {
+                                            <a title="@itemCatChild.CAT_NAME" class="dropdown-toggle nav-link" href="@LinkUrlCon">
+                                                @Html.Raw(itemCatChild.CAT_NAME)
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a title="@itemCatChild.CAT_NAME_EN" class="dropdown-toggle nav-link" href="@LinkUrlCon">
+                                                @Html.Raw(itemCatChild.CAT_NAME_EN)
+                                            </a>
+                                        }
+                                        if (lang == 1)
+                                        {
+                                            if (listmenuconCon.ToList().Count < 6)
+                                            {
+                                                clwidth = "style='width: 200px;'";
+                                            }
+                                            else if (listmenuconCon.ToList().Count < 12)
+                                            {
+                                                clwidth = "style='width: 235px;'";
+                                            }
+                                            else if (listmenuconCon.ToList().Count > 12)
+                                            {
+                                                clwidth = "style='width: 370px;'";
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (listmenuconCon.ToList().Count < 6)
+                                            {
+                                                clwidth = "style='width: 200px;'";
+                                            }
+                                            else if (listmenuconCon.ToList().Count < 12)
+                                            {
+                                                clwidth = "style='width: 260px;'";
+                                            }
+                                            else if (listmenuconCon.ToList().Count > 12)
+                                            {
+                                                clwidth = "style='width: 370px;'";
+                                            }
+                                        }
+
+                                        if (listmenuconCon.ToList().Count > 0)
+                                        {
+                                            <div class="dropdown-menu" @Html.Raw(clwidth)>
+                                                @foreach (var itemCatChildCon in listmenuconCon.ToList())
+                                                {
+                                                    int countround = listmenuconCon.ToList().Count;
+                                                    if (listmenuconCon.ToList().Count < 12)
+                                                    {
+                                                        if (count == 0)
+                                                        {
+                                                            //divopen = "<div class='col-lg-6 col-md-6'>";
+                                                            divopen = "<div class='flmenu'>";
+                                                            count++;
+                                                        }
+                                                        else
+                                                        {
+                                                            if (count % 8 == 0)
+                                                            {
+                                                                divopen = "<div class='flmenu'>";
+                                                            }
+                                                            else
+                                                            {
+                                                                divopen = "";
+                                                            }
+                                                            count++;
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        if (count == 0)
+                                                        {
+                                                            //divopen = "<div class='col-lg-4 col-md-4'>";
+                                                            divopen = "<div class='flmenu'>";
+                                                            count++;
+                                                        }
+                                                        else
+                                                        {
+                                                            if (count % 8 == 0)
+                                                            {
+                                                                divopen = "<div class='flmenu'>";
+                                                            }
+                                                            else
+                                                            {
+                                                                divopen = "";
+                                                            }
+                                                            count++;
+                                                        }
+                                                    }
+
+
+                                                    string classrow1 = "";
+                                                    if (countround % 8 == 0)
+                                                    {
+                                                        if (_count1 == 1)
+                                                        {
+                                                            _count1++;
+                                                        }
+                                                        else
+                                                        {
+                                                            if (_count1 % 8 == 0)
+                                                            {
+                                                                classrow1 = "</div>";
+                                                            }
+                                                            _count1++;
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+
+                                                        if (_count1 == 1)
+                                                        {
+                                                            _count1++;
+                                                            if (_count1 == countround)
+                                                            {
+                                                                classrow1 = "</div>";
+                                                            }
+                                                            else
+                                                            {
+
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            if (_count1 % 8 == 0)
+                                                            {
+                                                                classrow1 = "</div>";
+                                                            }
+                                                            else
+                                                            {
+                                                                if (_count1 == countround)
+                                                                {
+                                                                    classrow1 = "</div>";
+                                                                }
+                                                            }
+                                                            _count1++;
+                                                        }
+                                                    }
+
+                                                    string LinkUrlConOne = "";
+
+                                                    if (lang == 1)
+                                                    {
+                                                        if (!String.IsNullOrEmpty(itemCatChildCon.CAT_URL))
+                                                        {
+                                                            LinkUrlConOne = "/" + itemCatChildCon.CAT_URL;
+                                                        }
+                                                        else
+                                                        {
+                                                            LinkUrlConOne = "/" + itemCatChildCon.CAT_SEO_URL;
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        if (!String.IsNullOrEmpty(itemCatChildCon.CAT_URL))
+                                                        {
+                                                            LinkUrlConOne = "/" + itemCatChildCon.CAT_URL;
+                                                        }
+                                                        else
+                                                        {
+                                                            LinkUrlConOne = "/" + itemCatChildCon.CAT_SEO_URL_EN;
+                                                        }
+                                                    }
+                                                    @Html.Raw(divopen)
+                                                    <div class="dropdown submenu nav-item">
+                                                        @if (lang == 1)
+                                                        {
+                                                            <a title="@itemCatChildCon.CAT_NAME_EN" class="dropdown-toggle nav-link" href="@LinkUrlConOne">
+                                                                @Html.Raw(itemCatChildCon.CAT_NAME)
+                                                            </a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a title="@itemCatChildCon.CAT_NAME_EN" class="dropdown-toggle nav-link" href="@LinkUrlConOne">
+                                                                @Html.Raw(itemCatChildCon.CAT_NAME_EN)
+                                                            </a>
+                                                        }
+                                                    </div>
+                                                    @Html.Raw(classrow1)
+                                                }
+                                            </div>
+                                        }
+                                    }
+                                </li>
+                            }
+                        </ul>
+                    }
+                }
+            </li>
+        }
+    }
+    @*<li class="nav-item dropdown submenu">
+        <div class="btn-group cofg">
+            @if (lang == 1)
+            {
+                <button type="button" class="btn cls btn-danger">
+                    <img src="~/images/vn_flag.png" class="co" />
+                    @if (tien == 1)
+                    {
+                        @vnd
+                    }
+                    else
+                    {
+                        @usd
+                    }
+                </button>
+            }
+            else
+            {
+                <button type="button" class="btn cls btn-danger">
+                    <img src="~/images/en.svg" class="co" />
+                    @if (tien == 1)
+                    {
+                        @vnd
+                    }
+                    else
+                    {
+                        @usd
+                    }
+                </button>
+            }
+            <button type="button" class="btn cl btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <div class="dropdown-menu popover">
+                <div class="row is-relative currency-box">
+                    <div class="col-md-5 col-xs-12">
+                        <a class="is-flex middle-xs is-relative pointer is-checked" onclick="ChuyenNgonNgu(1)">
+                            <img src="~/images/vi.svg" width="16" height="16">
+                            <span class="px--12">Tiếng Việt</span>
+                        </a>
+                        <a class="is-flex middle-xs is-relative pointer" onclick="ChuyenNgonNgu(2)">
+                            <img src="~/images/en.svg" width="16" height="16">
+                            <span class="px--12">English</span>
+                        </a>
+                    </div>
+                    <div class="col-md-7 col-xs-12">
+                        <a class="is-flex middle-xs is-relative pointer is-checked" onclick="ChangeMoney(1)">
+                            <b>VND</b>
+                            <span class="px--12">Việt Nam Đồng</span>
+                        </a>
+                        <a class="is-flex middle-xs is-relative pointer" onclick="ChangeMoney(2)">
+                            <b>USD</b>
+                            <span class="px--12">Dollar USA</span>
+                        </a>
+                    </div>
+                    @*<div class="col-md-12 col-xs-12">
+                            <a class="is-flex middle-xs is-relative pointer">
+                                <b>USD</b>
+                                <span class="px--12">@cl.FormatMoney(Utils.CDecDef(ViewBag.USD)) VND</span>
+                            </a>
+                        </div>*@
+       @*         </div>
+            </div>
+        </div>
+    </li>*@
+</ul>
+
+<style>
+    .popover {
+        min-width: 442px;
+    }
+
+    .popover {
+        border: 1px solid hsl(0deg 0% 84%);
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,.1);
+        border-radius: .1875rem;
+        padding: 0 1rem;
+        top: 25px;
+        right: 0;
+        min-width: 349px !important;
+        padding: 15px !important;
+        text-align: left;
+        opacity: 0;
+        visibility: hidden;
+        transition: top .3s,opacity .3s;
+        z-index: 2;
+        min-width: 100%;
+    }
+
+        .popover a {
+            padding: 8px 0;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .popover img {
+            border-style: none;
+            max-width: 100%;
+            vertical-align: middle;
+            height: auto;
+        }
+
+    .px--12 {
+        padding-left: 12px !important;
+    }
+
+    .currency-box > div:first-child {
+        border-right: 1px solid hsl(0deg 0% 84%);
+    }
+
+    .popover > div a:hover {
+        color: hsl(12deg 91% 59%);
+    }
+
+    .popover:before {
+        content: "";
+        top: -5px;
+        right: 4px;
+        transform: rotate(45deg);
+        height: 1rem;
+        width: 1rem;
+        /* margin-top: -20px; */
+        /* float: left; */
+        /* border-top-left-radius: 3px; */
+        /* box-shadow: 0 0 0 1px rgba(6,44,82,.1), 0 2px 16px rgba(33,43,54,.08); */
+        background: hsl(0deg 0% 100%);
+        content: "";
+        position: absolute;
+        bottom: 0px;
+        right: 23px;
+        border-left: 7px solid hsl(0deg 0% 0% / 0%);
+        border-right: 7px solid hsl(0deg 0% 0% / 0%);
+        border-bottom: 7px solid hsl(0deg 0% 100%);
+        border-top: 7px solid hsl(0deg 0% 0% / 0%);
+    }
+
+    .popover {
+        top: 32px;
+    }
+
+    .navbar_fixed .cofg .cls {
+        color: hsl(0deg 0% 100%);
+        background-color: hsl(56, 28%, 55%);
+        border-color: hsl(0deg 0% 100% / 80%);
+        font-weight: bold;
+        padding: 3px 5px;
+        border-radius: 15px;
+        font-size: 10px;
+    }
+
+    .navbar_fixed .cl {
+        color: hsl(0deg 0% 0%);
+        background-color: hsl(56, 28%, 55%);
+        /*border-color: hsl(56, 28%, 55%);*/
+    }
+
+    .flmenu {
+        float: left;
+        width: auto;
+        padding: 0px 10px;
+    }
+</style>

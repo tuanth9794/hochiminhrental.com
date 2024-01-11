@@ -1,0 +1,35 @@
+﻿@using CoreCnice.UtilsCs;
+@{
+    int lang = Utils.CIntDef(ViewBag.Langue);
+    string name = "";
+}
+
+<div class="col-lg-3">
+    <div class="blog-sidebar">
+        <div class="widget sidebar_widget widget_search">
+            <form action="#" class="search-form input-group">
+                @if (lang == 1)
+                {
+                    name = "Tìm kiếm thông tin"; ;
+                }
+                else
+                {
+                    name = "Look for information";
+                }
+                <input type="search" class="form-control widget_input" placeholder="@name">
+                <button type="submit"><i class="ti-search"></i></button>
+            </form>
+        </div>
+        @await Component.InvokeAsync("MenuLeft", new { Position = 2 })
+        @await Component.InvokeAsync("NewsLeft", new { Position = 2 })
+    </div>
+</div>
+
+<style>
+    .blog-sidebar .widget.widget_recent_post .post_item .media-body h3 {
+        color: hsl(240, 14%, 18%);
+        font-size: 13px;
+        height: 60px;
+        overflow: hidden;
+    }
+</style>

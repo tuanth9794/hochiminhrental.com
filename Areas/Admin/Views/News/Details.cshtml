@@ -1,0 +1,199 @@
+﻿@model CoreCnice.Domain.ESHOP_NEWS
+
+@{
+    ViewData["Title"] = "Details";
+     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ESHOP_NEWS</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NEWS_CODE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NEWS_CODE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NEWS_TITLE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NEWS_TITLE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NEWS_DESC)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NEWS_DESC)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NEWS_URL)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NEWS_URL)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NEWS_TARGET)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NEWS_TARGET)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NEWS_SEO_KEYWORD)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NEWS_SEO_KEYWORD)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NEWS_SEO_DESC)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NEWS_SEO_DESC)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NEWS_SEO_TITLE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NEWS_SEO_TITLE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NEWS_SEO_URL)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NEWS_SEO_URL)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NEWS_FILEHTML)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NEWS_FILEHTML)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NEWS_PUBLISHDATE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NEWS_PUBLISHDATE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NEWS_UPDATE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NEWS_UPDATE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NEWS_SHOWTYPE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NEWS_SHOWTYPE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NEWS_SHOWINDETAIL)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NEWS_SHOWINDETAIL)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NEWS_FEEDBACKTYPE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NEWS_FEEDBACKTYPE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NEWS_TYPE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NEWS_TYPE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NEWS_PERIOD)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NEWS_PERIOD)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NEWS_ORDER_PERIOD)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NEWS_ORDER_PERIOD)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NEWS_ORDER)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NEWS_ORDER)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NEWS_PRINTTYPE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NEWS_PRINTTYPE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NEWS_COUNT)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NEWS_COUNT)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NEWS_SENDEMAIL)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NEWS_SENDEMAIL)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NEWS_SENDDATE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NEWS_SENDDATE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NEWS_PRICE1)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NEWS_PRICE1)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NEWS_PRICE2)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NEWS_PRICE2)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NEWS_PRICE3)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NEWS_PRICE3)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NEWS_IMAGE1)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NEWS_IMAGE1)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NEWS_IMAGE2)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NEWS_IMAGE2)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NEWS_IMAGE3)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NEWS_IMAGE3)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NEWS_IMAGE4)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NEWS_IMAGE4)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.NEWS_ID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -1,0 +1,98 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_CATEGORIES>
+@using CoreCnice.Connect;
+@using CoreCnice.Domain;
+@using CoreCnice.Servicer;
+@using CoreCnice.UtilsCs;
+@*@model List<CoreCnice.Domain.ESHOP_AD_ITEM>*@
+@{
+    BulSoftCmsConnectContext _context = new BulSoftCmsConnectContext();
+}
+<style>
+    .bg-silver-light {
+        background-color: hsl(0, 0%, 100%) !important;
+    }
+</style>
+@foreach (var category in Model.ToList())
+{
+    string LinkUrl = "";
+
+    if (String.IsNullOrEmpty(category.CAT_URL) == true)
+    {
+        LinkUrl = "/" + category.CAT_SEO_URL;
+    }
+    else
+    {
+        LinkUrl = category.CAT_URL;
+    }
+
+    <!-- Section:  -->
+    <section>
+        <div class="container pb-sm-70">
+            <div class="section-title text-center">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
+                        <h2 class="text-center line-height-1 mt-0 text-white"><a href="@LinkUrl">@Html.Raw(category.CAT_NAME)</a><span class="text-theme-colored3"> @Html.Raw(category.CAT_CODE)</span> </h2>
+                        <p class="text-center">@Html.Raw(category.CAT_DESC)</p>
+                    </div>
+                </div>
+            </div>
+            <div class="section-content text-center">
+                <div class="row">
+                    @{
+                        var listNew = (from n in _context.ESHOP_NEWS
+                                       join c in _context.ESHOP_NEWS_CAT on n.NEWS_ID equals c.NEWS_ID
+                                       join cat in _context.ESHOP_CATEGORIES on c.CAT_ID equals cat.CAT_ID
+                                       where c.CAT_ID == category.CAT_ID
+                                       orderby n.NEWS_ID descending
+                                       select new
+                                       {
+                                           n.NEWS_ID,
+                                           n.NEWS_TITLE,
+                                           n.NEWS_URL,
+                                           n.NEWS_SEO_URL,
+                                           n.NEWS_IMAGE1,
+                                           n.NEWS_DESC,
+                                           cat.CAT_SEO_URL,
+                                           n.NEWS_FIELD3,
+                                           n.NEWS_FIELD4,
+                                           n.NEWS_FILEHTML
+                                       }).Take(12);
+
+
+                        @foreach (var itemn in listNew.ToList())
+                        {
+                            string linkimg = "";
+                            string linkimgNews = "";
+                            if (!String.IsNullOrEmpty(itemn.NEWS_IMAGE1))
+                            {
+                                linkimg = "/UploadImages/Data/News/" + itemn.NEWS_ID + "/" + itemn.NEWS_IMAGE1;
+                                linkimgNews = "/UploadImages/Data/News/" + itemn.NEWS_ID + "/thumb-" + itemn.NEWS_IMAGE1;
+                                if (Utils.checkfileExit(linkimgNews) == true)
+                                {
+                                    linkimg = linkimgNews;
+                                }
+                            }
+                            else
+                            {
+                                linkimg = "/images/noimg.jpg";
+                            }
+                            <div class="col-sm-6 col-md-3 mb-sm-30">
+                                <div class="team-block bg-light pt-10 pb-15">
+                                    <div class="team-thumb">
+                                        <img class="img-fullwidth" src="@linkimg" alt="">
+                                    </div>
+                                    <div class="info">
+                                        <div class="pt-10 pb-10 bg-theme-colored2">
+                                            <h4 class="mt-0 mb-0 text-white">@itemn.NEWS_TITLE</h4>
+                                            <h6 class="mt-0 mb-0 text-white">@Html.Raw(itemn.NEWS_DESC)</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+}

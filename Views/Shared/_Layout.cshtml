@@ -1,0 +1,1040 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <!-- Google Tag Manager -->
+    <script>
+        (function(w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-MZRBK6M');</script>
+    <!-- End Google Tag Manager -->
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="content-language" content="vn">
+    <link rel="icon" href="/UploadImages/Data/@Html.Raw(ViewData["FAVICON"])">
+    <title>@Html.Raw(ViewData["Title"])</title>
+    <meta name="description" content="@Html.Raw(ViewData["Desc"])" />
+    <meta name="keywords" content="@Html.Raw(ViewData["Key"])" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/vendors/bootstrap-selector/css/bootstrap-select.min.css">
+    <!--icon font css-->
+    <link rel="stylesheet" href="~/vendors/themify-icon/themify-icons.css">
+    <link rel="stylesheet" href="~/vendors/elagent/style.css">
+    <link rel="stylesheet" href="~/vendors/flaticon/flaticon.css">
+    <link rel="stylesheet" href="~/vendors/animation/animate.css">
+    <link rel="stylesheet" href="~/vendors/owl-carousel/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/vendors/magnify-pop/magnific-popup.css">
+    <link rel="stylesheet" href="~/vendors/nice-select/nice-select.css">
+    <link rel="stylesheet" href="~/vendors/scroll/jquery.mCustomScrollbar.min.css">
+    <link rel="stylesheet" href="~/css/style.css">
+    <link rel="stylesheet" href="~/css/responsive.css">
+    <link rel="stylesheet" href="~/css/savistahouse.css">
+    <link rel="stylesheet" href="~/css/bootstrap-select.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <style>
+        .menu > .nav-item > .nav-link {
+            font: 500 15px "Poppins", sans-serif;
+            color: hsl(0deg 0% 0%);
+            padding: 0px;
+            -webkit-transition: color 0.3s ease 0s;
+            -o-transition: color 0.3s ease 0s;
+            transition: color 0.3s ease 0s;
+            position: relative;
+        }
+
+        .pos_banner_area {
+            height: 350px;
+            min-height: 350px;
+            width: 100%;
+            height: 600px;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .pos_slider:before {
+            content: "";
+            width: 100%;
+            height: 100%;
+            background: hsla(240, 5%, 30%, 0.5);
+            opacity: 0.70;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        .menu_one {
+            padding: 0px;
+            border-bottom: 1px solid hsl(0, 0%, 89%);
+        }
+
+        .menu > .nav-item {
+            position: relative;
+            padding-bottom: 20px;
+            padding-top: 20px;
+        }
+
+        .navbar_fixed .menu > .nav-item > .nav-link {
+            color: #000;
+        }
+
+        .new_footer_top {
+            padding: 60px 0px 25px;
+            position: relative;
+        }
+
+        .new_footer_area .footer_bottom {
+            padding: 20px 0px;
+            padding-bottom: 20px;
+            background: hsl(0, 0%, 0%);
+            color: hsl(0, 0%, 100%);
+            border-top: 1px solid hsla(0, 0%, 100%, 0.1);
+        }
+
+        .job_listing .listing_tab {
+            margin-bottom: -30px;
+            margin-top: 5px;
+            overflow: hidden;
+            width: 100%;
+        }
+
+            .job_listing .listing_tab .list_item {
+                padding: 0px;
+                background: none;
+            }
+
+
+
+        .section_container .intro_content .subcribes {
+            max-width: 100%;
+            margin: 0 auto;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .job_listing .job_list_tab .list_item_tab {
+            color: hsl(0, 0%, 100%);
+            font-size: 17px;
+        }
+
+        .job_listing .job_list_tab {
+            border-bottom: none;
+        }
+
+            .job_listing .job_list_tab .list_item_tab:before {
+                content: "";
+                width: 0;
+                height: 2px;
+                background: hsl(171, 100%, 29%);
+                position: absolute;
+                bottom: 0;
+                left: auto;
+                right: 0;
+                -webkit-transition: all 0.2s linear;
+                -o-transition: all 0.2s linear;
+                transition: all 0.2s linear;
+            }
+
+        .section_container .intro_content .subcribes .btn_submit {
+            border-radius: 0px;
+        }
+
+        .job_listing .job_list_tab .list_item_tab + .list_item_tab {
+            margin-left: 22px;
+        }
+
+        .btn_three {
+            font: 500 14px "Poppins", sans-serif;
+            color: hsl(0, 0%, 0%);
+            background: hsl(0, 0%, 100%);
+            border-radius: 3px;
+            padding: 7px 30px;
+            border: none;
+            margin-top: 50px;
+            -webkit-transition: all 0.3s linear;
+            -o-transition: all 0.3s linear;
+            transition: all 0.3s linear;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .security_inner {
+            border: none;
+        }
+
+        .security_customers_logo_area {
+            padding: 1px 0px;
+        }
+    </style>
+    <script type="application/ld+json">
+        {
+           "@Html.Raw("@")context": "http://schema.org",
+           "@Html.Raw("@")type":"Organization",
+          "url": "https://hochiminhrental.com/",
+          "logo": "https://hochiminhrental.com/UploadImages/Data/Banner/logo_erc.png",
+          "contactPoint": [
+            {
+              "@Html.Raw("@")type": "ContactPoint",
+              "telephone": "1800 234 546",
+              "contactType": "customer service"
+            }
+          ],
+          "sameAs": [
+            "https://www.facebook.com/EurekaHomeRE/",
+            "https://www.instagram.com/eureka_service_apartment/",
+            "https://www.youtube.com/channel/UCRho6lfszhN0Z07eByV8Rnw?view_as=subscriber"
+          ]
+        }
+    </script>
+    <script type="application/ld+json">
+        {
+            "@Html.Raw("@")context": "http://schema.org",
+             "@Html.Raw("@")id": "https://hochiminhrental.com/#website",
+            "@Html.Raw("@")type": "WebSite",
+            "url": "https://hochiminhrental.com/",
+            "name": "Rever",
+            "potentialAction": {
+                 "@Html.Raw("@")type": "SearchAction",
+                "target": "https://hochiminhrental.com/s/{search_term_string}",
+                "query-input": "required name=search_term_string"
+            }
+        }
+    </script>
+    <script type="application/ld+json">
+        {
+          "@Html.Raw("@")context": "http://schema.org",
+           "@Html.Raw("@")type": "LocalBusiness",
+          "name": "Hochiminhrental",
+          "image": "https://hochiminhrental.com/UploadImages/Data/Banner/logo_erc.png",
+          "url": "https://hochiminhrental.com/",
+          "telephone": "+84 898 303 929",
+          "priceRange": "$$$",
+          "address": {
+             "@Html.Raw("@")type": "PostalAddress",
+            "streetAddress": " 81 Street 03 - Binh An Ward - District 2 - HCMC",
+            "addressRegion": "HCM",
+            "addressLocality": "District 2",
+            "postalCode": "700000",
+            "addressCountry": "VN"
+          },
+          "geo": {
+             "@Html.Raw("@")type": "GeoCoordinates",
+            "latitude": 10.794886511848024,
+            "longitude": 106.72198554023069
+          },
+          "openingHoursSpecification": [
+            {
+               "@Html.Raw("@")type": "OpeningHoursSpecification",
+              "dayOfWeek": [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday"
+              ],
+              "opens": "08:00",
+              "closes": "17:00"
+            }
+          ],
+          "sameAs": [
+            "https://www.facebook.com/EurekaHomeRE/",
+          "https://www.instagram.com/eureka_service_apartment/",
+          "https://www.youtube.com/channel/UCRho6lfszhN0Z07eByV8Rnw?view_as=subscriber"
+          ]
+        }
+    </script>
+    <link rel="alternate" href="https://hochiminhrental.com" hreflang="en" />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-167781491-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-167781491-1');
+    </script>
+</head>
+<body class="">
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MZRBK6M"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+
+    <div id="page">
+        @await Component.InvokeAsync("MenuMobile", new { Position = 1 })
+        <div class="body_wrapper">
+            @await Html.PartialAsync("_Header")
+            @*@await Html.PartialAsync("_Menu")*@
+            <div class="main-content">
+                @RenderBody()
+            </div>
+            @await Html.PartialAsync("_Footer")
+        </div>
+    </div>
+    <script src="~/js/jquery-3.2.1.min.js"></script>
+    <script src="~/js/propper.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/vendors/wow/wow.min.js"></script>
+    <script src="~/vendors/sckroller/jquery.parallax-scroll.js"></script>
+    <script src="~/vendors/owl-carousel/owl.carousel.min.js"></script>
+    <script src="~/vendors/imagesloaded/imagesloaded.pkgd.min.js"></script>
+    <script src="~/vendors/isotope/isotope-min.js"></script>
+    <script src="~/vendors/magnify-pop/jquery.magnific-popup.min.js"></script>
+    <script src="~/vendors/counterup/jquery.counterup.min.js"></script>
+    <script src="~/vendors/counterup/jquery.waypoints.min.js"></script>
+    <script src="~/vendors/counterup/appear.js"></script>
+    <script src="~/vendors/circle-progress/circle-progress.js"></script>
+    <script src="~/vendors/stellar/jquery.stellar.js"></script>
+    <script src="~/vendors/scroll/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="~/js/plugins.js"></script>
+    <script src="~/js/main.js"></script>
+    <script src="~/js/savitajs.js"></script>
+
+    @RenderSection("Scripts", required: false)
+    <script>
+        function ChuyenNgonNgu(x) {
+            var getItemId = parseFloat(x);
+            $.ajax({
+                url: '/api/Cascading/ChangeLangue',
+                type: 'GET',
+                dataType: 'json',
+                data: { IdName: getItemId },
+                success: function(d) {
+                    //window.location.reload(true);
+                    location.replace("/");
+                },
+                error: function() {
+                    alert('Error!');
+                }
+            });
+        };
+        function ChangeMoney(x) {
+            var getItemId = parseFloat(x);
+            $.ajax({
+                url: '/api/Cascading/ChangeMoney',
+                type: 'GET',
+                dataType: 'json',
+                data: { IdName: getItemId },
+                success: function(d) {
+                    window.location.reload(true);
+                },
+                error: function() {
+                    alert('Error!');
+                }
+            });
+        };
+        //$(window).scroll(function () {
+        //    if ($(window).scrollTop() >= 40) {
+        //        $('#hdfix').addClass('sticky');
+        //        $('#hdfix').addClass('stickymb');
+        //    }
+        //    else {
+        //        $('#hdfix').removeClass('sticky');
+        //        $('#hdfix').addClass('stickymb');
+        //    }
+        //});
+    </script>
+    <script>
+        $(function() {
+            $("#searchClick").click(function() {
+                var Textsearch = $("#textS").val();
+                location.replace("/ket-qua-tim-kiem?key=" + Textsearch);
+            });
+        });
+
+        function search() {
+            var keyPressed = event.keyCode || event.which;
+            //if ENTER is pressed
+            if (keyPressed == 13) {
+                var Textsearch = $("#textS").val();
+                location.replace("/ket-qua-tim-kiem?key=" + Textsearch);
+            }
+            else {
+                return false;
+            }
+        }
+
+        $(document).ready(function() {
+            CheckAccount();
+            var location = window.location.pathname;
+            $("a[href='" + location + "']").addClass("active");
+        });
+
+        function CheckAccount() {
+            $.ajax({
+                url: '/api/Cascading/CheckLogin',
+                type: 'GET',
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                data: {},
+                success: function(d) {
+                    if (d.status == true) {
+                        $(".log").empty();
+                        if (d.typecheck == 1) {
+                            var txt1 = "<a href='/AdminCus/Index' id='btnGroupDrop1' class='btn btn-secondary eByCtD' style='text-align: center;display: flex;'> <span type='primary' class='sc-TmcTc dUUUwk'>" + d.response + "</span></a>";
+                            $(".log").append(txt1);
+                        }
+                        else {
+                            var txt1 = "<a href='/AdminCus/IndexSeller' id='btnGroupDrop1' class='btn btn-secondary eByCtD' style='text-align: center;display: flex;'> <span type='primary' class='sc-TmcTc dUUUwk'>" + d.response + "</span></a>";
+                            $(".log").append(txt1);
+                        }                       
+                    }
+
+                },
+                error: function() {
+                    alert('Error!');
+                }
+            });
+        }
+    </script>
+    <script>
+        var flag = 0;
+        $(document).ready(function() {
+            $("#rutgon").hide();
+            localStorage.setItem("linkchon", "");
+            var link = localStorage.getItem("linkchon");
+            if (link != "") {
+                $(".filter-items").css("display", "none");
+            }
+            else {
+                $(".filter-items").css("display", "block");
+            }
+        });
+
+
+        $(document).ready(function() {
+            var me = getUrlVars()["s"];
+            if (me == null) {
+
+            }
+            else {
+                var words = me.split(',');
+                var le = words.length;
+                var i;
+                for (i = 0; i < le; i++) {
+                    if (words[i] == 0) {
+
+                    }
+                    else {
+                        //$("#" + words[i]).setAttribute("checked", "checked");
+                        $("#chon-" + words[i]).attr('checked', 'checked');
+                    }
+
+                    //$("#" + words[i]).addClass("check");
+                    //$("#" + words[i]).attr('checked');
+                    //$(this).attr('checked')
+                }
+            }
+        });
+
+        //function clickSearch(x) {
+        //    var getItemId = parseInt(x);
+        //    var urlload = document.URL;
+        //    var me = getUrlVars()["s"];
+        //    if (me == null) {
+        //        if (urlload.search("page") == -1) {
+        //            window.location.href = urlload + "?s=" + x + ",";
+        //        }
+        //        else {
+        //            window.location.href = urlload + "&s=" + x + ",";
+        //        }
+        //    }
+        //    else {
+        //        if (urlload.search("page") == -1) {
+        //            if (me.indexOf(x) > -1) {
+        //                var words = me.split(',');
+        //                if (words.length == 2) {
+        //                    window.location.href = urlload.replace(x + ",", '').replace('?s=', '');
+        //                }
+        //                else {
+        //                    window.location.href = urlload.replace(x + ",", '');
+        //                }
+        //            }
+        //            else {
+        //                window.location.href = urlload + x + ",";
+        //            }
+        //        }
+        //        else {
+        //            if (me.indexOf(x) > -1) {
+        //                var words = me.split(',');
+        //                if (words.length == 2) {
+        //                    window.location.href = urlload.replace(x + ",", '').replace('&s=', '');
+        //                }
+        //                else {
+        //                    window.location.href = urlload.replace(x + ",", '');
+        //                }
+        //            }
+        //            else {
+        //                window.location.href = urlload + x + ",";
+        //            }
+        //        }
+        //    }
+        //};
+
+
+        function clickSearch(x, y) {
+            var getItemId = parseInt(x);
+            var urlloadFull = document.URL;
+            var urlload = window.location.pathname;
+            var me = getUrlVars()["s"];
+            var mePr = getUrlVars()["priceform"];
+            var mePrto = getUrlVars()["priceto"];
+            var element = document.getElementById("tieuchichon");
+            var link = "";
+            if (me == null) {
+                link = localStorage.getItem("linkchon");
+                /*    alert(link);*/
+                if (link != null) {
+                    if (link.indexOf(x) > -1) {
+                        localStorage.setItem("linkchon", link.replace(x + ",", ''));
+                    }
+                    else {
+                        localStorage.setItem("linkchon", link + x + ",");
+                    }
+                }
+                else {
+                    localStorage.setItem("linkchon", + x + ",");
+                }
+            }
+            else {
+                if (flag == 1) {
+
+                }
+                else {
+                    link = localStorage.getItem("linkchon");
+                    if (link == "") {
+                        localStorage.setItem("linkchon", me);
+                    }
+                    else {
+
+                    }
+                }
+                var chkBox = document.getElementById("chon-" + x);
+                if (chkBox.checked) {
+                    link = localStorage.getItem("linkchon");
+                    //alert("vào chọn " + link);
+                    if (link != "") {
+                        if (link.indexOf(x) > -1) {
+                            localStorage.setItem("linkchon", link.replace(x + ",", ''));
+                            link = localStorage.getItem("linkchon");
+                            if (link != "") {
+                                flag = 0;
+                            }
+                            else {
+                                flag = 1;
+                            }
+                        }
+                        else {
+                            localStorage.setItem("linkchon", link + x + ",");
+                        }
+                    }
+                    else {
+                        localStorage.setItem("linkchon", + x + ",");
+                    }
+                }
+                else {
+                    link = localStorage.getItem("linkchon");
+                    if (link != "") {
+                        if (link.indexOf(x) > -1) {
+                            //alert("xóa bỏ thuộc tính " + x + link);
+                            localStorage.setItem("linkchon", link.replace(x + ",", ''));
+                            link = localStorage.getItem("linkchon");
+                            if (link != "") {
+                                flag = 0;
+                            }
+                            else {
+                                flag = 1;
+                            }
+                        }
+                        else {
+
+                        }
+                    }
+                }
+            }
+
+            var onclick = "onclick='clickSearchRemove(" + x + ")'";
+
+            if ($('#xoachon' + x).length > 0) {
+                var element1 = document.getElementById("xoachon" + x);
+                element1.parentNode.removeChild(element1);
+            }
+            else {
+                var htmlAdd = element.innerHTML;
+                var HtmlNews = "<p id='xoachon" + x + "' class='default' style='color:#000;font-weight:bold'><a " + onclick + ">" + y + "<span><i class='fas fa-times'></i></span></a></p>";
+                element.innerHTML = HtmlNews + htmlAdd;
+            }
+            $("#idtimkiem").show();
+        };
+
+        function clickSearchRemove(x) {
+            if ($('#xoachon' + x).length > 0) {
+                var element1 = document.getElementById("xoachon" + x);
+                element1.parentNode.removeChild(element1);
+                $("#chon-" + x).prop("checked", false);
+            }
+            var mePr = getUrlVars()["priceform"];
+            var mePrto = getUrlVars()["priceto"];
+            var me = getUrlVars()["s"];
+            var link = localStorage.getItem("linkchon");
+            //alert(link);
+            if (me == null) {
+                if (link != "") {
+                    if (link.indexOf(x) > -1) {
+                        localStorage.setItem("linkchon", link.replace(x + ",", ''));
+                    }
+                    else {
+                        localStorage.setItem("linkchon", link + x + ",");
+                    }
+                }
+                else {
+                    localStorage.setItem("linkchon", + x + ",");
+                }
+            }
+            else {
+                if (link == "") {
+                    if (flag == 1) {
+
+                    }
+                    else {
+                        link = localStorage.getItem("linkchon");
+                        if (link == "") {
+                            localStorage.setItem("linkchon", me);
+                        }
+                        else {
+
+                        }
+                    }
+                }
+                else {
+
+                }
+                link = localStorage.getItem("linkchon");
+                if (link != "") {
+                    if (link.indexOf(x) > -1) {
+                        //alert("xóa bỏ thuộc tính " + x + link);
+                        localStorage.setItem("linkchon", link.replace(x + ",", ''));
+                        link = localStorage.getItem("linkchon");
+                        if (link != "") {
+                            flag = 0;
+                        }
+                        else {
+                            flag = 1;
+                        }
+                    }
+                    else {
+
+                    }
+                }
+                else {
+                    if (me != null) {
+                        if (me.indexOf(x) > -1) {
+                            me = me.replace(x + ",", '');
+                        }
+                        localStorage.setItem("linkchon", me);
+                    }
+                    else {
+
+                    }
+                }
+            }
+        }
+
+        function clickSearchTotal() {
+            var keysearch = $("#keysearch").val();
+            var urlload = document.URL;
+            var me = getUrlVars()["s"];
+            var mePr = getUrlVars()["priceform"];
+            var link = localStorage.getItem("linkchon");
+            if (me == null) {
+                if (mePr == null) {
+                    if (link == "") {
+                        /* window.location.href = window.location.pathname;*/
+                        window.location.href = "/ket-qua-tim-kiem?" + "keysearch=" + keysearch;
+                    }
+                    else {
+                        window.location.href = "/ket-qua-tim-kiem?s=" + link + "&priceform=" + $("#minPrice").text() + "&priceto=" + $("#maxPrice").text() + "&keysearch=" + keysearch;
+                    }
+                }
+                else {
+                    if (link == "") {
+                        /*window.location.href = window.location.pathname;*/
+                        window.location.href = "/ket-qua-tim-kiem?" + "keysearch=" + keysearch;
+                    }
+                    else {
+                        urlload = window.location.pathname;
+                        window.location.href = "/ket-qua-tim-kiem?priceform=" + $("#minPrice").text() + "&priceto=" + $("#maxPrice").text() + "&keysearch=" + keysearch;
+                    }
+                }
+            }
+            else {
+                if (mePr == null) {
+                    if (link == "") {
+                        /* window.location.href = window.location.pathname;*/
+                        window.location.href = "/ket-qua-tim-kiem?" + "keysearch=" + keysearch;
+                    }
+                    else {
+                        urlload = window.location.pathname;
+                        window.location.href = urlload + "?s=" + link;
+                    }
+                }
+                else {
+                    if (link == "") {
+                        /*window.location.href = window.location.pathname;*/
+                        window.location.href = "/ket-qua-tim-kiem?" + "keysearch=" + keysearch;
+                    }
+                    else {
+                        urlload = window.location.pathname;
+                        window.location.href = "/ket-qua-tim-kiem?s=" + link + "&priceform=" + $("#minPrice").text() + "&priceto=" + $("#maxPrice").text() + "&keysearch=" + keysearch;
+                    }
+                }
+            }
+        }
+
+        function clickSearchPrice() {
+            var urlload = document.URL;
+            var me = getUrlVars()["s"];
+            var mePr = getUrlVars()["priceform"];
+            if (mePr == null) {
+                if (me == null) {
+                    if (urlload.search("page") == -1) {
+                        window.location.href = urlload + "?priceform=" + $("#minPrice").text() + "&priceto=" + $("#maxPrice").text();
+                    }
+                    else {
+                        window.location.href = urlload + "&priceform=" + $("#minPrice").text() + "&priceto=" + $("#maxPrice").text();
+                    }
+                }
+                else {
+                    if (urlload.search("page") == -1) {
+                        urlload = window.location.pathname;
+                        window.location.href = urlload + "?s=" + me + "&priceform=" + $("#minPrice").text() + "&priceto=" + $("#maxPrice").text();
+                    }
+                    else {
+                        urlload = window.location.pathname;
+                        window.location.href = urlload + "?s=" + me + "&priceform=" + $("#minPrice").text() + "&priceto=" + $("#maxPrice").text();
+                    }
+                }
+            }
+            else {
+                if (urlload.search("page") == -1) {
+                    if (me == null) {
+                        window.location.href = urlload + "&priceform=" + $("#minPrice").text() + "&priceto=" + $("#maxPrice").text();
+                    }
+                    else {
+                        urlload = window.location.pathname;
+                        window.location.href = urlload + "?s=" + me + "&priceform=" + $("#minPrice").text() + "&priceto=" + $("#maxPrice").text();
+                    }
+                }
+                else {
+
+                }
+            }
+        };
+
+        function getUrlVars() {
+            var vars = [], hash;
+            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for (var i = 0; i < hashes.length; i++) {
+                hash = hashes[i].split('=');
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1];
+            }
+            return vars;
+        }
+
+        function showmore() {
+            $("#docthem").hide();
+            $("#rutgon").show();
+            $('.is-relative').addClass('open');
+        }
+        function hidenmore() {
+            $("#docthem").show();
+            $("#rutgon").hide();
+            $('.is-relative').removeClass('open');
+        }
+    </script>
+    <style>
+        .goiycss .owl-nav {
+            display: block !important;
+        }
+
+        .goiycss .owl-prev, .goiycss .owl-next {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border: 1px solid hsl(222, 27%, 90%);
+            text-align: center;
+            font-size: 14px;
+            color: hsl(225, 18%, 49%);
+            border-radius: 50%;
+            line-height: 48px;
+            -webkit-transition: all 0.3s linear;
+            -o-transition: all 0.3s linear;
+            transition: all 0.3s linear;
+            cursor: pointer;
+            color: hsl(0deg 0% 50%) !important;
+        }
+
+        .goiycss .owl-nav {
+            position: absolute;
+            top: 30%;
+            width: 100%;
+        }
+
+        .goiycss .owl-prev {
+            left: -60px;
+        }
+
+        .goiycss .owl-next {
+            right: -60px;
+        }
+    </style>
+    <script type="text/javascript">
+        function Addlike(x) {
+            var getItemId = parseFloat(x);
+            $.ajax({
+                url: '/api/Cascading/SaveLike',
+                type: 'GET',
+                dataType: 'json',
+                data: { IdNews: getItemId },
+                success: function(d) {
+                    $("#" + x).addClass("active");
+                },
+                error: function(d) {
+                    alert(d);
+                }
+            });
+        };
+        $(function() {
+            $('nav#menu').mmenu();
+        });
+        jQuery(document).ready(function($) {
+            if ($(window).scrollTop() > 200) {
+                $('#back-to-top').fadeIn();
+            } else {
+                $('#back-to-top').fadeOut();
+            }
+
+            $(window).scroll(function() {
+                if ($(this).scrollTop() > 200) {
+                    $('#back-to-top').fadeIn();
+                } else {
+                    $('#back-to-top').fadeOut();
+                }
+            });
+
+            $('#back-to-top').click(function() {
+                $("html, body").animate({
+                    scrollTop: 0
+                }, 600);
+                return false;
+            });
+        });
+
+
+    </script>
+    <script type="text/javascript" src="~/MenuMobile/dist/jquery.mmenu.js"></script>
+    <style>
+        #back-to-top {
+            position: fixed;
+            right: 30px;
+            bottom: 8px;
+            z-index: 9999;
+        }
+
+            #back-to-top a {
+                text-decoration: none;
+                padding: 6px 11px;
+                background: hsl(33deg 70% 55%);
+                color: hsl(0deg 0% 100%);
+                font-size: 25px;
+            }
+
+                #back-to-top a img {
+                    width: 40px;
+                    height: auto;
+                }
+    </style>
+    <p id="back-to-top">
+        <a href="#"><i class="fa fa-angle-up"></i></a>
+    </p>
+    <script>
+        $(document).ready(function() {
+            $('.divCart').hide();
+            $(".btndangky5").click(function() {
+                var phoneRegEx = "/\\(?\\d{3}\\)?[-\\/\\.\\s]?\\d{3}[-\\/\\.\\s]?/";
+                var re = /[A-Z0-9._%+-]+@Html.Raw("@")+.[A-Z]{2,4}/igm;
+                var hovaten = $("#name").val();
+                var sodienthoai = $("#phone").val();
+                var diachi = $("#emailkhach").val();
+                var noidung = "";
+                var tieude = $("#tieudelienhe").val();
+                if (hovaten == "") {
+                    alert("Vui lòng nhập họ tên");
+                }
+                else if (sodienthoai == "") {
+                    alert("Vui lòng nhập số điện thoại");
+                }
+                else if (sodienthoai.match(phoneRegEx)) {
+                    alert("Số điện thoại không chính xác vui lòng kiểm tra lại !");
+                }
+                else if (sodienthoai.length != 10) {
+                    alert("Số điện thoại không chính xác vui lòng kiểm tra lại !");
+                }
+                else if (diachi == "") {
+                    alert("Vui lòng nhập Email");
+                }
+                else if (!diachi.match(re)) {
+                    alert("Email không đúng định dạng !");
+                }
+                else {
+                    $('.bgxuly').show();
+                    $.ajax({
+                        url: '/api/Cascading/ContactDangKy1',
+                        type: 'GET',
+                        dataType: 'json',
+                        data: { Hoten: hovaten, sodienthoai: sodienthoai, email: diachi, noidung: noidung, tieude: tieude },
+                        success: function(d) {
+                            $('.bgxuly').hide();
+                            $('.divCart').html(d)
+                            $('.divCart').show(250).delay(2000).hide(250);
+                            setTimeout(function() { window.location.reload(true); }, 1000);
+                        },
+                        error: function() {
+                            $('.bgxuly').hide();
+                            alert('Error!');
+                        }
+                    });
+                }
+            });
+
+            $("#btndangkyLienHe").click(function() {
+                var phoneRegEx = "/\\(?\\d{3}\\)?[-\\/\\.\\s]?\\d{3}[-\\/\\.\\s]?/";
+                var hovaten = $("#name").val();
+                var sodienthoai = $("#sodt").val();
+                var diachi = $("#email").val();
+                var noidungtin = $("#noidungdangky").val();
+                var tieudetin = $("#thongtinlienhe").val();
+                if (sodienthoai == "") {
+                    alert("Vui lòng nhập số điện thoại");
+                }
+                else if (sodienthoai == "") {
+                    alert("Vui lòng nhập số điện thoại");
+                }
+                else if (sodienthoai.match(phoneRegEx)) {
+                    alert("Số điện thoại không chính xác vui lòng kiểm tra lại !");
+                }
+                else if (sodienthoai.length != 10) {
+                    alert("Số điện thoại không chính xác vui lòng kiểm tra lại !");
+                }
+                else if (tieude = "") {
+                    alert("Vui lòng nhập tiêu đề");
+                }
+                else if (noidung = "") {
+                    alert("Vui lòng nhập nội dung");
+                }
+                else {
+                    $('.bgxuly').show();
+                    $.ajax({
+                        url: '/api/Cascading/ContactLienHe',
+                        type: 'GET',
+                        dataType: 'json',
+                        data: { Hoten: hovaten, sodienthoai: sodienthoai, email: diachi, noidung: noidungtin, tieude: tieudetin },
+                        success: function(d) {
+                            $('.bgxuly').hide();
+                            $('.divCart').html(d)
+                            $('.divCart').show(250).delay(2000).hide(250);
+                            setTimeout(function() { window.location.reload(true); }, 1000);
+                        },
+                        error: function() {
+                            $('.bgxuly').hide();
+                            alert('Error!');
+                        }
+                    });
+                }
+            });
+
+            $(".btguikhuyenmai").click(function() {
+                var phoneRegEx = "/\\(?\\d{3}\\)?[-\\/\\.\\s]?\\d{3}[-\\/\\.\\s]?/";
+                var hovaten = "Đăng ký email khuyến mãi";
+                var diachi = $("#emailkhuyenmai").val();
+                var noidungtin = "Đăng ký email khuyến mãi";
+                var tieudetin = "Đăng ký email khuyến mãi";
+                if (diachi = "") {
+                    alert("Vui lòng nhập email đăng ký");
+                }
+                else if (noidung = "") {
+                    alert("Vui lòng nhập nội dung");
+                }
+                else {
+                    $('.bgxuly').show();
+                    $.ajax({
+                        url: '/api/Cascading/ContactEmailKM',
+                        type: 'GET',
+                        dataType: 'json',
+                        data: { Hoten: hovaten, email: diachi, noidung: noidungtin, tieude: tieudetin },
+                        success: function(d) {
+                            $('.bgxuly').hide();
+                            $('.divCart').html(d)
+                            $('.divCart').show(250).delay(2000).hide(250);
+                            setTimeout(function() { window.location.reload(true); }, 1000);
+                        },
+                        error: function() {
+                            $('.bgxuly').hide();
+                            alert('Error!');
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+    <div class="divCart">
+    </div>
+    @*<style>
+
+    </style>*@
+    <div class="bgxuly">
+        <span style="margin-top: 100px;color:#fff;font-weight:bold;font-size:25px;line-height: 300px;padding-top: 203px;">Thông tin liên hệ của bạn đang được xử lý gửi đi</span>
+    </div>
+    <style>
+        .bgxuly {
+            width: 100%;
+            height: 1000px;
+            text-align: center;
+            background: hsl(0deg 0% 0% / 61%);
+            position: fixed;
+            top: 10px;
+            z-index: 99999999999999;
+            display: none;
+        }
+
+        .sticky {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0,0,0,.8);
+            z-index: 99999;
+            z-index: 99999999999999;
+        }
+
+        .stickymb {
+            position: fixed;
+            z-index: 999999;
+            z-index: 99999999999999;
+        }
+    </style>
+</body>
+</html>

@@ -1,0 +1,75 @@
+﻿@model CoreCnice.Domain.ESHOP_NEWS_IMAGE
+
+
+<style>
+    .radio {
+        float: left !important;
+        margin-right: 10px !important
+    }
+</style>
+
+@using (Html.BeginForm(FormMethod.Post, new { enctype = "multipart/form-data", data_ajax = "false" }))
+{
+    <div class="content-header clearfix">       
+        <div class="pull-right">
+            <button type="button" data-toggle="modal" data-target="#myModal" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>
+                Lưu thông tin
+            </button>
+        </div>
+    </div>
+
+    <section class="content">
+        @if (!string.IsNullOrEmpty(ViewBag.Error))
+        {
+            <div class="callout callout-info">
+                <h4>Thông báo</h4>
+                <p>
+                    @Html.Raw(ViewBag.Error)
+                </p>
+            </div>
+        }
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Thông tin chung</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- form start -->
+
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Mô tả</label>
+                            <input type="text" class="form-control" asp-for="NEWS_IMG_DESC" readonly="readonly">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Thứ tự hiển thị</label>
+                            <input type="text" class="form-control" asp-for="NEWS_IMG_ORDER" readonly="readonly">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-md-2 control-label">Kích hoạt</label>
+                            <div class="col-md-10">
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.NEWS_IMG_SHOWTYPE, "0", new { id = 0, @checked = "checked", @class = "radio" })
+                                    Không sử dụng
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.NEWS_IMG_SHOWTYPE, "1", new { id = 1, @class = "radio" })
+                                    Sử dụng
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
+}
+

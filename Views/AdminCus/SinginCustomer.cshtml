@@ -1,0 +1,84 @@
+﻿@using CoreCnice.UtilsCs;
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    clsFormat cl = new clsFormat();
+    int lang = Utils.CIntDef(ViewBag.Langue);
+    int tygia = Utils.CIntDef(ViewBag.USD);
+    int tien = Utils.CIntDef(ViewBag.Money);
+    string donvi = "";
+    string donviEn = "";
+}
+
+@if (lang == 1)
+{
+    <section class="h-100">
+        <div class="container py-5 h-100">
+            <div class="row">
+                <div class="col-lg-4">
+                </div>
+                <div class="col-lg-4" style="border: 1px solid #e3e3e3;padding: 20px;background: #faf3f3;">
+                    <div class="alert alert-primary" role="alert" style="margin-top: 15px;@ViewBag.Display">
+                        @ViewBag.Error
+                    </div>
+                    <form asp-action="Singin" asp-controller="AdminCus" method="post">
+                        <!-- Email input -->
+                        <div class="form-outline mb-4">
+                            <input type="text" name="taikhoan" id="form2Example1" class="form-control" placeholder="Tài khoản / Email" />
+                        </div>
+                 
+                        <!-- Submit button -->
+                        <button type="submit" class="btn btn-primary btn-block mb-4" style="background:#f8b21b">Đăng Nhập</button>
+
+                        <!-- Register buttons -->
+                        <div class="text-center">
+                            <p>Nếu bạn chưa có tài khoản ? <a href="/sellernet/trang-dang-ky">Đăng ký chi tiết tại đây</a></p>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-lg-4">
+                </div>
+            </div>
+
+        </div>
+    </section>
+}
+else
+{
+    <section class="h-100">
+        <div class="container py-5 h-100">
+            <div class="row">
+                <div class="col-lg-4">
+                </div>
+                <div class="col-lg-4" style="border: 1px solid #e3e3e3;padding: 20px;background: #faf3f3;">
+                    <div class="alert alert-primary" role="alert" style="margin-top: 15px;@ViewBag.Display">
+                        @ViewBag.Error
+                    </div>
+                    <form asp-action="Singin" asp-controller="AdminCus" method="post">
+                        <!-- Email input -->
+                        <div class="form-outline mb-4">
+                            <input type="text" name="taikhoan" id="form2Example1" class="form-control" placeholder="Account / Email" />
+                        </div>
+
+                        <!-- Submit button -->
+                        <button type="submit" class="btn btn-primary btn-block mb-4" style="background:#f8b21b">Log in</button>
+
+                        <!-- Register buttons -->
+                        <div class="text-center">
+                            <p>If you do not already have an account ? <a href="/sellernet/trang-dang-ky">Sign up here</a></p>
+
+                        </div>
+                    </form>
+                </div>
+                <div class="col-lg-4">
+                </div>
+            </div>
+
+        </div>
+    </section>
+}
+
+<style>
+    .col a {
+        font-size: 15px;
+    }
+</style>

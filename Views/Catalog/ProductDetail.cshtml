@@ -1,0 +1,1239 @@
+﻿@model CoreCnice.Domain.ESHOP_NEWS;
+@using CoreCnice.UtilsCs;
+@using CoreCnice.Connect;
+@{
+    Layout = "~/Views/Shared/_LayoutDetail.cshtml";
+    clsFormat cl = new clsFormat();
+    string linkimg = "";
+    string tinhtrang = "";
+
+    if (!String.IsNullOrEmpty(Model.NEWS_IMAGE2))
+    {
+        linkimg = "/UploadImages/Data/News/" + Model.NEWS_ID + "/" + Model.NEWS_IMAGE2;
+    }
+    else
+    {
+        linkimg = "/UploadImages/Data/News/" + Model.NEWS_ID + "/" + Model.NEWS_IMAGE1;
+    }
+
+    string alt = "";
+    if (!String.IsNullOrEmpty(ViewBag.Alt))
+    {
+        alt = ViewBag.Alt;
+    }
+    else
+    {
+        alt = ViewBag.Title;
+    }
+
+    int lang = Utils.CIntDef(ViewBag.Langue);
+    int tygia = Utils.CIntDef(ViewBag.USD);
+    int tien = Utils.CIntDef(ViewBag.Money);
+
+    string fileName = "";
+    string donvidong = "";
+    @if (lang == 1)
+    {
+        fileName = "wwwroot/UploadImages/Data/News/" + Model.NEWS_ID + "/" + Model.NEWS_FILEHTML;
+        donvidong = "đ";
+    }
+    else
+    {
+        fileName = "wwwroot/UploadImages/Data/News/" + Model.NEWS_ID + "/" + Model.NEWS_FILEHTML_EN;
+        donvidong = "đ";
+    }
+    string hotline = "";
+    string Email = "";
+    BulSoftCmsConnectContext _context = new BulSoftCmsConnectContext();
+    //var Support = _context.ESHOP_ONLINE.Where(x => x.ONLINE_TYPE == 1);
+    //if (Support.ToList().Count > 0)
+    //{
+    hotline = "+84898303929";
+    //Email = Support.ToList()[0].ONLINE_NICKNAME;
+
+    if (lang == 1)
+    {
+        if (Model.NEWS_SHOWTYPE == 0)
+        {
+            tinhtrang = "Đã thuê";
+        }
+        else
+        {
+            tinhtrang = "Có sẵn";
+        }
+    }
+    else
+    {
+        if (Model.NEWS_SHOWTYPE == 0)
+        {
+            tinhtrang = "Rented";
+        }
+        else
+        {
+            tinhtrang = "Available";
+        }
+    }
+    string donvi = "Tháng";
+    if (Model.NEWS_TYPE == 3)
+    {
+        if (lang == 1)
+        {
+            donvi = "Ngày";
+        }
+        else
+        {
+            donvi = "Day";
+        }
+    }
+    else
+    {
+        if (lang == 1)
+        {
+            donvi = "Tháng";
+        }
+        else
+        {
+            donvi = "Month";
+        }
+    }
+}
+
+<style>
+    .navbar-brand img {
+        width: 231px;
+    }
+
+    .testimonial_title .owl-prev, .testimonial_title .owl-next {
+        position: absolute;
+        top: 84px;
+        width: 50px;
+        height: 50px;
+        border: 1px solid hsl(222, 27%, 90%);
+        text-align: center;
+        font-size: 14px;
+        color: hsl(225, 18%, 49%);
+        border-radius: 50%;
+        line-height: 48px;
+        -webkit-transition: all 0.3s linear;
+        -o-transition: all 0.3s linear;
+        transition: all 0.3s linear;
+        cursor: pointer;
+        background: hsla(0, 0%, 0%, 0);
+    }
+
+    .testimonial_title .owl-prev {
+        left: -60px;
+    }
+
+    .testimonial_title .owl-next {
+        left: 1200px;
+    }
+
+    .testimonial_area_five .stratup_testimonial_info:before {
+        background: url(images/testimonial_bg_two_abb.png) no-repeat scroll center 0/contain;
+    }
+
+    .imgSliderSP .owl-prev, .imgSliderSP .owl-next {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        border: 1px solid hsl(222, 27%, 90%);
+        text-align: center;
+        font-size: 14px;
+        color: hsl(225, 18%, 49%);
+        border-radius: 50%;
+        line-height: 48px;
+        -webkit-transition: all 0.3s linear;
+        -o-transition: all 0.3s linear;
+        transition: all 0.3s linear;
+        cursor: pointer;
+        color: hsl(0, 0%, 100%) !important;
+        font-size: 28px !important;
+        background: hsl(56deg 3% 57% / 78%) !important;
+    }
+
+    .imgSliderSP .owl-nav {
+        position: absolute;
+        top: 40%;
+        width: 100%;
+    }
+
+    .imgSliderSP .owl-prev {
+        left: 60px;
+    }
+
+    .imgSliderSP .owl-next {
+        right: 60px;
+    }
+
+    .design_tab .nav-item {
+        width: 100%;
+        margin-bottom: 5px;
+        margin-top: 10px;
+    }
+
+        .design_tab .nav-item .nav-link {
+            background-color: hsl(0, 0%, 100%);
+            -webkit-box-shadow: 0px 2px 3px 0px rgba(12, 0, 46, 0.06);
+            box-shadow: 0px 2px 3px 0px rgba(12, 0, 46, 0.23);
+            border: 0px;
+            border-radius: 0px;
+            padding: 12px 23px;
+            -webkit-transition: background 0.5s ease 0s;
+            -o-transition: background 0.5s ease 0s;
+            transition: background 0.5s ease 0s;
+        }
+
+            .design_tab .nav-item .nav-link h5 {
+                font-size: 17px;
+                line-height: 25px;
+                font-weight: 500;
+                margin-bottom: 0px;
+                color: hsl(211, 25%, 18%);
+                -webkit-transition: color 0.5s ease 0s;
+                -o-transition: color 0.5s ease 0s;
+                transition: color 0.5s ease 0s;
+            }
+
+    .svg-fill {
+        float: left;
+        margin-right: 10px;
+    }
+
+    .breadcrumb-item + .breadcrumb-item:before {
+        color: #000;
+        font-family: "molla";
+        padding-right: .7rem;
+        font-size: 15px;
+        vertical-align: middle;
+        margin-top: 1px;
+        z-index: 999999999999;
+    }
+
+    .mfp-img {
+        width: 800px;
+        height: 600px !important;
+    }
+
+    .imgSliderSP .item {
+        width: 100%;
+        float: left;
+        position: relative;
+        overflow: hidden;
+        height: auto;
+        background: hsl(0deg 0% 96%);
+        text-align: center;
+    }
+
+        .imgSliderSP .item img {
+            width: 100%;
+            /* max-width: 100%; */
+            /*max-height: 99%;*/
+            width: 100%;
+            text-align: center;
+            margin: 0 auto;
+            margin-right: auto !important;
+        }
+
+    .pr_details {
+        float: left;
+        width: 100%;
+    }
+
+        .pr_details .details-list li {
+            padding: 0px 10px 0px 0px;
+            margin-bottom: -1px;
+            width: 25%;
+            display: inline-block;
+            width: auto;
+            min-width: auto;
+            white-space: nowrap;
+            height: 31px;
+            display: -webkit-box;
+            display: flex;
+            -webkit-box-align: center;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+    .event_team_slider .item .e_team_img {
+        border-radius: 0px !important;
+    }
+
+    .job_info {
+        position: relative;
+        background: hsl(0deg 23% 95% / 20%);
+    }
+
+    .item iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+    }
+</style>
+@*<section class="product_details_area bg_color">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="product_slider" style="padding:0px">
+                    <div class="imgSliderSP owl-carousel">
+                        <div class="item">
+                            <a href="/UploadImages/Data/News/@Model.NEWS_ID/@Model.NEWS_IMAGE1" class="img_popup">
+                                <img src="/UploadImages/Data/News/@Model.NEWS_ID/@Model.NEWS_IMAGE1" title="@Model.NEWS_IMAGE1" />
+                            </a>
+                        </div>
+                        @await Component.InvokeAsync("ProductImages", new { catid = Model.NEWS_ID })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>*@
+
+<style>
+    #sync1 .item {
+        /*background: #0c83e7;*/
+        /*padding: 80px 0px;*/
+        /*margin: 5px;*/
+        /*color: #fff;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        text-align: center;*/
+    }
+
+    #sync2 .item {
+        background: #c9c9c9;
+        /*padding: 10px 0px;*/
+        margin: 5px;
+        color: #fff;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        text-align: center;
+        cursor: pointer;
+    }
+
+        #sync2 .item h1 {
+            font-size: 18px;
+        }
+
+    #sync2 .current .item {
+        background: #0c83e7;
+    }
+
+    .owl-theme .owl-nav {
+        /*default owl-theme theme reset .disabled:hover links */
+    }
+
+        .owl-theme .owl-nav [class*="owl-"] {
+            transition: all 0.3s ease;
+        }
+
+            .owl-theme .owl-nav [class*="owl-"].disabled:hover {
+                background-color: #d6d6d6;
+            }
+
+    #sync1.owl-theme {
+        position: relative;
+    }
+
+        #sync1.owl-theme .owl-next,
+        #sync1.owl-theme .owl-prev {
+            width: 22px;
+            height: 40px;
+            margin-top: -20px;
+            position: absolute;
+            top: 50%;
+        }
+
+        #sync1.owl-theme .owl-prev {
+            left: 10px;
+        }
+
+        #sync1.owl-theme .owl-next {
+            right: 10px;
+        }
+
+    .sliderAd #sync1 .item {
+        width: 100%;
+        float: left;
+        position: relative;
+        overflow: hidden;
+        height: 513px;
+        background: hsl(0deg 0% 93%);
+        text-align: center;
+    }
+
+        .sliderAd #sync1 .item > a {
+            vertical-align: middle;
+            display: table-cell;
+            width: 100%;
+            height: 513px;
+            text-align: center;
+        }
+
+        .sliderAd #sync1 .item img {
+            max-width: 100%;
+            max-height: 100%;
+            transition: all 1s;
+            transform: scale(1.1);
+            -webkit-transform: scale(1.1);
+            -moz-transform: scale(1.1);
+            -o-transform: scale(1.1);
+            -ms-transform: scale(1.1);
+            width: auto !important;
+            height: auto !important;
+        }
+
+    .sliderAd #sync2 .item {
+        margin-right: 5px;
+        width: 96%;
+        float: left;
+        position: relative;
+        overflow: hidden;
+        height: 122px;
+        background: hsl(0deg 0% 93%);
+        text-align: center;
+    }
+
+        .sliderAd #sync2 .item > a {
+            vertical-align: middle;
+            display: table-cell;
+            width: 100%;
+            height: 122px;
+            text-align: center;
+        }
+
+        .sliderAd #sync2 .item img {
+            max-width: 100%;
+            max-height: 100%;
+            transition: all 1s;
+            transform: scale(1.1);
+            -webkit-transform: scale(1.1);
+            -moz-transform: scale(1.1);
+            -o-transform: scale(1.1);
+            -ms-transform: scale(1.1);
+            width: auto !important;
+            height: auto !important;
+        }
+
+    .bodyti iframe {
+        width: 100%;
+    }
+
+    .e_team_img img {
+        width: 100%;
+        height: 278px;
+    }
+
+    .detail-block {
+        padding: 10px;
+        padding-bottom: 10px;
+        padding-top: 15px;
+        float: left;
+        width: 100%;
+    }
+
+    .detail-title {
+        margin-bottom: 0px;
+        padding-bottom: 25px;
+        border-bottom: 1px solid hsl(0deg 0% 90%);
+    }
+
+        .detail-title .title-left {
+            font-size: 18px;
+            line-height: 18px;
+            margin: 0;
+            font-weight: 500;
+            float: left;
+        }
+
+        .detail-title .title-right {
+            font-size: 12px;
+            line-height: 18px;
+            float: right;
+        }
+
+        .detail-title p {
+            font-size: 12px;
+            line-height: 18px;
+            margin: 0;
+            font-weight: 300;
+        }
+
+    .detail-block .alert-info {
+        color: hsl(0deg 0% 0% / 85%);
+        background-color: hsl(0deg 0% 100% / 80%);
+        border: none;
+        background: none;
+        padding: 0px;
+    }
+
+    .detail-list ul {
+        list-style: none;
+        list-style: none;
+        padding-left: 0px;
+        text-align: justify;
+        margin-bottom: 0px;
+    }
+
+    .list-three-col li {
+        line-height: 28px;
+        margin: 0;
+        font-weight: 400;
+    }
+
+    .detail-block .alert-info li {
+        line-height: 45px;
+    }
+
+    .list-three-col {
+        columns: 3;
+        -webkit-columns: 3;
+        -moz-columns: 3;
+    }
+</style>
+@if (lang == 1)
+{
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3" style="z-index: 999999999999999999999;">
+        <div class="container">
+            <ol class="breadcrumb" style="z-index: 2;">
+                <li class="breadcrumb-item" style="z-index:2">
+                    <a href="/" style="color: #000 !important;">Trang chủ</a>
+                </li>
+                <li class="breadcrumb-item" style="z-index:2">
+                    <a href="@ViewBag.UrlCat" style="color: #000 !important;">@Html.Raw(ViewBag.NameCat)</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page" style="z-index:2">
+                    <a href="@ViewBag.UrlCat/@Model.NEWS_SEO_URL" style="color: #000 !important;">@Html.Raw(Model.NEWS_TITLE)</a>
+                </li>
+            </ol>
+        </div><!-- End .container -->
+    </nav>
+}
+else
+{
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3" style="z-index: 999999999999999999999;">
+        <div class="container">
+            <ol class="breadcrumb" style="z-index: 2;">
+                <li class="breadcrumb-item" style="z-index:2">
+                    <a href="/" style="color: #000 !important;">Home page</a>
+                </li>
+                <li class="breadcrumb-item" style="z-index:2">
+                    <a href="@ViewBag.UrlCat" style="color: #000 !important;">@Html.Raw(ViewBag.NameCat)</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page" style="z-index:2">
+                    <a href="@ViewBag.UrlCat/@Model.NEWS_SEO_URL" style="color: #000 !important;">@Html.Raw(Model.NEWS_TITLE_EN)</a>
+                </li>
+            </ol>
+        </div><!-- End .container -->
+    </nav>
+}
+<style>
+    .box {
+        float: left;
+        overflow: hidden;
+        background: #f0e68c;
+    }
+    /* Add padding and border to inner content
+    for better animation effect */
+    .box-inner {
+        width: 400px;
+        padding: 10px;
+        border: 1px solid #a29415;
+    }
+</style>
+
+<section class="product_details_area sec_pad" style="padding-top:20px;padding-bottom:20px">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="product_slider sliderAd" style="padding:0px;margin-bottom:20px;float:left;width:100%;">
+                    @await Component.InvokeAsync("ProductImages", new { catid = Model.NEWS_ID })
+                </div>
+            </div>
+            <div class="col-lg-4">
+
+                <div class="job_info">
+                    @if (tien == 1)
+                    {
+                        <div class="info_head">
+                            <h6 class="f_p f_600 f_size_18 t_color3" style="text-align:right"><i class="fas fa-tags" style="margin-right: 10px;float: left;"></i>@cl.FormatMoney(Model.NEWS_PRICE1) @donvidong / @donvi</h6>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="info_head">
+                            <h6 class="f_p f_600 f_size_18 t_color3" style="text-align:right"><i class="fas fa-tags" style="margin-right: 10px;float: left;"></i>@cl.Dola(Utils.CDecDef(Model.NEWS_PRICE1), Utils.CDecDef(tygia)) / @donvi</h6>
+                        </div>
+                    }
+                    @if (lang == 1)
+                    {
+                        <div class="pr_details">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <h1 style="font-size:15px;line-height: 30px;margin-top: 12px;text-align: left;">
+                                        <a href="#" class="pr_title f_size_22 f_500 f_p" style="font-weight: bold;margin-bottom: 10px;">
+                                            @Html.Raw(Model.NEWS_TITLE)
+                                        </a>
+                                    </h1>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="pr_details">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <h1 style="font-size: 15px; line-height: 30px; margin-top: 12px; text-align: left;">
+                                        <a href="#" class="pr_title f_size_22 f_500 f_p" style="font-weight: bold;margin-bottom: 10px;">
+                                            @Html.Raw(Model.NEWS_TITLE_EN)
+                                        </a>
+                                    </h1>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    @if (lang == 1)
+                    {
+                        <div id="detail" class="detail-list detail-block target-block">
+                            <div class="detail-title">
+                                <h2 class="title-left">Mã <span style="color: black"> sản phẩm:</span> @Html.Raw(Model.NEWS_CODE)</h2>
+                            </div>
+                            <div class="alert alert-info">
+                                <ul class="list-three-col-note">
+                                    <li><strong>Đường :</strong> @Html.Raw(Model.NEWS_FIELD4)</li>
+                                    <li><strong>Loại phòng :</strong> @Model.NEWS_SEO_URL_JS</li>
+                                    <li class="prop_status"><strong>Tình trạng :</strong> @tinhtrang</li>
+                                    <li><strong>Phòng ngủ:</strong> @Utils.CIntDef(Model.NEWS_HTML_EN1)</li>
+                                    <li>
+                                        <span style="color: black"><strong>Giá:</strong></span>
+                                        @if (tien == 1)
+                                        {
+                                            <span>@cl.FormatMoney(Model.NEWS_PRICE1) @donvidong / @donvi</span>
+                                        }
+                                        else
+                                        {
+                                            <span>@cl.Dola(Utils.CDecDef(Model.NEWS_PRICE1), Utils.CDecDef(tygia)) / @donvi</span>
+                                        }
+                                    </li>
+                                    <li><strong>Diện tích:</strong> @Model.NEWS_HTML_EN3 m <b class="m2">2</b></li>
+                                </ul>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div id="detail" class="detail-list detail-block target-block">
+                            <div class="detail-title">
+                                <h2 class="title-left">Product <span style="color: black">ID:</span> @Html.Raw(Model.NEWS_CODE)</h2>
+
+                                @*<div class="title-right">
+                                        @if (lang == 1)
+                                        {
+                                            <div class="address"><i class="fa fa-map-marker"></i><span>@Html.Raw(Model.NEWS_FIELD4)</span></div>
+                                        }
+                                        else
+                                        {
+                                            <div class="address"><i class="fa fa-map-marker"></i><span>@Html.Raw(Model.NEWS_TITLE_JS)</span></div>
+                                        }
+                                    </div>*@
+
+                            </div>
+                            <div class="alert alert-info">
+                                <ul class="list-three-col-note">
+                                    <li><strong>Street :</strong> @Html.Raw(Model.NEWS_FIELD4)</li>
+                                    <li><strong>Type :</strong> @Model.NEWS_SEO_URL_JS </li>
+                                    <li class="prop_status"><strong>Status :</strong> @tinhtrang</li>
+                                    <li><strong>Bedroom:</strong> @Utils.CIntDef(Model.NEWS_HTML_EN1)</li>
+                                    <li>
+                                        <span style="color: black"><strong>Price:</strong></span>
+                                        @if (tien == 1)
+                                        {
+                                            <span>@cl.FormatMoney(Model.NEWS_PRICE1) @donvidong / @donvi</span>
+                                        }
+                                        else
+                                        {
+                                            <span>@cl.Dola(Utils.CDecDef(Model.NEWS_PRICE1), Utils.CDecDef(tygia)) / @donvi</span>
+                                        }
+                                    </li>
+                                    <li><strong>Size:</strong> @Model.NEWS_HTML_EN3 Sqm</li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    }
+                    @if (Model.NEWS_TYPE == 3)
+                    {
+                        <button data-toggle="modal" data-target="#exampleModal" id="addtocart-btn" class="btn btn-grad--primary px--6 mb--12 btn--sm btn--full bold rounded">
+
+                            @if (lang == 1)
+                            {
+                                <span>
+                                    Thuê ngắn hạn
+                                </span>
+                            }
+                            else
+                            {
+                                <span>
+                                    Short term rental
+                                </span>
+                            }
+
+                        </button>
+                    }
+                    <a data-toggle="modal" data-target="#exampleModal" id="addtocart-btn" class="btn btn-grad--primary px--6 mb--12 btn--sm btn--full bold rounded">
+                        @if (lang == 1)
+                        {
+                            <span style="color:#fff">
+                              Nhận tư vấn
+                            </span>
+                        }
+                        else
+                        {
+                            <span style="color:#fff">
+                               Contact Consulant
+                            </span>
+                        }
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                @if (String.IsNullOrEmpty(Model.NEWS_FIELD1))
+                {
+
+                }
+                else
+                {
+                    @Html.Raw(Model.NEWS_FIELD1)
+                }
+
+                @if (lang == 1)
+                {
+                    <div class="pr_details">
+                        <div class="bodyti">
+                            <div class="title">
+                                <h6 class="f_p f_600 f_size_18 t_color3" style="font-size: 20px;color:hsl(33, 93%, 54%);font-weight: bold;">Tiện nghi chỗ ở</h6>
+                                <span>Giới thiệu về các tiện nghi và dịch vụ tại nơi lưu trú</span>
+                            </div>
+                            <div class="is-flex amenities">
+                                <div class="d-sm-flex w--100" style="width:100%;">
+                                    <div class="fl-item-stretch">
+                                        @await Component.InvokeAsync("ProDescIner", new { NewsId = Model.NEWS_ID })
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="detail__intro">
+                            <!---->
+                            <div class="is-relative">
+                                <div id="short_intro" class="room-des dot1 show" style="-webkit-box-orient: vertical;">
+                                    @Html.Raw(cl.ReadFile(fileName.Replace("<p>", "").Replace("</p>", "")))
+                                </div>
+                                <a id="docthem" onclick="showmore()" class="color-i pointer mt--6 t_color3" style="color:hsl(33, 93%, 54%) !important;cursor:pointer;margin-top: 12px;float: left;">Đọc thêm </a>
+                                <a id="rutgon" onclick="hidenmore()" class="color-i pointer mt--6 t_color3" style="color:hsl(33, 93%, 54%) !important;cursor:pointer;margin-top: 12px;float: left;">Rút gọn </a>
+                            </div>
+                        </div>
+                        <div class="bodyti" style="margin-top: 60px;">
+                            <div class="job_info mt_30">
+                                @Html.Raw(Model.NEWS_FIELD2)
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="pr_details">
+                        <div class="bodyti">
+                            <div class="title">
+                                <h6 class="f_p f_600 f_size_18 t_color3" style="font-size: 20px;color:hsl(33, 93%, 54%);font-weight: bold;">Comfort accommodation</h6>
+                                <span>Introduction of facilities and services at the property</span>
+                            </div>
+                            <div class="is-flex amenities">
+                                <div class="d-sm-flex w--100" style="width:100%;">
+                                    <div class="fl-item-stretch">
+                                        @await Component.InvokeAsync("ProDescIner", new { NewsId = Model.NEWS_ID })
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="detail__intro">
+                            <!---->
+                            <div class="is-relative">
+                                <div id="short_intro" class="room-des dot1 show" style="-webkit-box-orient: vertical;">
+                                    @Html.Raw(cl.ReadFile(fileName.Replace("<p>", "").Replace("</p>", "")))
+                                </div>
+                                <a id="docthem" onclick="showmore()" class="color-i pointer mt--6 t_color3" style="color:hsl(33, 93%, 54%) !important;cursor:pointer;margin-top: 12px;float: left;">Read more </a>
+                                <a id="rutgon" onclick="hidenmore()" class="color-i pointer mt--6 t_color3" style="color:hsl(33, 93%, 54%) !important;cursor:pointer;margin-top: 12px;float: left;">Compact </a>
+                            </div>
+                        </div>
+                        <div class="bodyti" style="margin-top: 60px;">
+                            <div class="job_info mt_30">
+                                @Html.Raw(Model.NEWS_FIELD2)
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="row" style="margin-bottom: 24px;">
+            <div class="sticky-stopper"></div>
+            @await Component.InvokeAsync("ProductRelation", new { catid = ViewBag.CatId })
+        </div>
+
+        @*<section class="shop_grid_area sec_pad" style="display:none">
+            <div class="container">
+                <div class="sec_title text-center mb_20">
+                    @if (lang == 1)
+                    {
+                        <h2 class="f_p f_size_30 l_height50 f_600">Thông tin đã xem</h2>
+                    }
+                    else
+                    {
+                        <h2 class="f_p f_size_30 l_height50 f_600">Information viewed</h2>
+                    }
+
+                </div>
+                <div class="row mb_30 productsp" style="margin-bottom:50px">
+                    <div class="event_team_slider owl-carousel goiycss">
+                        @foreach (var item11 in ViewBag.cart)
+                        {
+
+                            string linkimg1 = "";
+
+                            string linkurl1 = "";
+
+
+                            if (!String.IsNullOrEmpty(item11.NEWS_URL))
+                            {
+                                linkurl1 = item11.NEWS_URL;
+                            }
+                            else
+                            {
+                                linkurl1 = "/" + item11.CAT_SEO_URL + "/" + item11.NEWS_SEO_URL;
+                            }
+
+
+                            if (!String.IsNullOrEmpty(Model.NEWS_IMAGE1))
+                            {
+                                linkimg1 = "/UploadImages/Data/News/" + item11.NEWS_ID + "/" + item11.NEWS_IMAGE1;
+                            }
+                            else
+                            {
+                                linkimg1 = "/images/noimg.jpg";
+                            }
+                            <div class="item ">
+                                @if (lang == 1)
+                                {
+                                    <div class="e_team_img">
+                                        <a href="@linkurl1">
+                                            <img src="@linkimg1" alt="@Html.Raw(item11.NEWS_TITLE_EN)" style="border-radius:inherit">
+                                        </a>
+
+                                        @if (Model.NEWS_TYPE == 2)
+                                        {
+                                            <div class="docquyen">Sản phẩm độc quyền</div>
+                                        }
+                                        else
+                                        {
+
+                                        }
+                                    </div>
+                                    <div class="bodyNew">
+                                        <a href="@linkurl1" title="@Html.Raw(item11.NEWS_TITLE)"><h4>@Html.Raw(item11.NEWS_TITLE)</h4></a>
+                                        <div class="address"><span class="codepro">@item11.NEWS_CODE</span> <i class="fa fa-map-marker"></i><span>@Html.Raw(item11.NEWS_FIELD4)</span></div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="e_team_img">
+                                        <a href="@linkurl1">
+                                            <img src="@linkimg" alt="@Html.Raw(item11.NEWS_TITLE_EN)" style="border-radius:inherit">
+                                        </a>
+
+                                        @if (item11.NEWS_TYPE == 2)
+                                        {
+                                            <div class="docquyen">Products exclusive</div>
+                                        }
+                                        else
+                                        {
+
+                                        }
+                                    </div>
+                                    <div class="bodyNew">
+                                        <a href="@linkurl1" title="@Html.Raw(item11.NEWS_TITLE_EN)"><h4>@Html.Raw(item11.NEWS_TITLE_EN)</h4></a>
+                                        <div class="address"><span class="codepro">@item11.NEWS_CODE</span> <i class="fa fa-map-marker"></i><span>@Html.Raw(item11.NEWS_FIELD4)</span></div>
+                                    </div>
+
+                                }
+                                <div class="propepty" style="margin-top:20px">
+                                    <ul class="details-list">
+                                        @if (!String.IsNullOrEmpty(item11.NEWS_HTML_EN1))
+                                        {
+                                            <li>
+                                                <i class="fas fa-bed"></i>
+                                                <span>@Utils.CIntDef(item11.NEWS_HTML_EN1)</span>
+                                            </li>
+                                        }
+                                        @if (!String.IsNullOrEmpty(item11.NEWS_HTML_EN2))
+                                        {
+                                            <li>
+                                                <i class="fa fa-bath"></i>
+                                                <span>@Utils.CIntDef(item11.NEWS_HTML_EN2)</span>
+                                            </li>
+                                        }
+                                        @if (!String.IsNullOrEmpty(item11.NEWS_HTML_EN3))
+                                        {
+                                            <li>
+                                                <img src="~/images/dt_icon.png" style="width: 21px;margin-right: 9px;" />
+                                                <span>@item11.NEWS_HTML_EN3 m2</span>
+                                            </li>
+                                        }
+                                        <li style="width: 42%;">
+                                            @if (tien == 1)
+                                            {
+                                                <ins><span class="woocommerce-Price-amount amount" style="color:hsl(30, 100%, 50%)"><span class="woocommerce-Price-currencySymbol"></span>@cl.DocTien(Utils.CDecDef(item11.NEWS_PRICE1))</span></ins>
+                                            }
+                                            else
+                                            {
+                                                <ins><span class="woocommerce-Price-amount amount" style="color:hsl(30, 100%, 50%)"><span class="woocommerce-Price-currencySymbol"></span>@cl.Dola(Utils.CDecDef(item11.NEWS_PRICE1), Utils.CDecDef(tygia))</span></ins>
+                                            }
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </section>*@
+    </div>
+</section>
+
+@if (lang == 1)
+{
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Gửi thông tin liên hệ tư vấn</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="contact_form_box" id="contact_form">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="col-lg-12" style="display:none">
+                                    <div class="form-group text_box">
+                                        <input type="text" id="tieudelienhe" name="name" placeholder="tiêu đề liên hệ" value="@Model.NEWS_TITLE">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group text_box">
+                                        <input type="text" id="name" name="name" placeholder="Họ và tên">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group text_box">
+                                        <input type="text" name="email" id="emailkhach" placeholder="Địa chỉ email">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group text_box">
+                                        <input type="text" id="phone" name="phone" placeholder="Số điện thoại">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group text_box">
+                                    <textarea name="message" id="noidungcantuvan" cols="30" rows="10" placeholder="Nội dung liên hệ ..."></textarea>
+                                </div>
+                            </div>
+                        </div>                      
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary" id="btndangky5vn">Gửi thông tin liên hệ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Consultant contact information</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="contact_form_box" id="contact_form">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="row">
+                                    <div class="col-lg-12" style="display:none">
+                                        <div class="form-group text_box">
+                                            <input type="text" id="tieudelienhe" name="tieude" placeholder="tiêu đề liên hệ" value="@Model.NEWS_TITLE_EN">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="form-group text_box">
+                                            <input type="text" id="name" name="name" placeholder="First and last name">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="form-group text_box">
+                                            <input type="text" name="email" id="emailkhach" placeholder="Email address">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="form-group text_box">
+                                            <input type="text" id="phone" name="phone" placeholder="phone number">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group text_box">
+                                    <textarea name="message" id="noidungcantuvan" cols="30" rows="10" placeholder="Contact content ..."></textarea>
+                                </div>
+                            </div>
+                        </div>                     
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="btndangky5en" >Send information</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<style>
+    input, select, textarea {
+        height: 3rem;
+        border: 1px solid hsl(0deg 0% 90%);
+        transition: all .3s;
+        font-size: 14px;
+        font-family: Luxstay;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        width: 100%;
+        border-radius: 5px;
+    }
+
+    input, textarea {
+        padding: .5rem 1.25rem;
+    }
+
+    .phone-input {
+        display: flex;
+    }
+
+    .country {
+        position: relative;
+    }
+
+        .country .code {
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            background: hsl(0deg 0% 96%);
+            border-radius: 2rem;
+            width: 120px;
+            margin-right: 1rem;
+        }
+
+    .input-group__custom .country .code {
+        width: 90px;
+        margin-right: 10px;
+        border: 1px solid hsl(0deg 0% 90%);
+        border-radius: 4px;
+        background-color: hsl(0deg 0% 100%);
+    }
+
+    .flag-box {
+        display: inline-block;
+        width: 20px;
+        margin-right: 6px;
+        vertical-align: middle;
+    }
+
+    .iti-flag.vn {
+        height: 14px;
+        background-position: -5412px 0;
+    }
+
+    .iti-flag {
+        width: 20px;
+        height: 15px;
+        box-shadow: 0 0 1px 0 #888;
+        background-image: url('images/imagesCo.png');
+        background-repeat: no-repeat;
+        background-color: hsl(0deg 0% 86%);
+        background-position: 20px 0;
+    }
+
+    .bg-gray-f {
+        background-color: hsl(0deg 0% 96%) !important;
+    }
+
+    .rounded {
+        border-radius: 5px !important;
+        overflow: hidden;
+    }
+
+    .is-flex.jbetween {
+        justify-content: space-between;
+        -ms-justify-content: space-between;
+        -ms-flex-pack: distribute;
+        -webkit-justify-content: space-between;
+    }
+
+    .p--small-2 {
+        font-size: 13px !important;
+        margin-bottom: 5px !important;
+    }
+
+    .p--12 {
+        padding: 12px !important;
+        margin-top: 10px;
+    }
+
+    .is-flex.align-center {
+        align-items: center;
+    }
+
+    .extra-bold {
+        font-weight: 900;
+        color: #000;
+    }
+</style>
+<style>
+    .goiycss .owl-nav {
+        display: block !important;
+    }
+
+    .goiycss .owl-prev, .goiycss .owl-next {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        border: 1px solid hsl(222, 27%, 90%);
+        text-align: center;
+        font-size: 14px;
+        color: hsl(225, 18%, 49%);
+        border-radius: 50%;
+        line-height: 48px;
+        -webkit-transition: all 0.3s linear;
+        -o-transition: all 0.3s linear;
+        transition: all 0.3s linear;
+        cursor: pointer;
+        color: hsl(0, 0%, 100%) !important;
+        font-size: 36px !important;
+    }
+
+    .goiycss .owl-nav {
+        position: absolute;
+        top: 40%;
+        width: 100%;
+    }
+
+    .goiycss .owl-prev {
+        left: -60px;
+    }
+
+    .goiycss .owl-next {
+        right: -60px;
+    }
+
+    /*.sticky {
+        position: fixed;
+        top: 10px;
+        width: 370px;
+        z-index: 99999;
+    }*/
+
+    .room-sidebar {
+        border-radius: 3px;
+        position: -webkit-sticky;
+        position: sticky;
+        top: 100px;
+    }
+
+    .event_team_slider .item {
+        background: hsl(0, 0%, 100%);
+        float: left;
+        width: 100%;
+        margin-bottom: 25px;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+        transition: box-shadow 0.3s ease-in-out;
+    }
+
+        .event_team_slider .item .bodyNew a {
+            float: left;
+            width: 100%;
+            margin-bottom: 9px;
+        }
+
+        .event_team_slider .item .e_team_img:after, .event_team_slider .item .e_team_img:before, .event_team_slider .item .e_team_img:after {
+            display: none;
+        }
+
+    .modal-open .modal {
+        background: hsl(0deg 0% 0% / 43%);
+        z-index: 9999999999999999999999999;
+    }
+
+    .modal-backdrop {
+        z-index: 0;
+    }
+
+    .text_box textarea {
+        height: 204px;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        color: hsl(0deg 0% 0%);
+    }
+
+    .h3, h3 {
+        font-size: 17px;
+        margin-top: 12px;
+        font-weight: bold;
+    }
+    .is-relative ul li {
+        color: hsl(0deg 0% 0%);
+        font-weight: normal;
+        font-size: 15px;
+        margin-bottom: 9px;
+    }
+    .detail__intro p, .detail__intro span {
+        font-size: 15px !important;
+        line-height: 1.5rem !important;
+        color: hsl(0deg 0% 0%) !important;
+        font-family: 'Roboto';
+    }
+    .detail__intro h2 {
+        font-size: 29px;
+        font-weight: bold;
+    }
+</style>

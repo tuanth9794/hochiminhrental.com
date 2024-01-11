@@ -1,0 +1,127 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    var defaultGridPageSize = 100;
+    //page title
+    ViewBag.Title = "Danh sách chuyên mục";
+}
+
+
+<div class="content-header clearfix">
+    <h1 class="pull-left">
+        DANH SÁCH CHUYÊN MỤC
+    </h1>
+    <div class="pull-right">
+        <div class="pull-right">
+            <a href="~/Admin/Categories/CreateCat" class="btn btn-social btn-bitbucket btn-xs"> <i class="fa fa-plus-square"></i>  THÊM MỚI</a>
+        </div>
+    </div>
+</div>
+<!-- Main content -->
+<div class="content">
+    <div id="example">
+        <div id="grid"></div>
+        <script>
+            $(document).ready(function () {
+                    $("#grid").kendoGrid({
+                        dataSource: {
+                            type: "json",
+                            transport: {
+                                  read: {
+                                    url: "/Admin/Categories/CategoriesListOut",
+                                            type: "POST",
+                                            dataType: "json",
+                                },
+                                destroy: {
+                                    url: "/Admin/Categories/DeleteConfirmed",
+                                    type: 'POST',
+                                    contentType: 'application/json; charset=utf-8',
+                                    dataType: "json",
+                                        }
+                            },
+                            schema: {
+                                total: "Total",
+                                errors: "Errors",
+                                model: {
+                                    id: "caT_ID",
+                                    fields: {
+                                        caT_ID: { type: "number", editable: false }
+                                    }
+                                }
+                            },
+                            pageSize: @(defaultGridPageSize)
+                        },
+                        groupable: true,
+                        sortable: true,
+                        selectable: true,
+                        navigatable: true,
+                        filterable: true,
+                         editable: {
+                                    confirmation: "Bạn có muốn xóa dữ liệu",
+                                    mode: "inline"
+                                },
+                        pageable: {
+                            refresh: true,
+                            pageSizes: true,
+                            buttonCount: 5,
+                             @await Html.PartialAsync("_GridPagerMessages")
+                        },
+                        columns: [{
+                            field: "caT_NAME",
+                            title: "Tên chuyên mục",
+                            filterable: {
+                                multi: true,
+                                search: true
+                            }
+                        },{
+                    field: "caT_ID",
+                    title: "Xem thông tin",
+                    headerAttributes: { style: "text-align:center" },
+                    attributes: { style: "text-align:center" },
+                    template: '<a href="/Admin/Categories/Edit/#=caT_ID#" class="btn btn-social btn-info btn-xs"><i class="fa fa-pencil" ></i> Xem chi tiết</a>',
+                    width:150
+                            }, {
+                                field: "caT_ID",
+                                title: "Xem thông tin",
+                                headerAttributes: { style: "text-align:center" },
+                                attributes: { style: "text-align:center" },
+                                template: '<button type="submit" name="DeleteConfirmed" formmethod="post" formaction="/Admin/Categories/DeleteConfirmed?id=#=caT_ID#" class="btn bg-red btn-xs"><span class="glyphicon glyphicon-trash"></span> Xóa</button>',
+                                width: 100
+                            }]
+                    });
+                });
+        </script>
+    </div>
+</div>
+
+<style type="text/css">
+    .customer-photo {
+        display: inline-block;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background-size: 32px 35px;
+        background-position: center center;
+        vertical-align: middle;
+        line-height: 32px;
+        box-shadow: inset 0 0 1px #999, inset 0 0 10px rgba(0,0,0,.2);
+        margin-left: 5px;
+    }
+
+    .customer-name {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: 32px;
+        padding-left: 3px;
+    }
+</style>
+
+
+
+<!-- section scripts
+    {
+    <script>
+        $(document).ready(function () {
+            $("#pickker").kendoDatePicker();
+        })
+    </script>
+}-->

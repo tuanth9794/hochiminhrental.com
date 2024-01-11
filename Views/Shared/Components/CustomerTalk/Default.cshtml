@@ -1,0 +1,139 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_CATEGORIES>
+@using CoreCnice.Connect;
+@using CoreCnice.Domain;
+@using CoreCnice.Servicer;
+@using CoreCnice.UtilsCs;
+@*@model List<CoreCnice.Domain.ESHOP_AD_ITEM>*@
+@{
+    BulSoftCmsConnectContext _context = new BulSoftCmsConnectContext();
+    int lang = Utils.CIntDef(ViewBag.Langue);
+}
+
+<style>
+    .testimonial_title .owl-prev {
+        text-align: center;
+        right: 230px;
+    }
+
+    .testimonial_title .owl-next {
+        left: 210px;
+    }
+</style>
+
+
+@foreach (var category in Model.ToList())
+{
+    string LinkUrl = "";
+
+    if (String.IsNullOrEmpty(category.CAT_URL) == true)
+    {
+        LinkUrl = "/" + category.CAT_SEO_URL;
+    }
+    else
+    {
+        LinkUrl = category.CAT_URL;
+    }
+    <section class="feedback_area_two sec_pad" style="min-height:0px;height:auto">
+        <div class="container custom_container">
+            <div class="sec_title text-center mb_5 mt_2">
+                @if (lang == 1)
+                {
+                    <h2 class="f_p f_size_30 l_height50 f_700 t_color  blod">@Html.Raw(category.CAT_NAME)</h2>
+                }
+                else
+                {
+                    <h2 class="f_p f_size_30 l_height50 f_700 t_color  blod">@Html.Raw(category.CAT_NAME_EN)</h2>
+                }
+            </div>            
+            <div id="fslider_three" class="feedback_slider_two owl-carousel">
+                @{
+                    var listNew = (from n in _context.ESHOP_NEWS
+                                   join c in _context.ESHOP_NEWS_CAT on n.NEWS_ID equals c.NEWS_ID
+                                   join cat in _context.ESHOP_CATEGORIES on c.CAT_ID equals cat.CAT_ID
+                                   where c.CAT_ID == category.CAT_ID
+                                   orderby n.NEWS_ID descending
+                                   select new
+                                   {
+                                       n.NEWS_ID,
+                                       n.NEWS_TITLE,
+                                       n.NEWS_URL,
+                                       n.NEWS_SEO_URL,
+                                       n.NEWS_IMAGE1,
+                                       n.NEWS_DESC,
+                                       cat.CAT_SEO_URL,
+                                       n.NEWS_FIELD3,
+                                       n.NEWS_FIELD4,
+                                       n.NEWS_FILEHTML,
+                                       n.NEWS_CODE,
+                                       n.NEWS_DESC_EN,
+                                       n.NEWS_TITLE_EN
+                                   }).Take(12);
+
+
+                    @foreach (var itemn in listNew.ToList())
+                    {
+                        string linkimg = "";
+                        string linkimgNews = "";
+                        if (!String.IsNullOrEmpty(itemn.NEWS_IMAGE1))
+                        {
+                            linkimg = "/UploadImages/Data/News/" + itemn.NEWS_ID + "/" + itemn.NEWS_IMAGE1;
+                            linkimgNews = "/UploadImages/Data/News/" + itemn.NEWS_ID + "/thumb-" + itemn.NEWS_IMAGE1;
+                            if (Utils.checkfileExit(linkimgNews) == true)
+                            {
+                                linkimg = linkimgNews;
+                            }
+                        }
+                        else
+                        {
+                            linkimg = "/images/noimg.jpg";
+                        }
+                        @if (lang == 1)
+                        {
+                            <div class="item">
+                                <div class="feedback_item feedback_item_two">
+                                    <div class="feed_back_author">
+                                        <div class="media">
+                                            <div class="img">
+                                                <img src="@linkimg" alt="@itemn.NEWS_TITLE">
+                                            </div>
+                                            <div class="media-body">
+                                                <h5 class="t_color f_size_15 f_p f_500">@itemn.NEWS_TITLE</h5>
+                                                <h6 class="f_p f_400">@itemn.NEWS_CODE</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="f_size_15" style="text-align:justify">@Html.Raw(itemn.NEWS_DESC)</p>
+                                    <div class="shap_one"></div>
+                                    <div class="shap_two"></div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="item">
+                                <div class="feedback_item feedback_item_two">
+                                    <div class="feed_back_author">
+                                        <div class="media">
+                                            <div class="img">
+                                                <img src="@linkimg" alt="@itemn.NEWS_TITLE_EN">
+                                            </div>
+                                            <div class="media-body">
+                                                <h5 class="t_color f_size_15 f_p f_500">@itemn.NEWS_TITLE_EN</h5>
+                                                <h6 class="f_p f_400">@itemn.NEWS_CODE</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="f_size_15" style="text-align:justify">@Html.Raw(itemn.NEWS_DESC_EN)</p>
+                                    <div class="shap_one"></div>
+                                    <div class="shap_two"></div>
+                                </div>
+                            </div>
+                        }
+
+                    }
+                }
+            </div>
+        </div>
+    </section>
+}
+

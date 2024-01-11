@@ -1,0 +1,363 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    //var defaultGridPageSize = 100;
+    //page title
+    ViewBag.Title = "Danh sách chuyên mục";
+}
+
+<style>
+    .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+        padding: 10px;
+        line-height: normal;
+        vertical-align: middle;
+        border-top: 1px solid hsl(0, 0%, 87%);
+    }
+</style>
+<div class="content-header clearfix">
+    <div class="pull-left" style="width: 50%;">
+        <div class="alert alert-success alert-dismissible" style="margin-bottom: 0px;padding: 5px 15px;">
+            <p style="margin-bottom: 0px;">
+                <i class="icon fa fa-check"></i> <span class="thongbao"> Thông báo! </span>
+            </p>
+        </div>
+    </div>
+    <div class="pull-right">
+        <div class="pull-right">
+            <a href="~/Admin/Categories/CreateCat" class="btn btn-social btn-bitbucket btn-xs"> <i class="fa fa-plus-square"></i>  THÊM MỚI</a>
+            @*<a style="cursor:pointer" class="btn btn-social btn-bitbucket btn-xs" id="capnhatseourl"> <i class="fa fa-plus-square"></i> CẬP NHẬT SEO URL EN</a>*@
+        </div>
+    </div>
+</div>
+<!-- Main content -->
+<div class="content">
+    @*<div id="example">
+            <div id="grid"></div>
+            <script>
+                $(document).ready(function () {
+                        $("#grid").kendoGrid({
+                            dataSource: {
+                                type: "json",
+                                transport: {
+                                      read: {
+                                        url: "/Admin/Categories/CategoriesListOut",
+                                                type: "POST",
+                                                dataType: "json",
+                                    },
+                                    destroy: {
+                                        url: "/Admin/Categories/DeleteConfirmed",
+                                        type: 'POST',
+                                        contentType: 'application/json; charset=utf-8',
+                                        dataType: "json",
+                                            }
+                                },
+                                schema: {
+                                    total: "Total",
+                                    errors: "Errors",
+                                    model: {
+                                        id: "caT_ID",
+                                        fields: {
+                                            caT_ID: { type: "number", editable: false }
+                                        }
+                                    }
+                                },
+                                pageSize: @(defaultGridPageSize)
+                            },
+                            groupable: true,
+                            sortable: true,
+                            selectable: true,
+                            navigatable: true,
+                            filterable: true,
+                             editable: {
+                                        confirmation: "Bạn có muốn xóa dữ liệu",
+                                        mode: "inline"
+                                    },
+                            pageable: {
+                                refresh: true,
+                                pageSizes: true,
+                                buttonCount: 5,
+                                 @await Html.PartialAsync("_GridPagerMessages")
+                            },
+                            columns: [{
+                                field: "caT_NAME",
+                                title: "Tên chuyên mục",
+                                filterable: {
+                                    multi: true,
+                                    search: true
+                                }
+                            },{
+                        field: "caT_ID",
+                        title: "Xem thông tin",
+                        headerAttributes: { style: "text-align:center" },
+                        attributes: { style: "text-align:center" },
+                        template: '<a href="/Admin/Categories/Edit/#=caT_ID#" class="btn btn-social btn-info btn-xs"><i class="fa fa-pencil" ></i> Xem chi tiết</a>',
+                        width:150
+                                }, {
+                                    field: "caT_ID",
+                                    title: "Xem thông tin",
+                                    headerAttributes: { style: "text-align:center" },
+                                    attributes: { style: "text-align:center" },
+                                    template: '<a class="btn bg-red btn-xs" onclick="xoaimages(#=caT_ID#)"><span class="glyphicon glyphicon-trash"></span>Xóa</a>',
+                                    width: 100
+                                }]
+                        });
+                    });
+            </script>
+        </div>*@
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">DANH SÁCH CHUYÊN MỤC</h3>
+            <div class="box-tools">
+                <div class="input-group input-group-sm" style="width: 250px;">
+                    <input type="text" id="txtSearch" name="table_search" class="form-control pull-right" placeholder="Tìm kiếm chuyên mục">
+                    <div class="input-group-btn">
+                        <button type="button" id="search" class="btn btn-default"><i class="fa fa-search"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box-body">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Tên chuyên mục</th>
+                        <th>Thứ tự hiển thị</th>
+                        <th>Xem thông tin</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+
+                <tbody class="load-list"></tbody>
+            </table>
+        </div>
+        <div class="box-footer clearfix">
+            <div class="pull-left">
+                <button type="button" class="btn btn-block btn-danger btn-flat">CẬP NHẬT</button>
+            </div>
+            <div class="pull-right">
+                <ul class="pagination pagination-sm no-margin pull-right" id="load-pagination"></ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<style type="text/css">
+    .customer-photo {
+        display: inline-block;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background-size: 32px 35px;
+        background-position: center center;
+        vertical-align: middle;
+        line-height: 32px;
+        box-shadow: inset 0 0 1px #999, inset 0 0 10px rgba(0,0,0,.2);
+        margin-left: 5px;
+    }
+
+    .customer-name {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: 32px;
+        padding-left: 3px;
+    }
+</style>
+
+
+<style type="text/css">
+    .btn-social.btn-xs {
+        padding-left: 30px;
+        margin-right: 9px;
+    }
+
+    .customer-photo {
+        display: inline-block;
+        width: 125px;
+        height: 44px;
+        /*border-radius: 50%;*/
+        background-size: cover;
+        background-position: center center;
+        vertical-align: middle;
+        line-height: 32px;
+        box-shadow: inset 0 0 1px #999, inset 0 0 10px rgba(0,0,0,.2);
+        margin-left: 5px;
+    }
+
+    .customer-name {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: 32px;
+        padding-left: 3px;
+    }
+
+    .btn-app {
+        border-radius: 3px;
+        position: relative;
+        padding: 5px 5px;
+        margin: 0 0 10px 10px;
+        min-width: 41px;
+        height: 30px;
+        text-align: center;
+        color: hsl(0, 0%, 40%);
+        border: 1px solid hsl(0, 0%, 87%);
+        font-size: 12px;
+    }
+</style>
+
+<script>
+    var count = 0;
+    var txt_class = "";
+    function load(txtSearch, page, status) {
+        count = 0;
+        txt_class = "";
+        $.ajax({
+            url: '/Admin/Categories/GetCatListOut',
+            type: "GET",
+            data: { txtSearch: txtSearch, page: page },
+            dataType: 'json',
+            contentType: 'application/json;charset=utf-8',
+            success: function (result) {
+                console.log(result);
+                var str = "";
+                $.each(result.data, function (index, value) {
+                    txt_class = "period_order_" + value.caT_ID;
+                    count = count + 1;
+                    str += "<tr>";
+                    str += "<td>" + count + "</td>";
+                    str += "<td> <a class='nameCode' href='/Admin/Categories/EditCat/" + value.caT_ID + "'>" + value.caT_NAME + "</a></td>";
+                    str += "<td><input class='form-control input-sm " + txt_class + "' type='text'  placeholder='' value='" + value.caT_PERIOD_ORDER + "' style='float: left;width: 41px;'><a class='btn btn-app updateCart' data-id='" + value.caT_ID + "'><i class='fa fa-save'></i></a></td>";
+                    str += "<td><a href='/Admin/Categories/EditCat/" + value.caT_ID + "' class='btn btn-social btn-info btn-xs'><i class='fa fa-pencil'></i> Xem chi tiết</a></td>";
+                    str += "<td><a data-id='" + value.caT_ID + "' class='btn bg-red btn-xs deleteCart'><i class='glyphicon glyphicon-trash'></i> Xóa</a></td>";
+                    str += "</tr>";
+                    //create pagination
+                    var pagination_string = "";
+                    var pageCurrent = result.pageCurrent;
+                    var numSize = result.numSize;
+                    //create button previous
+                    if (pageCurrent > 1) {
+                        var pagePrevious = pageCurrent - 1;
+                        pagination_string += '<li class="page-item"><a href="" class="page-link" data-page=' + pagePrevious + '>Previous</a></li>';
+                    }
+                    for (i = 1; i <= numSize; i++) {
+                        if (i == pageCurrent) {
+                            pagination_string += '<li class="page-item active"><a href="" class="page-link" data-page=' + i + '>' + pageCurrent + '</a></li>';
+                        } else {
+                            pagination_string += '<li class="page-item"><a href="" class="page-link" data-page=' + i + '>' + i + '</a></li>';
+                        }
+                    }
+                    //create button next
+                    if (pageCurrent > 0 && pageCurrent < numSize) {
+                        var pageNext = pageCurrent + 1;
+                        pagination_string += '<li class="page-item"><a href="" class="page-link"  data-page=' + pageNext + '>Next</a></li>';
+                    }
+                    //load pagination
+                    $("#load-pagination").html(pagination_string);
+                });
+                //load str to class="load-list"
+                $(".load-list").html(str);
+            }
+        });
+    };
+    function loadListStatus(x) {
+        load(null, 1, x);
+    };
+    $(document).ready(function () {
+        //function load pagination
+        $("body").on("click", ".pagination li a", function (event) {
+            event.preventDefault();
+            var page = $(this).attr('data-page');
+
+            //load event pagination
+            var txtSearch = $(".txtSearch").val();
+            if (txtSearch != "") {
+                load(txtSearch, page, null)
+            }
+            else {
+                load(null, page, null);
+            }
+
+        });
+        $("#search").click(function () {
+            var txtSearch = $("#txtSearch").val();
+            if (txtSearch != "") {
+                load(txtSearch, 1, null)
+            }
+            else {
+                load(null, 1, null);
+            }
+        });
+
+        $("body").on("click", ".updateCart", function (event) {
+            event.preventDefault();
+            var quantity = $(".period_order_" + $(this).attr("data-id")).val();
+            console.log(quantity);
+            $.ajax({
+                type: "POST",
+                url: "/Admin/Categories/UpdateId",
+                data: {
+                    id: $(this).attr("data-id"),
+                    sttAd: quantity
+                },
+                success: function (result) {
+                    $('.thongbao').html("Cập nhật thành công");
+                    $('.alert').show(250).delay(2000).hide(250);
+                    load(null, 1, null);
+                }
+            });
+        });
+
+        $("body").on("click", ".deleteCart", function (event) {
+            event.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: "/Admin/Categories/DeleteCat",
+                data: {
+                    id: $(this).attr("data-id"),
+                },
+                success: function (result) {
+                    if (result == "False") {
+                        var r = confirm("Chuyên mục có chứa sản phẩm vui lòng xóa sản phẩm trước khi xóa chuyên mục ! Chuyển sang danh sách sản phẩm ngay ?");
+                        if (r == true) {
+                            window.location.href = "/Admin/news";
+                        } else {
+
+                        }
+                    }
+                    else if (result == "OK") {
+                        $('.thongbao').html("Xóa thành công");
+                        $('.alert').show(250).delay(2000).hide(250);
+                        load(null, 1, null);
+                    }
+                }
+            });
+        });
+
+        $("body").on("click", "#capnhatseourl", function (event) {
+            event.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: "/Admin/Categories/UpdateSeoUrlEn",
+                data: {                  
+                },
+                success: function (result) {
+                    if (result == "False") {
+                        alert("Không thành công");
+                    }
+                    else if (result == "OK") {
+                        $('.thongbao').html("Thành công");
+                        $('.alert').show(250).delay(2000).hide(250);                    
+                    }
+                }
+            });
+        });
+        //load init
+        load(null, 1, null);
+    });
+</script>
+
+<style>
+    .alert {
+        display: none;
+    }
+</style>

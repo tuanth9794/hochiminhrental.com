@@ -1,0 +1,112 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_CATEGORIES>
+@using CoreCnice.Connect;
+@using CoreCnice.Domain;
+@using CoreCnice.UtilsCs;
+@*@model List<CoreCnice.Domain.ESHOP_AD_ITEM>*@
+@{
+    clsFormat cl = new clsFormat();
+    BulSoftCmsConnectContext _context = new BulSoftCmsConnectContext();
+}
+<!-- Section: Testimonial  -->
+@foreach (var category in Model.ToList())
+{
+    string LinkUrl = "";
+
+    if (String.IsNullOrEmpty(category.CAT_URL))
+    {
+        LinkUrl = "/" + category.CAT_SEO_URL;
+    }
+    else
+    {
+        LinkUrl = category.CAT_URL;
+    }
+
+    <!-- Section: blog -->
+    <section id="blog">
+        <div class="container pb-70">
+            <div class="section-title text-center">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 col-sm-12 col-xs-12">
+                        <h2 class="text-center line-height-1 mt-0"><a href="@LinkUrl">@Html.Raw(category.CAT_NAME)</a><span class="text-theme-colored3"> @Html.Raw(category.CAT_CODE)</span> </h2>
+                        <p class="text-center" style="text-align:center!important">@Html.Raw(category.CAT_DESC)</p>
+                    </div>
+                </div>
+            </div>
+            <div class="section-content">
+                <div class="row">
+                    @{
+                        var listNew = (from n in _context.ESHOP_NEWS
+                                       join c in _context.ESHOP_NEWS_CAT on n.NEWS_ID equals c.NEWS_ID
+                                       join cat in _context.ESHOP_CATEGORIES on c.CAT_ID equals cat.CAT_ID
+                                       where c.CAT_ID == category.CAT_ID
+                                       orderby n.NEWS_PUBLISHDATE descending
+                                       select new
+                                       {
+                                           n.NEWS_ID,
+                                           n.NEWS_TITLE,
+                                           n.NEWS_URL,
+                                           n.NEWS_SEO_URL,
+                                           n.NEWS_IMAGE1,
+                                           n.NEWS_DESC,
+                                           n.NEWS_CODE,
+                                           cat.CAT_SEO_URL
+                                       }).Take(4);
+                        //int countloop = 0;
+                        //int counttt = listNew.ToList().Count;
+                        foreach (var itemn in listNew.ToList())
+                        {
+                            string linkurl = "";
+
+                            if (!String.IsNullOrEmpty(linkurl))
+                            {
+                                linkurl = itemn.NEWS_URL;
+                            }
+                            else
+                            {
+                                linkurl = "/" + itemn.CAT_SEO_URL + "/" + itemn.NEWS_SEO_URL;
+                            }
+
+                            string linkimg = "";
+                            string linkimgNews = "";
+                            if (!String.IsNullOrEmpty(itemn.NEWS_IMAGE1))
+                            {
+                                linkimg = "/UploadImages/Data/News/" + itemn.NEWS_ID + "/" + itemn.NEWS_IMAGE1;
+                                linkimgNews = "/UploadImages/Data/News/" + itemn.NEWS_ID + "/thumb-" + itemn.NEWS_IMAGE1;
+                                if (Utils.checkfileExit(linkimgNews) == true)
+                                {
+                                    linkimg = linkimgNews;
+                                }
+                            }
+                            else
+                            {
+                                linkimg = "/images/noimg.jpg";
+                            }
+                            <div class="col-sm-6 col-md-4 col-lg-4">
+                                <article class="post clearfix maxwidth600 mb-30 border-1px">
+                                    <div class="entry-header-new">
+                                        <div class="post-thumb thumb">
+                                            <a href="@linkurl">
+                                                <img class="img-responsive img-fullwidth" alt="@itemn.NEWS_TITLE" src="@linkimg" asp-append-version="true">
+                                            </a>
+                                        </div>
+                                        <div class="blog-overlay"></div>
+                                    </div>
+                                    <div class="pr-20 pl-20 pb-30 text-center">
+                                        <h3 class="entry-title mt-20 pt-0"><a class="text-theme-colored" href="@linkurl">@itemn.NEWS_TITLE</a></h3>
+                                        <ul class="list-inline entry-date font-13 mt-5">
+                                            <li><i class="fa fa-map-marker mr-5 text-theme-colored"></i> @itemn.NEWS_CODE </li>
+                                        </ul>
+                                        <div class="mt-10">@Html.Raw(itemn.NEWS_DESC)</div>
+                                        <a class="btn btn-theme-colored btn-lg btn-flat mt-0 text-white mt-10" href="@linkurl">Xem Chi Tiết <i class="fa fa-angle-double-right text-theme-colored2"></i></a>
+                                    </div>
+                                </article>
+                            </div>
+                        }
+                    }
+
+                </div>
+            </div>
+        </div>
+    </section>
+}
+

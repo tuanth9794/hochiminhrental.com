@@ -1,0 +1,167 @@
+﻿@using CoreCnice.UtilsCs;
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    clsFormat cl = new clsFormat();
+    int lang = Utils.CIntDef(ViewBag.Langue);
+    int tygia = Utils.CIntDef(ViewBag.USD);
+    int tien = Utils.CIntDef(ViewBag.Money);
+    string donvi = "";
+    string donviEn = "";
+}
+
+@if (lang == 1)
+{
+    <section class="h-100">
+        <div class="container py-5 h-100" style="padding-top: 10px !important;padding-bottom:10px !important">
+            <div class="row d-flex justify-content-center align-items-center h-100" style="width: 70%;margin: 0 auto;">
+                <div class="col">
+                    <div class="card card-registration my-4">
+                        <div class="row g-0">
+                            <div class="col-xl-5 d-none d-xl-block">
+                                <img src="~/images/img4.webp"
+                                 alt="Sample photo" class="img-fluid"
+                                 style="border-top-left-radius: .25rem; border-bottom-left-radius: .25rem;" />
+                            </div>
+                            <div class="col-xl-7">
+                                <div class="alert alert-primary" role="alert" style="margin-top: 15px;@ViewBag.Display">
+                                    @ViewBag.Error
+                                </div>
+                                <form asp-action="Singin" asp-controller="AdminCus" method="post">
+                                    <h5 type="primary" class="sc-bYEvPH cugSgN" style="margin-top: 0px;">Xin chào bạn</h5>
+                                    <h3 class="mb-5 text-uppercase" style="font-weight: bold;font-family: Lexend;font-size: 22px;line-height: 32px;font-weight: bold;color: rgb(44, 44, 44);margin-bottom: 10px!important;">Đăng nhập thông tin</h3>
+                                    <!-- Email input -->
+                                    <div class="form-outline mb-4">
+                                        <input type="text" name="taikhoan" id="form2Example1" class="form-control" placeholder="Tài khoản / Email" />
+                                    </div>
+
+                                    <!-- Password input -->
+                                    <div class="form-outline mb-4">
+                                        <input type="password" name="matkhau" id="form2Example2" class="form-control" placeholder="Mật khẩu" />
+                                    </div>
+
+                                    <!-- 2 column grid layout for inline styling -->
+                                    <div class="row mb-4">
+                                        <div class="col d-flex justify-content-center">
+                                            <!-- Checkbox -->
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="form2Example31" checked />
+                                                <label class="form-check-label" for="form2Example31"> Ghi nhớ tài khoản </label>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <!-- Simple link -->
+                                            <a href="/AdminCus/ForgotPassword">Quên mật khẩu ?</a>
+                                        </div>
+                                    </div>
+                                    <!-- Submit button -->
+                                    <button type="submit" class="btn btn-primary btn-block mb-4 ipTBQe">Đăng Nhập</button>
+
+                                    <!-- Register buttons -->
+                                    <div class="text-center">
+                                        <p>Nếu bạn chưa có tài khoản ? <a href="/sellernet/trang-dang-ky">Đăng ký tại đây</a></p>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+else
+{
+    <section class="h-100">
+        <div class="container py-5 h-100" style="padding-top: 10px !important;padding-bottom:10px !important">
+            <div class="row d-flex justify-content-center align-items-center h-100" style="width: 70%;margin: 0 auto;">
+                <div class="col">
+                    <div class="card card-registration my-4">
+                        <div class="row g-0">
+                            <div class="col-xl-5 d-none d-xl-block">
+                                <img src="~/images/img4.webp"
+                                 alt="Sample photo" class="img-fluid"
+                                 style="border-top-left-radius: .25rem; border-bottom-left-radius: .25rem;" />
+                            </div>
+                            <div class="col-xl-7">
+                                <div class="alert alert-primary" role="alert" style="margin-top: 15px;@ViewBag.Display">
+                                    @ViewBag.Error
+                                </div>
+                                <form asp-action="Singin" asp-controller="AdminCus" method="post">
+                                    <h5 type="primary" class="sc-bYEvPH cugSgN" style="margin-top: 0px;">Hello</h5>
+                                    <h3 class="mb-5 text-uppercase" style="font-weight: bold;font-family: Lexend;font-size: 22px;line-height: 32px;font-weight: bold;color: rgb(44, 44, 44);margin-bottom: 10px!important;">Login information</h3>
+                                    <!-- Email input -->
+                                    <div class="form-outline mb-4">
+                                        <input type="text" name="taikhoan" id="form2Example1" class="form-control" placeholder="Account / Email" />
+                                    </div>
+
+                                    <!-- Password input -->
+                                    <div class="form-outline mb-4">
+                                        <input type="password" name="matkhau" id="form2Example2" class="form-control" placeholder="Password" />
+                                    </div>
+
+                                    <!-- 2 column grid layout for inline styling -->
+                                    <div class="row mb-4">
+                                        <div class="col d-flex justify-content-center">
+                                            <!-- Checkbox -->
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="form2Example31" checked />
+                                                <label class="form-check-label" for="form2Example31"> remember account </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col">
+                                            <!-- Simple link -->
+                                            <a href="/AdminCus/ForgotPassword">Forgot password ?</a>
+                                        </div>
+                                    </div>
+
+                                    <!-- Submit button -->
+                                    <button type="submit" class="btn btn-primary btn-block mb-4 ipTBQe">Log in</button>
+
+                                    <!-- Register buttons -->
+                                    <div class="text-center">
+                                        <p>If you do not already have an account ? <a href="/sellernet/trang-dang-ky">Sign up here</a></p>
+
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+
+
+
+
+<style>
+    .col a {
+        font-size: 15px;
+    }
+
+    form {
+        width: 94%;
+         margin-top: 48px;
+    }
+    input.form-control
+    {
+          height: 48px;
+    }
+  .ipTBQe {
+    position: relative;
+    height: 48px;
+    display: inline-block;
+    border-radius: 8px;
+    cursor: pointer;
+    white-space: nowrap;
+    width: fit-content;
+    background-color: #f9b416;
+    padding: 14px 16px;
+    color: rgb(255, 255, 255);
+    opacity: 1;
+    border: none;
+    width:100%;
+}
+</style>

@@ -1,0 +1,145 @@
+﻿@using CoreCnice.UtilsCs;
+@{
+    int lang = Utils.CIntDef(ViewBag.Langue); 
+}
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="content-language" content="vn">
+    <link rel="icon" href="/UploadImages/Data/@Html.Raw(ViewData["FAVICON"])">
+    <title>@Html.Raw(ViewData["Title"])</title>
+    <meta name="description" content="@Html.Raw(ViewData["Desc"])" />
+    <meta name="keywords" content="@Html.Raw(ViewData["Key"])" />
+    <!-- Bootstrap CSS -->
+    <link href="~/AdminCus/assets/css/main.css?v=1.1" rel="stylesheet" type="text/css" />
+
+    <link rel="stylesheet" href="~/css/savistahouse.css">
+    <script src="~/AdminCus/assets/js/vendors/jquery-3.6.0.min.js"></script>
+    <link href="~/AdminCus/css/csscustomer.css" rel="stylesheet" type="text/css" />
+</head>
+<body class="">
+
+    <div class="screen-overlay"></div>
+    @await Html.PartialAsync("_HeaderSeller")
+
+    <main class="main-wrap">
+        <header class="main-header navbar">
+            <div class="col-search">
+                <form class="searchform">
+                    <div class="input-group">
+                        <input list="search_terms" type="text" class="form-control" placeholder="Search term" />
+                        <button class="btn btn-light bg" style="background:#3BB77E" type="button"><i class="material-icons md-search"></i></button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-nav">
+                <button class="btn btn-icon btn-mobile me-auto" data-trigger="#offcanvas_aside"><i class="material-icons md-apps"></i></button>
+                <ul class="nav">
+                    @*  <li class="nav-item">
+                    <a class="nav-link btn-icon darkmode" href="#"> <i class="material-icons md-nights_stay"></i> </a>
+                    </li>
+                    <li class="nav-item">
+                    <a href="#" class="requestfullscreen nav-link btn-icon"><i class="material-icons md-cast"></i></a>
+                    </li>
+                    <li class="dropdown nav-item">
+                    <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownLanguage" aria-expanded="false"><i class="material-icons md-public"></i></a>
+                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownLanguage">
+                    <a class="dropdown-item text-brand" href="#"><img src="~/AdminCus/assets/imgs/theme/flag-us.png" alt="English" />English</a>
+                    <a class="dropdown-item" href="#"><img src="~/AdminCus/assets/imgs/theme/flag-fr.png" alt="Français" />Tiếng việt</a>
+                    </div>
+                    </li>*@
+                    <li class="dropdown nav-item">
+                        <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownAccount" aria-expanded="false"> <img class="img-xs rounded-circle" src="~/AdminCus/assets/imgs/people/avatar-2.png" alt="User" /></a>
+                        @if(lang == 1)
+                        {
+                               <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownAccount">
+                            <a class="dropdown-item" href="/AdminCus/CustomerSetting"><i class="material-icons md-perm_identity"></i>Chỉnh sửa tài khoản</a>
+                            <a class="dropdown-item" href="/"><i class="material-icons md-settings"></i>Về trang chủ</a>
+                            <a class="dropdown-item" href="#"><i class="material-icons md-help_outline"></i>Video hỗ trợ</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-danger" href="/sellernet/trang-dang-nhap"><i class="material-icons md-exit_to_app"></i>Thoát</a>
+                            </div>
+                        }
+                        else
+                        {
+                              <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownAccount">
+                            <a class="dropdown-item" href="/AdminCus/CustomerSetting"><i class="material-icons md-perm_identity"></i>Edit account</a>
+                            <a class="dropdown-item" href="/"><i class="material-icons md-settings"></i>On the homepage</a>
+                            <a class="dropdown-item" href="#"><i class="material-icons md-help_outline"></i>Support video</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-danger" href="/sellernet/trang-dang-nhap"><i class="material-icons md-exit_to_app"></i>Exit</a>
+                            </div>
+                        }
+                    </li>
+                </ul>
+            </div>
+        </header>
+        @RenderBody()
+        <!-- content-main end// -->
+        <footer class="main-footer font-xs">
+            <div class="row pb-30 pt-15">
+                <div class="col-sm-6">
+                    ©
+                    <script>
+                        document.write(new Date().getFullYear());
+                    </script>
+                    COPYRIGHT EUREKA REAL ESTATE
+                </div>
+                <div class="col-sm-6">
+                    <div class="text-sm-end">. ALL RIGHTS RESERVED.</div>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <script src="~/AdminCus/assets/js/vendors/bootstrap.bundle.min.js"></script>
+    <script src="~/AdminCus/assets/js/vendors/select2.min.js"></script>
+    <script src="~/AdminCus/assets/js/vendors/perfect-scrollbar.js"></script>
+    <script src="~/AdminCus/assets/js/vendors/jquery.fullscreen.min.js"></script>
+    <script src="~/AdminCus/assets/js/vendors/chart.js"></script>
+    <!-- Main Script -->
+    <script src="~/AdminCus/assets/js/main.js?v=1.1" type="text/javascript"></script>
+    <script src="~/AdminCus/assets/js/custom-chart.js" type="text/javascript"></script>
+    @RenderSection("Scripts", required: false)
+    <script>
+        function myFunction($param) {
+
+            var idRequest = $('.idqt').val();
+
+            var idCustomer = $('.idcustomer').val();
+
+            var idNew = $param;
+
+            $.ajax({
+                url: '/api/Cascading/CustomerSugget',
+                type: 'GET',
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                data: { IdRequest: idRequest, IdNew: idNew, CustomerId: idCustomer },
+                success: function(d) {
+                    $('.bgxuly').hide();
+                    $('#snackbar').html("Gợi ý khách hàng thành công !");
+                    $(".xacnhan-" + $param).prop("disabled", true);
+                    setTimeout(function() {
+                        x.className = x.className.replace("show", "");
+                    }, 2000);
+                },
+                error: function() {
+                    $('.bgxuly').hide();
+                    alert('Error!');
+                }
+            });
+
+            console.log('idCustomer', idCustomer);
+        }
+
+        function ViewSugget($param) {
+            $("#bookLoad").load("/AdminCus/ListSugget/" + $param + "#loadhere");
+            $('#exampleModal').modal('show');
+        }
+    </script>
+
+</body>
+</html>

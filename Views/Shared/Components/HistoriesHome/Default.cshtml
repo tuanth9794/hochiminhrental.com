@@ -1,0 +1,11 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_CATEGORIES>
+
+@foreach (var category in Model.ToList())
+{
+    <div class="hosting_title erp_title text-center">
+        <h2 class="f_p f_size_30 l_height50 f_600 t_color">@Html.Raw(category.CAT_NAME)</h2>
+        <p class="f_400 f_size_16">@Html.Raw(category.CAT_DESC)</p>
+    </div>
+    @await Component.InvokeAsync("HistoryList", new { Position = category.CAT_ID })
+}
+

@@ -1,0 +1,64 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_CATEGORIES>
+@using CoreCnice.Connect;
+@*@await Component.InvokeAsync("CatBanner", new { Position = @ViewBag.Id })*@
+@{
+    Layout = "~/Views/Shared/_LayoutDetail.cshtml";
+    int typeCat = ViewBag.Type;
+    BulSoftCmsConnectContext _context = new BulSoftCmsConnectContext();
+    string linkimg = "";
+    string alt = "";
+
+    if (!String.IsNullOrEmpty(ViewBag.IMAGE3))
+    {
+        linkimg = "/UploadImages/Data/Cats/" + ViewBag.Id + "/" + ViewBag.IMAGE3;
+    }
+    else
+    {
+        if (!String.IsNullOrEmpty(ViewBag.IMAGE2))
+        {
+            linkimg = "/UploadImages/Data/Cats/" + ViewBag.Id + "/" + ViewBag.IMAGE2;
+        }
+        else
+        {
+            linkimg = "/images/noimg.png";
+        }
+    }
+    if (!String.IsNullOrEmpty(ViewBag.Alt))
+    {
+        alt = ViewBag.Alt;
+    }
+    else
+    {
+        alt = ViewBag.Title;
+    }
+
+}
+<style>
+    .descghv {
+        width: 94%;
+        margin: 0 auto;
+        position: relative;
+    }
+</style>
+<section class="slidertop slider-overlay">
+    <h1>
+        <img src="@linkimg" style="width:100%;" alt="@Html.Raw(alt)" />
+    </h1>
+</section>
+<section class="listwp bodyn">
+    <div class="container ">
+        <div class="row ">
+            <div class="text-center" style="width: 100%;font-size: 25px;font-weight: bold;margin-top: 5px;margin-bottom: 7px;">
+                <h2 class="display-4 font-weight-normal cltext" style="font-size: 40px;">@Html.Raw(ViewBag.NAME)</h2>
+            </div>
+        </div>
+        <div class="row ">
+            @{
+            foreach (var item in Model.ToList())
+            {
+                @Html.Partial("~/Views/Catalog/_CatOne.cshtml", item);
+        }
+            }
+        </div>
+    </div>
+</section>

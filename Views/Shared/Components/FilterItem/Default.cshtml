@@ -1,0 +1,59 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_PROPERTIES>
+@using CoreCnice.Connect;
+@using CoreCnice.UtilsCs;
+@{
+    int lang = Utils.CIntDef(ViewBag.Langue);
+    int tien = Utils.CIntDef(ViewBag.Money);
+}
+
+@foreach (var category in Model.ToList())
+{
+    string linkimg = "";
+    if (!String.IsNullOrEmpty(category.PRO_IMAGES))
+    {
+        linkimg = "/UploadImages/Data/Properties/" + category.PROP_ID + "/" + category.PRO_IMAGES;
+    }
+    else
+    {
+        linkimg = "/images/noimg.jpg";
+    }
+    <div class="input-group" style="padding-bottom: 4px;">
+        <div class="input-group-prepend" style="display: block;float: left;">
+            <div class="input-group-text">
+                @if (lang == 1)
+                {
+                    <input type="checkbox" id="chon-@category.PROP_ID" href="javascript:void(0)" onclick="clickSearch(@category.PROP_ID,'@category.PROP_NAME')" data-id="@category.PROP_ID" title="@category.PROP_NAME" data-url="@category.PROP_NAME">
+                }
+                else
+                {
+                    <input type="checkbox" id="chon-@category.PROP_ID" href="javascript:void(0)" onclick="clickSearch(@category.PROP_ID,'@category.PRO_NAME_EN')" data-id="@category.PROP_ID" title="@category.PROP_NAME" data-url="@category.PROP_NAME">
+                }
+            </div>
+        </div>
+        @if (category.PRO_TYPE == 0)
+        {
+            @if (lang == 1)
+            {
+                <span class="form-control">@category.PROP_NAME</span>
+            }
+            else
+            {
+                <span class="form-control">@category.PRO_NAME_EN</span>
+            }
+        }
+        else
+        {
+            @if (tien == 1)
+            {
+                <span class="form-control">@category.PROP_NAME</span>
+            }
+            else
+            {
+                <span class="form-control">@category.PRO_NAME_EN</span>
+            }
+        }
+    </div>
+}
+
+
+

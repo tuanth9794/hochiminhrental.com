@@ -1,0 +1,87 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_CATEGORIES>
+@using CoreCnice.Servicer;
+@using CoreCnice.Domain;
+@using CoreCnice.UtilsCs;
+@{
+    CategoryServices ct = new CategoryServices();
+    int lang = Utils.CIntDef(ViewBag.Langue);
+}
+
+<section class="payment_features_two sec_pad">
+    <div class="container">
+        <div class="sec_title text-center mb_5 mt_2">
+            @if (lang == 1)
+            {
+                <h2 class="f_p f_size_30 l_height50 f_700 t_color  blod">Căn Hộ Cho Thuê Theo Khu Vực</h2>
+            }
+            else
+            {
+                <h2 class="f_p f_size_30 l_height50 f_700 t_color  blod">Apartments For Rent By Regions</h2>
+            }
+        </div>
+        <div class="row">
+            <div class="bg_row_dt goiycss owl-carousel owl-theme">
+                @foreach (var category in Model.ToList())
+                {
+                    string LinkUrl = "";
+
+                    if (lang == 1)
+                    {
+                        if (String.IsNullOrEmpty(category.CAT_URL) == true)
+                        {
+                            LinkUrl = "/" + category.CAT_SEO_URL;
+                        }
+                        else
+                        {
+                            LinkUrl = category.CAT_URL;
+                        }
+                    }
+                    else
+                    {
+                        if (String.IsNullOrEmpty(category.CAT_URL) == true)
+                        {
+                            LinkUrl = "/" + category.CAT_SEO_URL_EN;
+                        }
+                        else
+                        {
+                            LinkUrl = category.CAT_URL;
+                        }
+                    }
+
+                    if (lang == 1)
+                    {
+                        <div class="item">
+                            <div class="listing-cat">
+                                <a href="@LinkUrl" title="@category.CAT_NAME">
+                                    <div class="overlay" style="background-color: rgba(0, 0, 0, 0.79); "></div>
+                                    <div class="lc-background" style="background-image: url('/UploadImages/Data/Cats/@category.CAT_ID/@category.CAT_IMAGE1');"></div>
+                                    <div class="lc-info">
+                                        <h4 class="case27-secondary-text">@Html.Raw(category.CAT_NAME)</h4>
+                                        <h6>@await ct.getCountNews(category.CAT_ID) danh sách</h6>
+                                    </div>
+                                    <div class="lc-icon"> <i class="icon-location-pin-4" style=""></i></div>
+                                </a>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="item">
+                            <div class="listing-cat">
+                                <a href="@LinkUrl" title="@category.CAT_NAME_EN">
+                                    <div class="overlay" style="background-color: rgba(0, 0, 0, 0.79); "></div>
+                                    <div class="lc-background" style="background-image: url('/UploadImages/Data/Cats/@category.CAT_ID/@category.CAT_IMAGE1');"></div>
+                                    <div class="lc-info">
+                                        <h4 class="case27-secondary-text">@Html.Raw(category.CAT_NAME_EN)</h4>
+                                        <h6>@await ct.getCountNews(category.CAT_ID) listings</h6>
+                                    </div>
+                                    <div class="lc-icon"> <i class="icon-location-pin-4" style=""></i></div>
+                                </a>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,289 @@
+﻿@model CoreCnice.Domain.PRO_DESC
+@{
+    ViewData["Title"] = "Danh sách miêu tả " + ViewBag.Title;
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    var defaultGridPageSize = 20;
+}
+<style>
+    .radio {
+        float: left !important;
+        margin-right: 10px !important
+    }
+</style>
+<script src="~/Admin/tinymce/js/tinymce/tinymce.js"></script>
+@using (Html.BeginForm(FormMethod.Post, new { enctype = "multipart/form-data", data_ajax = "false" }))
+{
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+            Danh sách thuộc tính - @ViewBag.Title
+            <small>
+                <i class="fa fa-arrow-circle-left"></i>
+                <a href="/Admin/News">Về danh sách</a>
+            </small>
+        </h1>
+        <div class="pull-right">
+            <button type="submit" name="save" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>
+                Lưu tiện ích
+            </button>
+        </div>
+    </div>
+
+    <section class="content">
+        @if (!string.IsNullOrEmpty(ViewBag.Error))
+        {
+            <div class="callout callout-info">
+                <h4>Thông báo</h4>
+                <p>
+                    @Html.Raw(ViewBag.Error)
+                </p>
+            </div>
+        }
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" class="form-control" value="@ViewBag.NewsId">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Thông tin chung</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- form start -->
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Mã Tin</label>
+                            <input type="text" class="form-control" value="@ViewBag.Code" readonly="readonly">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Tên Tin</label>
+                            <input type="text" class="form-control" value="@ViewBag.Title" readonly="readonly">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Tên tiện ích</label>
+                            <input type="text" class="form-control" asp-for="PRO_NAME">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Tên tiện ích TA</label>
+                            <input type="text" class="form-control" asp-for="PRO_NAME_EN">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Thứ tự hiển thị</label>
+                            <input type="text" class="form-control" asp-for="PRO_ORDER">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Icon</label>
+                            <input type="file" asp-for="PRO_IMAGES">
+                            <input type="hidden" class="form-control" asp-for="PRO_IMAGES">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Tình trạng</label>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.PRO_ACTIVE, "0", new { id = 0, @checked = "checked", @class = "radio" })
+                                    Không
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.PRO_ACTIVE, "1", new { id = 1, @class = "radio" })
+                                    Có
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Nội dung miêu tả</label>
+                            <textarea class="form-control textarea" rows="2" id="catseokey" asp-for="PRO_FILE"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Nội dung miêu tả TA</label>
+                            <textarea class="form-control textarea" rows="2" id="catseokey" asp-for="PRO_FILE_EN"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">
+                            Danh sách miêu tả
+                        </h3>
+                        <!-- tools box -->
+                        <div class="pull-right box-tools">
+                            <button type="button" class="btn btn-default btn-sm" data-widget="collapse" data-toggle="tooltip"
+                                    title="Collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                        <!-- /. tools -->
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div id="grid"></div>
+                        <script>
+                $(document).ready(function () {
+                    $("#grid").kendoGrid({
+                        dataSource: {
+                            type: "json",
+                            transport: {
+                                read: "/Admin/News/ProductDescListOb/@ViewBag.NewsId"
+                            },
+                            pageSize: @(defaultGridPageSize)
+                        },
+                        groupable: true,
+                        sortable: true,
+                        selectable: true,
+                        navigatable: true,
+                         filterable: true,
+                        pageable: {
+                            refresh: true,
+                            pageSizes: true,
+                            buttonCount: 5
+                        },
+                        columns: [{
+                            field: "prO_NAME",
+                            title: "Tên Miêu tả",
+                            }, {
+                                field: "prO_ID",
+                    title: "Xem thông tin",
+                    headerAttributes: { style: "text-align:center" },
+                    attributes: { style: "text-align:center" },
+                                template: '<a class="btn btn-default btn-xs" href="/Admin/News/ProductDescListEdit/#=prO_ID#"><i class="fa fa-pencil"></i>Chi tiết</a><a class="btn bg-red btn-xs" onclick="xoaimages(#=prO_ID#)"><span class="glyphicon glyphicon-trash"></span>Xóa</a>',
+                    width:150
+                }]
+                    });
+                });
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <style type="text/css">
+        .customer-photo {
+            display: inline-block;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-size: 32px 35px;
+            background-position: center center;
+            vertical-align: middle;
+            line-height: 32px;
+            box-shadow: inset 0 0 1px #999, inset 0 0 10px rgba(0,0,0,.2);
+            margin-left: 5px;
+        }
+
+        .customer-name {
+            display: inline-block;
+            vertical-align: middle;
+            line-height: 32px;
+            padding-left: 3px;
+        }
+
+        .btn {
+            margin-right: 10px;
+        }
+    </style>
+
+}
+<script>
+    function xoaimages(x) {
+        var getItemId = parseInt(x);
+        $.ajax({
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            url: '/Admin/News/DeleteListDesc?id=' + getItemId,
+            data: "{ 'ItemId':' " + getItemId + "' }",
+            success: function (data) {
+                window.location.reload(true);
+            },
+            error: function (data) {
+                alert(data);
+            }
+        });
+    };
+</script>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        tinymce.init({
+            selector: 'textarea.textarea',  // change this value according to your HTML
+            //plugins: [
+            //    'advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker',
+            //    'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+            //    'save table contextmenu directionality emoticons template paste textcolor'
+            //],
+            //a_plugin_option: true,
+            //toolbar: [
+            //    'undo redo | styleselect | bold italic | link image | alignleft aligncenter alignright',
+            //    'newdocument, undo, redo, visualaid, cut, copy, paste, selectall, bold, italic, underline, strikethrough, subscript, superscript, removeformat, formats'
+            //],
+            plugins: [
+                'advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker',
+                'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+                'save table contextmenu directionality emoticons template paste textcolor'
+            ],
+            toolbar: 'formatselect| fontsizeselect | bold italic strikethrough forecolor backcolor permanentpen formatpainter | link image | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent | removeformat | addcomment',
+            fontsize_formats: "8pt 10pt 12pt 14pt 18pt 24pt 36pt",
+            //theme_modern_font_sizes: "10px,12px,13px,14px,16px,18px,20px",
+            //font_size_style_values: "12px,13px,14px,16px,18px,20px",
+            theme_advanced_font_sizes: "8pt, 10pt, 12pt, 14pt, 16pt, 18pt, 20pt, 22pt, 24pt, 26pt, 28pt, 30pt, 32pt, 34pt, 36pt",
+            //image_advtab: true,
+            a_plugin_option: true,
+            content_css: [
+                'https://fonts.googleapis.com/css?family=Nunito',
+            ],
+            //file_browser_callback: 'myFileBrowser',
+            a_configuration_option: 400,
+            //importcss_append: true,
+            height: 400,
+            //images_upload_url: '/Areas/Admin/api/UploadService',
+            //automatic_uploads: false,
+            //images_reuse_filename: true,
+            //images_upload_base_path: '/UploadImages/UploadService/'
+            //image_advtab: true,
+            //external_filemanager_path: "/Admin/responsive_filemanager/filemanager/",
+            //filemanager_title: "Trình quản lý thư viện",
+            //external_plugins: { "filemanager": "/Admin/responsive_filemanager/filemanager/plugin.min.js" }
+            file_browser_callback: RoxyFileBrowser
+        });
+
+        function RoxyFileBrowser(field_name, url, type, win) {
+            var roxyFileman = '/lib/fileman/index.html';
+            if (roxyFileman.indexOf("?") < 0) {
+                roxyFileman += "?type=" + type;
+            }
+            else {
+                roxyFileman += "&type=" + type;
+            }
+            roxyFileman += '&input=' + field_name + '&value=' + win.document.getElementById(field_name).value;
+            if (tinyMCE.activeEditor.settings.language) {
+                roxyFileman += '&langCode=' + tinyMCE.activeEditor.settings.language;
+            }
+            tinyMCE.activeEditor.windowManager.open({
+                file: roxyFileman,
+                title: 'Roxy Fileman',
+                width: 850,
+                height: 650,
+                resizable: "yes",
+                plugins: "media",
+                inline: "yes",
+                close_previous: "no"
+            }, { window: win, input: field_name });
+            return false;
+        }
+    </script>
+}
+@*<div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+             Modal content
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Thêm mới hình ảnh</h4>
+                </div>
+                <div class="modal-body">
+                    @await Html.PartialAsync("AddNewsImages")
+                </div>
+            </div>
+
+        </div>
+    </div>*@

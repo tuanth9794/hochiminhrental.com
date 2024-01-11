@@ -1,0 +1,231 @@
+﻿@using CoreCnice.UtilsCs;
+@model CoreCnice.Domain.ESHOP_CUSTOMER
+@{
+    Layout = "~/Views/Shared/_LayoutCus.cshtml";
+    clsFormat cl = new clsFormat();
+    int lang = Utils.CIntDef(ViewBag.Langue);
+    int tygia = Utils.CIntDef(ViewBag.USD);
+    int tien = Utils.CIntDef(ViewBag.Money);
+    string donvi = "";
+    string donviEn = "";
+}
+
+<style>
+    .form-control, .form-select {
+        border: 1px solid #c3c4c8 !important;
+    }
+</style>
+
+<!-- The actual snackbar -->
+<div id="snackbar"></div>
+
+@{
+    if (lang == 1)
+    {
+        <section class="content-main">
+            <div class="row">
+                <div class="col-12">
+                    <div class="content-header">
+                        <h2 class="content-title">Gửi yêu cầu của khách hàng</h2>
+                        <div>
+                            <button class="btn btn-light rounded font-sm mr-5 text-body hover-up btndangkyLienHe">Lưu nháp</button>
+                            <button class="btn btn-md rounded font-sm hover-up btndangkyLienHePub">Lưu và hiện thị</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h4>Thông tin yêu cầu</h4>
+                        </div>
+                        <div class="card-body">
+                            <form name="ContactForm" id="ContactForm">
+                                <div class="mb-4">
+                                    <label for="product_name" class="form-label">Họ và tên</label>
+                                    <input type="text" placeholder="Họ tên khách hàng" class="form-control name" value="@Model.CUSTOMER_FULLNAME" />
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="mb-4">
+                                            <label class="form-label">Số điện thoại</label>
+                                            <div class="row gx-2">
+                                                <input placeholder="" type="text" class="form-control sodt" value="@Model.CUSTOMER_PHONE1" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="mb-4">
+                                            <label class="form-label">Địa chỉ email</label>
+                                            <input placeholder="" type="text" class="form-control emailkhach" id="emailget" value="@Model.CUSTOMER_EMAIL" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label class="form-label">Quốc tịch</label>
+                                        <input placeholder="" type="text" class="form-control quoctich" value="" />
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label">Dự án</label>
+                                    <input type="text" placeholder="" class="form-control duanname" value="" />
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="mb-4">
+                                            <label class="form-label">Số phòng ngủ</label>
+                                            <div class="row gx-2">
+                                                <input placeholder="" type="text" class="form-control sopn" value="" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="mb-4">
+                                            <label class="form-label">Diện tích</label>
+                                            <input placeholder="" type="text" class="form-control dientich" value="" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label class="form-label">Ngân sách</label>
+                                        <input placeholder="" type="text" class="form-control ngansach" value="" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="mb-4">
+                                            <label class="form-label">Thời gian dọn vào</label>
+                                            <div class="row gx-2">
+                                                <input class="form-control thoigiandonvao" type="date" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-4">
+                                            <label class="form-label">Thời hạn thuê</label>
+                                            <input class="form-control thoihanthua" type="date" />
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label">Mô tả yêu cầu</label>
+                                    <textarea placeholder="Mô tả yêu cầu" class="form-control mota" rows="4"></textarea>
+                                </div>
+                                <label class="form-check mb-4" hidden>
+                                    <input class="form-check-input checkbox" type="checkbox" value="" />
+                                    <span class="form-check-label"> Bạn có muốn tạo tài khoản ? </span>
+                                </label>
+                            </form>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-light rounded font-sm mr-5 text-body hover-up btndangkyLienHe">Lưu nháp</button>
+                            <button class="btn btn-md rounded font-sm hover-up btndangkyLienHePub">Lưu và hiện thị</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    }
+    else
+    {
+        <section class="content-main">
+            <div class="row">
+                <div class="col-12">
+                    <div class="content-header">
+                        <h2 class="content-title">Send customer request</h2>
+                        <div>
+                            <button class="btn btn-light rounded font-sm mr-5 text-body hover-up btndangkyLienHe">Save draft</button>
+                            <button class="btn btn-md rounded font-sm hover-up btndangkyLienHePub">Save and display</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h4>Information required</h4>
+                        </div>
+                        <div class="card-body">
+
+                            <div class="mb-4">
+                                <label for="product_name" class="form-label">First and last name</label>
+                                <input type="text" placeholder="" class="form-control name" value="@Model?.CUSTOMER_FULLNAME" />
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="mb-4">
+                                        <label class="form-label">Phone number</label>
+                                        <div class="row gx-2">
+                                            <input placeholder="" type="text" class="form-control sodt" value="@Model?.CUSTOMER_PHONE1" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="mb-4">
+                                        <label class="form-label">Email address</label>
+                                        <input placeholder="" type="text" class="form-control emailkhach" value="@Model?.CUSTOMER_EMAIL" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <label class="form-label">Nationality</label>
+                                    <input placeholder="" type="text" class="form-control quoctich" value="" />
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label">Project / Area</label>
+                                <input type="text" placeholder="" class="form-control duanname" value="" />
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="mb-4">
+                                        <label class="form-label">Number of bedrooms</label>
+                                        <div class="row gx-2">
+                                            <input placeholder="" type="text" class="form-control sopn" value="" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="mb-4">
+                                        <label class="form-label">Area</label>
+                                        <input placeholder="" type="text" class="form-control dientich" value="" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <label class="form-label">Budget</label>
+                                    <input placeholder="" type="text" class="form-control ngansach" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="mb-4">
+                                        <label class="form-label">Time to move in</label>
+                                        <div class="row gx-2">
+                                            <input placeholder="" type="date" class="form-control thoigiandonvao" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="mb-4">
+                                        <label class="form-label">Lease term (month)</label>
+                                        <input placeholder="" type="text" class="form-control thoihanthua" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label">Description of the request</label>
+                                <textarea placeholder="" class="form-control mota" rows="4"></textarea>
+                            </div>
+                            <label class="form-check mb-4" hidden>
+                                <input class="form-check-input" type="checkbox" value="" />
+                                <span class="form-check-label"> Do you want to create an account? </span>
+                            </label>
+
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-light rounded font-sm mr-5 text-body hover-up btndangkyLienHe">Save draft</button>
+                            <button class="btn btn-md rounded font-sm hover-up btndangkyLienHePub">Save and display</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+}

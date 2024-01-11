@@ -1,0 +1,50 @@
+﻿@model CoreCnice.Models.NewsModelCat;
+@using CoreCnice.Connect;
+@using CoreCnice.UtilsCs;
+@{
+    clsFormat cl = new clsFormat();
+    string linkimg = "";
+
+    string linkurl = "";
+
+    if (!String.IsNullOrEmpty(Model.NEWS_URL))
+    {
+        linkurl = Model.NEWS_URL;
+    }
+    else
+    {
+        linkurl = "/" + Model.CAT_SEO_URL + "/" + Model.NEWS_SEO_URL;
+
+    }
+
+    string linkimgNews = "";
+    if (!String.IsNullOrEmpty(Model.NEWS_IMAGE1))
+    {
+        linkimg = "/UploadImages/Data/News/" + Model.NEWS_ID + "/" + Model.NEWS_IMAGE1;
+        linkimgNews = "/UploadImages/Data/News/" + Model.NEWS_ID + "/thumb-" + Model.NEWS_IMAGE1;
+        if (Utils.checkfileExit(linkimgNews) == true)
+        {
+            linkimg = linkimgNews;
+        }
+    }
+    else
+    {
+        linkimg = "/images/noimg.jpg";
+    }
+}
+
+<div class="col-md-4">
+    <div class="box-hover-effect effect-alaska">
+        <div class="effect-wrapper">
+            <div class="thumb">
+                <img class="img-fullwidth" src="@linkimg" alt="project">
+            </div>
+            <div class="bottom-info-box bg-theme-colored-transparent-9">
+                <div class="title">
+                    <div class="pull-left mr-10 text-white"><i class="fa fa-globe font-24"></i></div>
+                    <h3 class="title text-white mt-0">@Html.Raw(Model.NEWS_TITLE)</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

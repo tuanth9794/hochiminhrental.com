@@ -1,0 +1,66 @@
+﻿@using CoreCnice.Connect;
+@using CoreCnice.UtilsCs;
+@model IEnumerable<CoreCnice.Models.ConfirmModelCustomer>
+@{
+    Layout = "";
+       int lang = Utils.CIntDef(ViewBag.Langue);
+}
+
+
+
+
+<div id="loadhere">
+    <div class="row">
+        @{
+            if (Model.ToList().Count > 0)
+            {
+                @foreach (var itemCatChild in Model.ToList())
+                {
+                    if(lang == 1)
+                    {
+                    <div class="col-lg-4">
+                        <div class="card">
+                            <h5 class="card-header">@itemCatChild.Customer_Name</h5>
+                            <div class="card-body">
+                                <h5 class="card-title">@itemCatChild.NEWS_TITLE</h5>
+                                <p class="card-text">Thời gian gợi ý : @itemCatChild.CustomerConfirm_PublishDate.Value.ToShortDateString()</p>
+                                @if (itemCatChild.CustomerConfirm_Active == 0)
+                                {
+                                    <p class="card-text">Xác nhận khách : Chưa</p>
+                                }
+                                else
+                                {
+                                    <p class="card-text">Xác nhận khách : Lên lịch hẹn</p>
+                                    <a href="#" class="btn btn-sm bg-green" style="width:100%;margin-top:5px">Xác nhận</a>
+                                }
+                            </div>
+                        </div>
+                        </div>
+                    }
+                    else
+                    {
+                         <div class="col-lg-4">
+                        <div class="card">
+                            <h5 class="card-header">@itemCatChild.Customer_Name</h5>
+                            <div class="card-body">
+                                <h5 class="card-title">@itemCatChild.NEWS_TITLE</h5>
+                                <p class="card-text">Suggested time: @itemCatChild.CustomerConfirm_PublishDate.Value.ToShortDateString()</p>
+                                @if (itemCatChild.CustomerConfirm_Active == 0)
+                                {
+                                    <p class="card-text">Guest confirmation : No</p>
+                                }
+                                else
+                                {
+                                    <p class="card-text">Confirm guests: Schedule an appointment</p>
+                                    <a href="#" class="btn btn-sm bg-green" style="width:100%;margin-top:5px">Confirm</a>
+                                }
+                            </div>
+                        </div>
+                        </div>
+                    }
+                }
+            }
+        }
+    </div>
+</div>
+

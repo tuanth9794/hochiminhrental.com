@@ -1,0 +1,44 @@
+﻿@model CoreCnice.Domain.ESHOP_NEWS
+    
+<div class="col-xs-12 col-md-12">
+    <div class="sec-heading-area p_0_15" style="margin-top: 0px;">
+        <h2 class="section-heading" style="margin-top: 0px">@Model.NEWS_TITLE</h2>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-7" style="padding: 0px; margin-bottom: 10px">
+        <ul class="bxslider1">
+            @await Component.InvokeAsync("NewsImages", new { NewsID = Model.NEWS_ID })
+        </ul>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-5 clearright">
+        <div class="service_info_middle">
+            <div class="product-details-overlay hide"></div>
+            <div class="rate_social">
+                <div class="floatLeft">
+                    NHÀ CUNG CẤP :
+                    <a class="merchantLink" href="#">@Model.NEWS_FIELD1</a>
+                </div>
+                <div class="devide floatLeft">&nbsp; | &nbsp;</div>
+                <div class="floatLeft">
+                    <a class="merchantLink" href="#">@Model.NEWS_FIELD2</a>
+                </div>
+                <div class="devide floatLeft">&nbsp; | &nbsp;</div>
+                <div class="floatLeft">
+                    <a class="merchantLink" href="#">@Model.NEWS_FIELD3</a>
+                </div>
+            </div>
+            <div class="product__info" style="padding-left: 0px">
+                <ul class="list-group" style="margin-bottom: 0px">
+                    <li class="list-group-item" style="border: none; border-bottom: 1px solid #e3e3e3; margin-bottom: 0px; padding: 2px 9px; padding-left: 0px">Chất liệu : @Model.NEWS_IMAGE4</li>
+                    <li class="list-group-item" style="border: none; border-bottom: 1px solid #e3e3e3; margin-bottom: 0px; padding: 2px 9px; padding-left: 0">Màu sắc: @Model.NEWS_IMAGE3</li>
+                    <li class="list-group-item" style="border: none; border-bottom: 1px solid #e3e3e3; margin-bottom: 0px; padding: 2px 9px; padding-left: 0">Quy cách : @Model.NEWS_IMAGE2</li>
+                    <li class="list-group-item" style="border: none; border-bottom: 1px solid #e3e3e3; margin-bottom: 0px; padding: 2px 9px; padding-left: 0">
+                        @Model.NEWS_FILEHTML
+                    </li>
+                </ul>
+            </div>
+            <div class="item-info-block item-info-block-gift clearfix hide"></div>
+        </div>
+    </div>
+</div>
+
+

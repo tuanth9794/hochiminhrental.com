@@ -1,0 +1,554 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_NEWS>
+
+@{
+
+    //var defaultGridPageSize = 20;
+    //page title
+    ViewData["Title"] = "Danh sách Google Sheet";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+  <link rel="stylesheet" href="~/Admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+<style>
+    .alert {
+        display: none;
+    }
+</style>
+<div class="content-header clearfix">
+    <div class="pull-left" style="width: 50%;">
+        <div class="alert alert-success alert-dismissible" style="margin-bottom: 0px;padding: 5px 15px;">
+            <p style="margin-bottom: 0px;">
+                <i class="icon fa fa-check"></i> <span class="thongbao"> Thông báo! </span>
+            </p>
+        </div>
+    </div>
+</div>
+<div class="content">
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">DANH SÁCH TIN TỨC</h3>
+            <div class="box-tools">
+                <div class="input-group input-group-sm" style="float: left;margin-right: 10px;">
+                    <select id="searchselect" class="form-control" asp-items="@(new SelectList(ViewBag.ListCatPr,"CAT_ID","CAT_NAME"))"></select>
+                </div>
+                <div class="input-group input-group-sm" style="width: 250px;">
+                    <input type="text" id="txtSearch" name="table_search" class="form-control pull-right" placeholder="Tìm kiếm sản phẩm">
+                    <div class="input-group-btn">
+                        <button type="button" id="search" class="btn btn-default"><i class="fa fa-search"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="outer">
+                <div class="inner">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th class="hard_left">Mã</th>
+                                <th>Tên</th>
+                                <th>Tên EN</th>
+                                <th>Địa chỉ</th>
+                                <th>Diện tích</th>
+                                <th>Giá thuê</th>
+                                <th>Phòng ngủ</th>
+                                <th>Phòng tắm</th>
+                                <th>Loại căn hộ</th>
+                                <th>Tiên ích</th>
+                                <th>Tình trạng</th>
+                                <th style="width:100px">Ngày trống</th>
+                                <th>Ngày tạo</th>
+                                <th>Ngày update</th>
+                            </tr>
+                        </thead>
+                        <tbody class="load-list"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="box-footer clearfix">
+            @*<div class="pull-left">
+            <button type="button" class="btn btn-block btn-danger btn-flat">CẬP NHẬT</button>
+            </div>*@
+            <div class="pull-right">
+                <ul class="pagination pagination-sm no-margin pull-right" id="load-pagination"></ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style type="text/css">
+    .customer-photo {
+        display: inline-block;
+        width: 36px;
+        height: 36px;
+        /* border-radius: 50%; */
+        background-size: contain;
+        background-position: center center;
+        vertical-align: middle;
+        line-height: 32px;
+        box-shadow: inset 0 0 1px #999, inset 0 0 10px rgba(0,0,0,.2);
+        margin-left: 5px;
+    }
+
+    .customer-name {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: 32px;
+        padding-left: 3px;
+    }
+
+    .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+        padding: 8px;
+        line-height: 1.42857143;
+        vertical-align: middle;
+        border-top: 1px solid hsl(0, 0%, 87%);
+    }
+</style>
+<!-- bootstrap datepicker -->
+
+<script type="text/javascript">
+    //$('body').on('change', '.roomtype', function () {
+    //      console.log($(this).val());
+    //  }
+    function getvaluechange(selectObject, id) {
+        var valueSelect = selectObject.value;
+        $.ajax({
+            type: "POST",
+            url: "/Admin/News/EditTable",
+            data: {
+                id: id,
+                CLASSName: "NEWS_SEO_URL_JS",
+                value: valueSelect
+            },
+            success: function (result) {
+                if (result.status === false) {
+                    $('.thongbao').html(result.message + " với giá trị :" + item);
+                    $('.alert').show(250).delay(2000).hide(250);
+                }
+                else if (result.status === true) {
+                    $('.thongbao').html("Chuyển trạng thái thành công");
+                    $('.alert').show(250).delay(2000).hide(250);
+                }
+                else {
+                    alert(result);
+                }
+            }
+        });
+    }
+    var count = 0;
+    var txt_class = "";
+    function load(txtSearch, page, status) {
+        count = 0;
+        txt_class = "";
+        var e = document.getElementById("searchselect");
+        var catid = e.options[e.selectedIndex].value;
+       var now = new Date();
+        $.ajax({
+            url: '/Admin/News/GetNewsList',
+            type: "GET",
+            data: { txtSearch: txtSearch, page: page, trang: 150, catId: catid },
+            dataType: 'json',
+            contentType: 'application/json;charset=utf-8',
+            success: function (result) {
+                var str = "";
+                $.each(result.data, function (index, value) {
+                    txt_class = "period_order_" + value.newS_ID;
+                    var date = new Date(value.newS_PUBLISHDATE);
+                    var dateOne = new Date(value.newS_UPDATE);
+                    var tinhtrang = value.newS_SHOWTYPE;
+                    count = count + 1;
+                    str += "<tr>";
+                    str += "<td name='NEWS_CODE' data-id='" + value.newS_ID + "'>" + value.newS_CODE + "</td>";
+                    str += "<td name='NEWS_TITLE' data-id='" + value.newS_ID + "'>" + value.newS_TITLE + "</td>";
+                    str += "<td name='NEWS_TITLE_EN' data-id='" + value.newS_ID + "'>" + value.newS_TITLE_EN + "</td>";
+                    str += "<td name='NEWS_FIELD4' data-id='" + value.newS_ID + "'>" + value.newS_FIELD4 + "</td>";
+                    str += "<td  name='NEWS_HTML_EN3' data-id='" + value.newS_ID + "'>" + value.newS_HTML_EN3 + "</td>";
+                    str += "<td  name='NEWS_PRICE1' data-id='" + value.newS_ID + "'>" + new Intl.NumberFormat('vi', { style: 'currency', currency: 'VND' }).format(value.newS_PRICE1) + "</td>";
+                    str += "<td name='NEWS_HTML_EN1' data-id='" + value.newS_ID + "'>" + value.newS_HTML_EN1 + "</td>";
+                    str += "<td name='NEWS_HTML_EN2' data-id='" + value.newS_ID + "'>" + value.newS_HTML_EN2 + "</td>";
+
+                    str += "<td  name='NEWS_SEO_URL_JS' data-id='" + value.newS_ID + "'> <select onchange='getvaluechange(this," + value.newS_ID + ")' class='roomtype' style='padding: 3px;border-radius: 5px;'>";
+                    if (value.newS_SEO_URL_JS == "Separate Room") {
+                        str += "<option selected='selected' value='Separate Room'>PN Riêng</option>";
+                        str += "<option value='Studio'>Studio</option>";
+                        str += "<option value='Duplex'>Duplex</option>";
+                        str += "<option value='Penthouse'>Penthouse</option>";
+                        str += "<option value='Share House'>Share House</option>";
+                        str += "<option value='Whole House'>Nhà Nguyên Căn</option>";
+                        str += "<option value='Officetel'>Văn phòng</option>";
+                    }
+                    else if (value.newS_SEO_URL_JS == "Studio") {
+                        str += "<option value='Separate Room'>PN Riêng</option>";
+                        str += "<option selected='selected' value='Studio'>Studio</option>";
+                        str += "<option value='Duplex'>Duplex</option>";
+                         str += "<option value='Penthouse'>Penthouse</option>";
+                        str += "<option value='Share House'>Share House</option>";
+                        str += "<option value='Whole House'>Nhà Nguyên Căn</option>";
+                        str += "<option value='Officetel'>Văn phòng</option>";
+                    }
+                    else if (value.newS_SEO_URL_JS == "Duplex") {
+                        str += "<option value='Separate Room'>PN Riêng</option>";
+                        str += "<option  value='Studio'>Studio</option>";
+                        str += "<option selected='selected' value='Duplex'>Duplex</option>";
+                         str += "<option value='Penthouse'>Penthouse</option>";
+                        str += "<option value='Share House'>Share House</option>";
+                        str += "<option value='Whole House'>Nhà Nguyên Căn</option>";
+                        str += "<option value='Officetel'>Văn phòng</option>";
+                    }
+                      else if (value.newS_SEO_URL_JS == "Penthouse") {
+                        str += "<option value='Separate Room'>PN Riêng</option>";
+                        str += "<option  value='Studio'>Studio</option>";
+                        str += "<option  value='Duplex'>Duplex</option>";
+                         str += "<option selected='selected' value='Penthouse'>Penthouse</option>";
+                        str += "<option value='Share House'>Share House</option>";
+                        str += "<option value='Whole House'>Nhà Nguyên Căn</option>";
+                        str += "<option value='Officetel'>Văn phòng</option>";
+                    }
+                    else if (value.newS_SEO_URL_JS == "Share House") {
+                        str += "<option value='Separate Room'>PN Riêng</option>";
+                        str += "<option  value='Studio'>Studio</option>";
+                        str += "<option value='Duplex'>Duplex</option>";
+                         str += "<option value='Penthouse'>Penthouse</option>";
+                        str += "<option selected='selected'  value='Share House'>Share House</option>";
+                        str += "<option value='Whole House'>Nhà Nguyên Căn</option>";
+                        str += "<option value='Officetel'>Văn phòng</option>";
+                    }
+                    else if (value.newS_SEO_URL_JS == "Whole House") {
+                        str += "<option value='Separate Room'>PN Riêng</option>";
+                        str += "<option  value='Studio'>Studio</option>";
+                        str += "<option value='Duplex'>Duplex</option>";
+                         str += "<option value='Penthouse'>Penthouse</option>";
+                        str += "<option value='Share House'>Share House</option>";
+                        str += "<option selected='selected' value='Whole House'>Nhà Nguyên Căn</option>";
+                        str += "<option value='Officetel'>Văn phòng</option>";
+                    }
+                     else if (value.newS_SEO_URL_JS == "Officetel") {
+                        str += "<option value='Separate Room'>PN Riêng</option>";
+                        str += "<option  value='Studio'>Studio</option>";
+                        str += "<option value='Duplex'>Duplex</option>";
+                         str += "<option value='Penthouse'>Penthouse</option>";
+                        str += "<option value='Share House'>Share House</option>";
+                        str += "<option value='Whole House'>Nhà Nguyên Căn</option>";
+                        str += "<option selected='selected'  value='Officetel'>Văn phòng</option>";
+                    }
+                    str += "</select></td>";
+                    str += "<td class='editnotallow'><a data-id='" + value.newS_ID + "' class='btn  btn-xs Updatetienich'  data-url='/Admin/News/NewsProCheckPopup/" + value.newS_ID + "'  style='margin-right:10px'><i class='fa fa-fw fa-arrow-circle-up'></i> Sửa tiện ích</a></td>";
+                    if (tinhtrang == 0) {
+                        str += "<td class='editnotallow'><a data-id='" + value.newS_ID + "' class='btn btn-success btn-xs UpdateTinhTrang' style='margin-right:10px;background:hsl(0deg 0% 35%)'><i class='fa fa-fw fa-arrow-circle-up'></i> Đã thuê</a></td>";
+                    }
+                    else {
+                        str += "<td class='editnotallow'><a data-id='" + value.newS_ID + "' class='btn btn-success btn-xs UpdateTinhTrang'  style='margin-right:10px'><i class='fa fa-fw fa-arrow-circle-up'></i> Có sẵn</a></td>";
+                    }
+                    str += "<td name='NEWS_TIME_AVALBLE' data-id='" + value.newS_ID + "'>" + value.newS_TIME_AVALBLE + "</td>";
+                    str += "<td class='editnotallow'>" + date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() + "</td>";
+                    if (dateOne.getFullYear() == 1970) {
+                        str += "<td class='editnotallow'></td>";
+                    }
+                    else {
+                        str += "<td class='editnotallow'>" + dateOne.getDate() + '/' + (dateOne.getMonth() + 1) + '/' + dateOne.getFullYear() + ' ' + dateOne.getHours() + ':' + dateOne.getMinutes() + "</td>";
+                    }
+
+                    str += "</tr>";
+                    //create pagination
+                    var pagination_string = "";
+                    var pageCurrent = result.pageCurrent;
+                    var numSize = result.numSize;
+                    //create button previous
+                    if (pageCurrent > 1) {
+                        var pagePrevious = pageCurrent - 1;
+                        pagination_string += '<li class="page-item"><a href="" class="page-link" data-page=' + pagePrevious + '>Previous</a></li>';
+                    }
+                    for (i = 1; i <= numSize; i++) {
+                        if (i == pageCurrent) {
+                            pagination_string += '<li class="page-item active"><a href="" class="page-link" data-page=' + i + '>' + pageCurrent + '</a></li>';
+                        } else {
+                            pagination_string += '<li class="page-item"><a href="" class="page-link" data-page=' + i + '>' + i + '</a></li>';
+                        }
+                    }
+                    //create button next
+                    if (pageCurrent > 0 && pageCurrent < numSize) {
+                        var pageNext = pageCurrent + 1;
+                        pagination_string += '<li class="page-item"><a href="" class="page-link"  data-page=' + pageNext + '>Next</a></li>';
+                    }
+                    //load pagination
+                    $("#load-pagination").html(pagination_string);
+                });
+                //load str to class="load-list"
+                $(".load-list").html(str);
+            }
+        });
+    };
+
+    $(document).ready(function () {
+        $(".sidebar-toggle").trigger('click');
+        $(function () {
+            //select2 eklentimizin tanımı
+            $('#select2').select2({
+                placeholder: "Lựa chọn danh mục",
+            });
+        });
+        //function load pagination
+        $("body").on("click", ".pagination li a", function (event) {
+            event.preventDefault();
+            var page = $(this).attr('data-page');
+            localStorage.setItem("page", page);
+            //load event pagination
+            var txtSearch = $(".txtSearch").val();
+            if (txtSearch != "") {
+                load(txtSearch, page, null)
+            }
+            else {
+                load(null, page, null);
+            }
+        });
+
+        $("#search").click(function () {
+            var txtSearch = $("#txtSearch").val();
+            var catid = $("#searchselect").value;
+            if (txtSearch != "") {
+                load(txtSearch, 1, null)
+            }
+            else {
+                load(null, 1, null);
+            }
+        });
+
+        $("body").on("click", ".deleteNews", function (event) {
+            event.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: "/Admin/News/DeleteNewsId",
+                data: {
+                    id: $(this).attr("data-id"),
+                },
+                success: function (result) {
+                    if (result == "False") {
+                        $('.thongbao').html("Xóa không thành công . Liên hệ kỹ thuật kiểm tra chức năng");
+                        $('.alert').show(250).delay(2000).hide(250);
+                    }
+                    else if (result == "OK") {
+                        $('.thongbao').html("Xóa thông tin thành công");
+                        $('.alert').show(250).delay(2000).hide(250);
+                        var page = localStorage.getItem("page");    
+                        if (page != "")
+                        {
+                            load(null, page, null);
+                        }
+                        else
+                        {
+                            load(null, 1, null);
+                        }
+                       
+                    }
+                    else {
+                        alert(result);
+                    }
+                }
+            });
+        });
+
+        $("body").on("click", ".UpdateDauTrang", function (event) {
+            event.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: "/Admin/News/UpdateNews",
+                data: {
+                    id: $(this).attr("data-id"),
+                },
+                success: function (result) {
+                    if (result == "False") {
+                        $('.thongbao').html("Cập nhật không thành công");
+                        $('.alert').show(250).delay(2000).hide(250);
+                    }
+                    else if (result == "OK") {
+                        $('.thongbao').html("Cập nhật thông tin thành công");
+                        $('.alert').show(250).delay(2000).hide(250);
+                        load(null, 1, null);
+                    }
+                }
+            });
+        });
+
+        $("body").on("click", ".Updatetienich", function (event) {
+            event.preventDefault();
+              $(".modal").modal('show');
+                $(".modal").modal('show');
+            var url = $(this).attr("data-url");
+            $.get(url, function (data) {
+                $(".modal-body").html(data);              
+            });
+        });
+
+           $("body").on("click", ".UpdateTinhTrang", function (event) {
+            event.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: "/Admin/News/UpdateNewsTinhTrang",
+                data: {
+                    id: $(this).attr("data-id"),
+                },
+                success: function (result) {
+                    if (result == "False") {
+                        $('.thongbao').html("Cập nhật không thành công");
+                        $('.alert').show(250).delay(2000).hide(250);
+                    }
+                    else if (result == "OK") {
+                        $('.thongbao').html("Cập nhật thông tin thành công");
+                        $('.alert').show(250).delay(2000).hide(250);
+                        var slcat = $("#slecCat").val();
+                        var txtSearch = $("#txtSearch").val();
+                        var page = localStorage.getItem("page");
+                        if (txtSearch != "") {
+                            load(txtSearch, page, null, slcat)
+                        }
+                        else {
+                            load(null, page, null, slcat)
+                        }
+                    }
+                }
+            });
+        });
+
+        $("body").on("click", ".CopyCode", function (event) {
+            event.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: "/Admin/News/CopyNews",
+                data: {
+                    id: $(this).attr("data-id"),
+                },
+                success: function (result) {
+                    if (result == "False") {
+                        $('.thongbao').html("Không copy được sản phẩm");
+                        $('.alert').show(250).delay(2000).hide(250);
+                    }
+                    else if (result == "OK") {
+                        $('.thongbao').html("Copy sản phẩm thành công");
+                        $('.alert').show(250).delay(2000).hide(250);
+                        load(null, 1, null);
+                    }
+                    else {
+                        alert(result);
+                    }
+                }
+            });
+        });
+        //load init
+        load(null, 1, null);
+    });
+    $("table").on("click", "td:not(.editnotallow)", function (event) {
+        var $this = $(this);
+        if ($this.attr("name") === "NEWS_SEO_URL_JS") {
+
+        }
+        else {
+            var $textbox = $("<input>", { type: "text", size: 5, value: $this.addClass("editnotallow").text() });
+            $this.html($textbox);
+            $textbox.focus();
+        }
+    });
+    $("table").on("blur", "input:text", function (event) {
+        event.preventDefault();
+        var $this = $(this);
+        var item = $this.parent().find("input").val();
+        if (item !== "") {
+
+            $.ajax({
+                type: "POST",
+                url: "/Admin/News/EditTable",
+                data: {
+                    id: $this.parent().attr("data-id"),
+                    CLASSName: $this.parent().attr("name"),
+                    value: item
+                },
+                success: function (result) {
+                    if (result.status === false) {
+                        $('.thongbao').html(result.message + " với giá trị :" + item);
+                        $('.alert').show(250).delay(2000).hide(250);
+                    }
+                    else if (result.status === true) {
+
+                    }
+                    else {
+                        alert(result);
+                    }
+                }
+            });
+            $this.parent().removeClass("editnotallow").text($this.parent().find("input").val());
+
+        }
+        else {
+
+        }
+    });    
+</script>
+
+<style>
+    th, td {
+        text-align: center;
+    }
+
+    .inner {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        max-height: 600px;
+    }
+
+    td.editnotallow input {
+        width: 100%;
+    }
+</style>
+
+
+<div class="modal fade" id="modal-default">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Chỉnh sửa thông tin tiện ích</h4>
+            </div>
+            <div class="modal-body">
+                <img src="~/images/loadding.gif" style="width:100px" />
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+<style>
+    .jstree-default-large > .jstree-container-ul > .jstree-node {
+        margin-left: 0;
+        margin-right: 0;
+        width: 100% !important;
+        float: left !important;
+    }
+
+
+    /*.jstree-default-large > .jstree-no-dots .jstree-node .jstree-children li {
+            width: 25% !important;
+            float: left !important;
+        }*/
+
+    .jstree-default .jstree-wholerow-clicked {
+        background: none;
+    }
+
+    .jstree-default-large .jstree-anchor {
+        line-height: 32px;
+        height: 32px;
+        color: hsl(0deg 0% 0%);
+    }
+
+    .modal-dialog {
+        width: 900px;
+        margin: 30px auto;
+    }
+</style>

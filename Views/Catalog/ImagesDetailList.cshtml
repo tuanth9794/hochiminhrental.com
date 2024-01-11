@@ -1,0 +1,90 @@
+﻿@model CoreCnice.Domain.ESHOP_NEWS
+@using CoreCnice.Connect;
+@{
+    BulSoftCmsConnectContext _context = new BulSoftCmsConnectContext();
+    var ListImages = _context.ESHOP_NEWS_IMAGE.Where(x => x.NEWS_ID == Model.NEWS_ID);
+    string linkimg = "";
+}
+<style>
+    body {
+        font-family: 'Lato', Calibri, Arial, sans-serif;
+        color: #6b7381;
+        background: #ffffff !important;
+    }
+    .grid li {
+        display: block;
+        float: left;
+        padding: 3px !important;
+        width: 25% !important;
+        opacity: 0;
+    }
+</style>
+<style>
+    .grid .fancybox img {
+        filter: none;
+        filter: grayscale(0);
+        -webkit-filter: grayscale(0);
+    }
+
+    .grid .fancybox:hover img {
+        filter: gray;
+        filter: grayscale(1);
+        -webkit-filter: grayscale(1);
+        transition: all ease-in 200ms;
+        -moz-transition: all ease-in 200ms;
+        -webkit-transition: all ease-in 200ms;
+        -o-transition: all ease-in 200ms;
+        -ms-transition: all ease-in 200ms;
+    }
+
+    .grid {
+        padding-top: 40px;
+    }
+</style>
+<div class="container">
+    <ul class="grid effect-1" id="grid" style="margin-top: 30px; max-width: 100em">
+        @{
+            if (ListImages.ToList().Count > 0)
+            {
+                foreach (var item in ListImages)
+                {
+                    if (!String.IsNullOrEmpty(item.NEWS_IMG_IMAGE1))
+                    {
+                        linkimg = "/UploadImages/Data/News/" + Model.NEWS_ID + "/" + item.NEWS_IMG_IMAGE1;
+                    }
+                    else
+                    {
+                        linkimg = "/images/noimg.jpg";
+                    }
+
+                    <li class="shown" style="position: absolute; left: 0px; top: 0px;">
+                        <a class="fancybox" href="@linkimg" data-fancybox="gallery">
+                            <img src="@linkimg">
+                        </a>
+                    </li>
+                }
+            }
+        }
+    </ul>
+</div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.6/dist/jquery.fancybox.min.css" />
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.6/dist/jquery.fancybox.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".fancybox").fancybox();
+    });
+</script>
+<link rel="stylesheet" type="text/css" href="~/Theme/MonDay/css/hieuung/default.css" />
+<link rel="stylesheet" type="text/css" href="~/Theme/MonDay/css/hieuung/component.css" />
+<script src="~/Theme/MonDay/js/JsImages/modernizr.custom.js"></script>
+<script src="~/Theme/MonDay/js/JsImages/masonry.pkgd.min.js"></script>
+<script src="~/Theme/MonDay/js/JsImages/imagesloaded.js"></script>
+<script src="~/Theme/MonDay/js/JsImages/classie.js"></script>
+<script src="~/Theme/MonDay/js/JsImages/AnimOnScroll.js"></script>
+<script>
+    new AnimOnScroll(document.getElementById('grid'), {
+        minDuration: 0.4,
+        maxDuration: 0.7,
+        viewportFactor: 0.2
+    });
+</script>

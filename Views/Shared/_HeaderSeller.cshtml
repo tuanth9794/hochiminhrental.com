@@ -1,0 +1,117 @@
+﻿@using CoreCnice.Domain;
+@using CoreCnice.Connect;
+@using CoreCnice.Servicer;
+@using CoreCnice.UtilsCs;
+
+@{
+    string hotline = "";
+    string Email = "";
+    string linklogo = "";
+    BulSoftCmsConnectContext _context = new BulSoftCmsConnectContext();
+    var Config = _context.ESHOP_AD_ITEM.Where(m => m.AD_ITEM_POSITION == 3);
+    var Meta = _context.ESHOP_CONFIG.SingleOrDefault(m => m.CONFIG_ID == 1);
+    var Support = _context.ESHOP_ONLINE.Where(x => x.ONLINE_TYPE == 1);
+    if (Support.ToList().Count > 0)
+    {
+        hotline = Support.ToList()[0].ONLINE_COMBACK;
+        Email = Support.ToList()[0].ONLINE_NICKNAME;
+    }
+
+    if (Config.ToList().Count > 0)
+    {
+
+        linklogo = "/UploadImages/Data/Banner/" + Config.ToList()[0].AD_ITEM_FILENAME;
+
+    }
+    int lang = Utils.CIntDef(ViewBag.Langue);
+}
+
+<aside class="navbar-aside" id="offcanvas_aside">
+    <div class="aside-top">
+        <a href="/" class="brand-wrap">
+            <img src="@linklogo" alt="@Meta.CONFIG_TITLE" class="logo" />
+        </a>
+        <div>
+            <button class="btn btn-icon btn-aside-minimize"><i class="text-muted material-icons md-menu_open"></i></button>
+        </div>
+    </div>
+    <nav>
+        @if (lang == 1)
+        {
+            <ul class="menu-aside">
+                <li class="menu-item active">
+                    <a class="menu-link" href="/AdminCus/IndexSeller">
+                        <i class="icon material-icons md-home"></i>
+                        <span class="text">Tổng quan</span>
+                    </a>
+                </li>
+                <li class="menu-item has-submenu">
+                    <a class="menu-link" href="page-products-list.html">
+                        <i class="icon material-icons md-shopping_bag"></i>
+                        <span class="text">Danh sách dự án</span>
+                    </a>
+                    <div class="submenu">
+                        <a href="/AdminCus/SelerListProject">Dự án đang có</a>
+                        <a href="/AdminCus/SellerListRequest">Dự án đang tìm kiếm</a>
+                        <a href="/AdminCus/SellerPost">Đăng dự án</a>
+                    </div>
+                </li>
+            </ul>
+            <hr />
+            <ul class="menu-aside">
+                <li class="menu-item">
+                    <a class="menu-link" href="/AdminCus/SellerSetting">
+                        <i class="icon material-icons md-store"></i>
+                        <span class="text">Cập nhật tài khoản</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a class="menu-link" href="/">
+                        <i class="icon material-icons md-local_offer"></i>
+                        <span class="text"> Về trang chủ </span>
+                    </a>
+                </li>
+            </ul>
+            <br />
+            <br />
+        }
+        else
+        {
+            <ul class="menu-aside">
+                <li class="menu-item active">
+                    <a class="menu-link" href="/AdminCus/IndexSeller">
+                        <i class="icon material-icons md-home"></i>
+                        <span class="text">Overview</span>
+                    </a>
+                </li>
+                <li class="menu-item has-submenu">
+                    <a class="menu-link" href="page-products-list.html">
+                        <i class="icon material-icons md-shopping_bag"></i>
+                        <span class="text">Project List</span>
+                    </a>
+                    <div class="submenu">
+                        <a href="/AdminCus/SelerListProject">Existing project</a>
+                        <a href="/AdminCus/SellerListRequest">Customer requirements</a>
+                        <a href="/AdminCus/SellerPost">Post a project</a>
+                    </div>
+                </li>
+            </ul>
+            <hr />
+            <ul class="menu-aside">
+                <li class="menu-item">
+                    <a class="menu-link" href="/AdminCus/SellerSetting">
+                        <i class="icon material-icons md-store"></i>
+                        <span class="text">Update account</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a class="menu-link" href="/">
+                        <i class="icon material-icons md-local_offer"></i>
+                        <span class="text"> On the homepage </span>
+                    </a>
+                </li>
+            </ul>
+            <br />
+        }
+    </nav>
+</aside>

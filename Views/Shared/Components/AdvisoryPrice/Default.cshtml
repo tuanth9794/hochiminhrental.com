@@ -1,0 +1,144 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_CATEGORIES>
+@using CoreCnice.Connect;
+@using CoreCnice.Domain;
+@using CoreCnice.Servicer;
+@using CoreCnice.UtilsCs
+@{
+    BulSoftCmsConnectContext _context = new BulSoftCmsConnectContext();
+    clsFormat cl = new clsFormat();
+    int lang = Utils.CIntDef(ViewBag.Langue);
+}
+}
+
+@foreach (var category in Model.ToList())
+{
+    string LinkUrl = "";
+
+    if (String.IsNullOrEmpty(category.CAT_URL) == true)
+    {
+        LinkUrl = "/" + category.CAT_SEO_URL;
+    }
+    else
+    {
+        LinkUrl = category.CAT_URL;
+    }
+
+    <section id="package" class="service-pack">
+        <div class="container">
+            <div class="row">
+                @if (lang == 1)
+                {
+                    <h3 class="title font-tiempos">@Html.Raw(category.CAT_NAME)</h3>
+                    <div class="desc">@Html.Raw(category.CAT_DESC)</div>
+                }
+                else
+                {
+                    <h3 class="title font-tiempos">@Html.Raw(category.CAT_NAME_EN)</h3>
+                    <div class="desc">@Html.Raw(category.CAT_DESC_EN)</div>
+                }
+                <div class="service-pack-grid">
+                    @{
+                        var listNew = (from n in _context.ESHOP_NEWS
+                                       join c in _context.ESHOP_NEWS_CAT on n.NEWS_ID equals c.NEWS_ID
+                                       join cat in _context.ESHOP_CATEGORIES on c.CAT_ID equals cat.CAT_ID
+                                       where c.CAT_ID == category.CAT_ID
+                                       select new
+                                       {
+                                           n.NEWS_ID,
+                                           n.NEWS_TITLE,
+                                           n.NEWS_URL,
+                                           n.NEWS_SEO_URL,
+                                           n.NEWS_IMAGE1,
+                                           n.NEWS_DESC,
+                                           cat.CAT_SEO_URL,
+                                           cat.CAT_NAME,
+                                           n.NEWS_PUBLISHDATE,
+                                           n.NEWS_CODE,
+                                           n.NEWS_FIELD4,
+                                           n.NEWS_TYPE,
+                                           n.NEWS_PRICE1,
+                                           n.NEWS_ORDER,
+                                           n.NEWS_FILEHTML,
+                                           n.NEWS_TITLE_EN,
+                                           n.NEWS_FILEHTML_EN
+                                       }).Take(4);
+                        //int countloop = 0;
+                        //int counttt = listNew.ToList().Count;
+                        foreach (var itemn in listNew.ToList())
+                        {
+                            string linkurl = "";
+
+                            if (!String.IsNullOrEmpty(linkurl))
+                            {
+                                linkurl = itemn.NEWS_URL;
+                            }
+                            else
+                            {
+                                linkurl = "/" + itemn.CAT_SEO_URL + "/" + itemn.NEWS_SEO_URL;
+                            }
+
+                            string linkimg = "";
+                            string linkimgNews = "";
+                            if (!String.IsNullOrEmpty(itemn.NEWS_IMAGE1))
+                            {
+                                linkimg = "/UploadImages/Data/News/" + itemn.NEWS_ID + "/" + itemn.NEWS_IMAGE1;
+                                linkimgNews = "/UploadImages/Data/News/" + itemn.NEWS_ID + "/thumb-" + itemn.NEWS_IMAGE1;
+                                if (Utils.checkfileExit(linkimgNews) == true)
+                                {
+                                    linkimg = linkimgNews;
+                                }
+                            }
+                            else
+                            {
+                                linkimg = "/images/noimg.jpg";
+                            }
+                            string fileName = "";
+                            @if (lang == 1)
+                            {
+                                fileName = "wwwroot/UploadImages/Data/News/" + itemn.NEWS_ID + "/" + itemn.NEWS_FILEHTML;
+                            }
+                            else
+                            {
+                                fileName = "wwwroot/UploadImages/Data/News/" + itemn.NEWS_ID + "/" + itemn.NEWS_FILEHTML_EN;
+                            }
+                            <div class="service-pack-item">
+                                <div class="service-pack-content">
+                                    @if (lang == 1)
+                                    {
+                                        <div class="head">
+                                            <div class="cover">
+                                                <img src="@linkimg" alt="Rever">
+                                            </div>
+                                            <h4 class="title">@Html.Raw(itemn.NEWS_TITLE)</h4>
+                                            @Html.Raw(cl.ReadFile(fileName.Replace("<p>", "").Replace("</p>", "")))
+                                        </div>
+                                        <div class="bottom">
+                                            <div class="charge">Phí @Html.Raw(Utils.CDecDef(itemn.NEWS_PRICE1.ToString())) %</div>
+                                            <p class="text-vat">(Đã bao gồm VAT)</p>
+                                            <a href="/lien-he" data-action="request-service" class="s-btn-red">Đăng ký ngay</a>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="head">
+                                            <div class="cover">
+                                                <img src="@linkimg" alt="Rever">
+                                            </div>
+                                            <h4 class="title">@Html.Raw(itemn.NEWS_TITLE_EN)</h4>
+                                            @Html.Raw(cl.ReadFile(fileName.Replace("<p>", "").Replace("</p>", "")))
+                                        </div>
+                                        <div class="bottom">
+                                            <div class="charge">Price @Html.Raw(Utils.CDecDef(itemn.NEWS_PRICE1.ToString())) %</div>
+                                            <p class="text-vat">(VAT included)</p>
+                                            <a href="/lien-he" data-action="request-service" class="s-btn-red">Register now</a>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+}

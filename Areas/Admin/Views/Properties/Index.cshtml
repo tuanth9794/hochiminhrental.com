@@ -1,0 +1,132 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_PROPERTIES>
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    var defaultGridPageSize = 15;
+    //page title
+    ViewBag.Title = "Danh sách đơn hàng";
+}
+
+<div class="content-header clearfix">
+    <h1 class="pull-left">
+       Danh sách tiện ích
+    </h1>
+    <div class="pull-right">
+        <a href="~/Admin/Properties/Create" class="btn btn-social btn-bitbucket btn-xs"> <i class="fa fa-plus-square"></i>  THÊM MỚI</a>
+    </div>
+</div>
+<!-- Main content -->
+<div class="content">
+    <div id="example">
+        <div id="grid"></div>
+        <script>
+                $(document).ready(function () {
+                    $("#grid").kendoGrid({
+                        dataSource: {
+                            type: "json",
+                            transport: {
+                                read: "/Admin/Properties/PropertiesList/0"
+                            },
+                            pageSize: @(defaultGridPageSize)
+                        },
+                        groupable: true,
+                        sortable: true,
+                        selectable: true,
+                        navigatable: true,
+                         filterable: true,
+                        pageable: {
+                            refresh: true,
+                            pageSizes: true,
+                            buttonCount: 5,
+
+                        },
+                        columns: [{
+                            field: "proP_ID",
+                            title: "Mã thuộc tính",
+                            filterable: {
+                                multi: true,
+                                search: true
+                            }
+                        }, {
+                                field: "proP_NAME",
+                            title: "Tên thuộc tính",
+                            filterable: {
+                                multi: true,
+                                search: true
+                            }
+                            }, {
+                                field: "proP_DESC",
+                                title: "Miêu tả",
+                                filterable: {
+                                    multi: true,
+                                    search: true
+                                }
+                            }, {
+                                field: "proP_ACTIVE",
+                                title: "Tình trạng",
+                                template: "#if(proP_ACTIVE == '0') {#<div class='btn btn-default btn-xs'>Không sử dụng</div>#} else if(proP_ACTIVE == '1') {#<div class='btn btn-primary btn-xs'>Sử dụng tiện ích</div>#} else if(proP_ACTIVE == '2') {#<div class='btn btn-warning btn-xs'>Sử dụng bộ lọc</div>#}#",
+                                filterable: {
+                                    multi: true,
+                                    search: true
+                                }
+                            }, {
+                                field: "proP_ID",
+                    title: "Xem thông tin",
+                    headerAttributes: { style: "text-align:center" },
+                    attributes: { style: "text-align:center" },
+                                template: '<a href="/Admin/Properties/Edit/#=proP_ID#" class="btn btn-social btn-info btn-xs"><i class="fa fa-pencil" ></i> Xem chi tiết</a><a class="btn bg-red btn-xs" onclick="xoathuoctinh(#=proP_ID#)"><span class="glyphicon glyphicon-trash"></span>Xóa</a>',
+                    width:200
+                }]
+                    });
+                });
+        </script>
+    </div>
+</div>
+
+<style type="text/css">
+    .customer-photo {
+        display: inline-block;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background-size: 32px 35px;
+        background-position: center center;
+        vertical-align: middle;
+        line-height: 32px;
+        box-shadow: inset 0 0 1px #999, inset 0 0 10px rgba(0,0,0,.2);
+        margin-left: 5px;
+    }
+
+    .customer-name {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: 32px;
+        padding-left: 3px;
+    }
+
+    .btn-social.btn-xs {
+        padding-left: 30px;
+        margin-right: 9px;
+    }
+
+    .glyphicon {
+        margin-right: 5px;
+    }
+</style>
+<script>
+    function xoathuoctinh(x) {
+        var getItemId = parseInt(x);
+        $.ajax({
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            url: '/Admin/Properties/DeletePro?id=' + getItemId,
+            data: "{ 'ItemId':' " + getItemId + "' }",
+            success: function (data) {
+                window.location.reload(true);
+            },
+            error: function (data) {
+                alert(data);
+            }
+        });
+    };
+</script>

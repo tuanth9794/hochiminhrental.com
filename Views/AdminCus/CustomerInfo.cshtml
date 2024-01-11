@@ -1,0 +1,97 @@
+﻿@model CoreCnice.Domain.ESHOP_CUSTOMER
+@using CoreCnice.UtilsCs;
+@{
+    Layout = "~/Views/Shared/_LayoutSeller.cshtml";
+    clsFormat cl = new clsFormat();
+    int lang = Utils.CIntDef(ViewBag.Langue);
+    int tygia = Utils.CIntDef(ViewBag.USD);
+    int tien = Utils.CIntDef(ViewBag.Money);
+    string donvi = "";
+    string donviEn = "";
+}
+
+<section class="productlist">
+    <div class="container">
+        <div class="row">         
+            <div class="col-12 col-md-12">
+                <div style="width:100%;float:left;height:30px;"></div>
+                <div class="headerproduct">
+                    <h1 class="boc_heading home-header bgr_diagonal" style="margin-bottom: 15px; color: #2a2a2a;"><span><a href="#">THÔNG TIN TỔNG QUAN</a></span></h1>
+                </div>
+
+                @using (Html.BeginForm(FormMethod.Post, new { enctype = "multipart/form-data", data_ajax = "false" }))
+                {
+
+                    @if (!string.IsNullOrEmpty(ViewBag.Error))
+                    {
+                        <div class="callout callout-info">
+                            <h4>Thông báo</h4>
+                            <p>
+                                @Html.Raw(ViewBag.Error)
+                            </p>
+                        </div>
+                    }
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="CUSTOMER_ID" value="@Model.CUSTOMER_ID" />
+                    <div class="row" style="width:100%;float:left">
+                        <div class="col-md-6">
+                            <!-- general form elements -->
+                            <div class="box box-primary">
+                                <!-- form start -->
+                                <div class="box-body">
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Tên khách hàng</label>
+                                        <input type="text" class="form-control" asp-for="CUSTOMER_FULLNAME">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Địa Chỉ</label>
+                                        <input type="text" class="form-control" asp-for="CUSTOMER_ADDRESS">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Số điện thoại</label>
+                                        <input type="text" class="form-control" asp-for="CUSTOMER_PHONE1">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Ngày đăng ký</label>
+                                        <input type="text" class="form-control" asp-for="CUSTOMER_PUBLISHDATE">
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="box box-primary">
+                                <!-- form start -->
+                                <div class="box-body">
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Tài khoản</label>
+                                        <input type="text" class="form-control" id="catseourl" asp-for="CUSTOMER_UN">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Mật khẩu</label>
+                                        <input type="password" class="form-control" id="catseotitle" asp-for="CUSTOMER_PW">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Tình trạng</label>
+                                        <input type="password" class="form-control" id="catseotitle" asp-for="CUSTOMER_SHOWTYPE">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Ip Đăng ký</label>
+                                        <input type="text" class="form-control" id="catseotitle" asp-for="CUSTOMER_IP">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="width:100%;float:left">
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-primary">LƯU CẬP NHẬT</button>
+                        </div>
+                    </div>
+
+                }
+
+            </div>
+        </div>
+    </div>
+</section>

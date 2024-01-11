@@ -1,0 +1,81 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_EMAIL>
+
+@{
+    ViewData["Title"] = "Danh sách email";
+     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    var defaultGridPageSize = 10;
+}
+
+<div class="content-header clearfix">
+    <h1 class="pull-left">
+        DANH SÁCH EMAIL CẤU HÌNH
+    </h1>   
+</div>
+<!-- Main content -->
+<div class="content">
+    <div id="example">
+        <div id="grid"></div>
+        <script>
+                $(document).ready(function () {
+                    $("#grid").kendoGrid({
+                        dataSource: {
+                            type: "json",
+                            transport: {
+                                read: "/Admin/Config/EmailConfig"
+                            },
+                            pageSize: @(defaultGridPageSize)
+                        },
+                        groupable: true,
+                        sortable: true,
+                        selectable: true,
+                        navigatable: true,
+                         filterable: true,
+                        pageable: {
+                            refresh: true,
+                            pageSizes: true,
+                            buttonCount: 5
+                        },
+                        columns: [{
+                            field: "emaiL_DESC",
+                            title: "Miêu tả",                            
+                        }, {
+                                field: "emaiL_TO",
+                            title: "Email To",
+                            }, {
+                                field: "emaiL_FORM",
+                                title: "Email Form",
+                            },{
+                                field: "emaiL_ID",
+                    title: "Xem thông tin",
+                    headerAttributes: { style: "text-align:center" },
+                    attributes: { style: "text-align:center" },                 
+                    template: '<a href="/Admin/Config/EditEmail/#=emaiL_ID#" class="btn btn-social btn-info btn-xs"><i class="fa fa-pencil" ></i> Xem chi tiết</a>',
+                    width:150
+                }]
+                    });
+                });
+        </script>
+    </div>
+</div>
+
+<style type="text/css">
+    .customer-photo {
+        display: inline-block;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background-size: 32px 35px;
+        background-position: center center;
+        vertical-align: middle;
+        line-height: 32px;
+        box-shadow: inset 0 0 1px #999, inset 0 0 10px rgba(0,0,0,.2);
+        margin-left: 5px;
+    }
+
+    .customer-name {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: 32px;
+        padding-left: 3px;
+    }
+</style>

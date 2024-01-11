@@ -1,0 +1,186 @@
+﻿@model CoreCnice.Domain.ESHOP_ORDER
+
+@{
+    ViewData["Title"] = "Thông tin đơn hàng -" + Model.ORDER_CODE;
+    var defaultGridPageSize = 15;
+     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<style>
+    .radio {
+        float: left !important;
+        margin-right: 10px !important
+    }
+</style>
+@using (Html.BeginForm(FormMethod.Post, new { enctype = "multipart/form-data", data_ajax = "false" }))
+{
+
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+            Cập nhật thông tin đơn hàng - @Model.ORDER_CODE
+            <small>
+                <i class="fa fa-arrow-circle-left"></i>
+                <a href="/Admin/AdminOrder">Về danh sách</a>
+            </small>
+        </h1>
+        <div class="pull-right">
+            <button type="submit" name="save" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>
+                Lưu chỉnh sửa
+            </button>
+        </div>
+    </div>
+
+    <section class="content">
+        @if (!string.IsNullOrEmpty(ViewBag.Error))
+        {
+            <div class="callout callout-info">
+                <h4>Thông báo</h4>
+                <p>
+                    @Html.Raw(ViewBag.Error)
+                </p>
+            </div>
+        }
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="ORDER_ID" value="@Model.ORDER_ID" />
+        <div class="row">
+            <div class="col-md-6">
+                <!-- general form elements -->
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Thông tin liên hệ</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- form start -->
+
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Tên khách hàng</label>
+                            <input type="text" class="form-control" asp-for="RECEIVER_FULLNAME">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Email mua hàng</label>
+                            <input type="text" class="form-control" asp-for="RECEIVER_EMAIL">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Địa chỉ mua hàng</label>
+                            <input type="text" class="form-control" asp-for="RECEIVER_ADDRESS">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Số điện thoại</label>
+                            <input type="text" class="form-control" asp-for="RECEIVER_PHONE1">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Ngày đặt hàng</label>
+                            <input type="text" class="form-control" id="catseotitle" asp-for="ORDER_PUBLISHDATE">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Thông tin mua hàng</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- form start -->
+
+                    <div class="box-body">
+
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Mã đơn</label>
+                            <input type="text" class="form-control" id="catseourl" asp-for="ORDER_CODE">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Tình trạng</label>
+                            <input type="text" class="form-control" id="catseotitle" asp-for="ORDER_STATUS">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Ghi chú</label>
+                            <textarea class="form-control" rows="2" id="catseokey" asp-for="ORDER_DESC" style="height:172px"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">
+                            Danh sách sản phẩm
+                        </h3>
+                        <!-- tools box -->
+                        <div class="pull-right box-tools">
+                            <button type="button" class="btn btn-default btn-sm" data-widget="collapse" data-toggle="tooltip"
+                                    title="Collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                        <!-- /. tools -->
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div id="grid"></div>
+                        <script>
+                $(document).ready(function () {
+                    $("#grid").kendoGrid({
+                        dataSource: {
+                            type: "json",
+                            transport: {
+                                read: "/AdminOrder/OrderItemList/@Model.ORDER_ID"
+                            },
+                            pageSize: @(defaultGridPageSize)
+                        },
+                        groupable: true,
+                        sortable: true,
+                        selectable: true,
+                        navigatable: true,
+                         filterable: true,
+                        pageable: {
+                            refresh: true,
+                            pageSizes: true,
+                            buttonCount: 5
+                        },
+                        columns: [{
+                            field: "newS_TITLE",
+                            title: "Tên sản phẩm",
+                            filterable: {
+                                multi: true,
+                                search: true
+                            }
+                        }, {
+                                field: "iteM_QUANTITY",
+                            title: "Số lượng",
+                            filterable: {
+                                multi: true,
+                                search: true
+                            }
+                            }, {
+                                field: "iteM_PRICE",
+                                title: "Đơn giá",
+                                filterable: {
+                                    multi: true,
+                                    search: true
+                                }
+                        }, {
+                                field: "iteM_SUBTOTAL",
+                            title: "Tổng tiền",
+                            filterable: {
+                                multi: true,
+                                search: true
+                            }
+                            }]
+                    });
+                });
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
+}
+

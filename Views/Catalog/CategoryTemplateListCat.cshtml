@@ -1,0 +1,154 @@
+﻿@model CoreCnice.Domain.ESHOP_CATEGORIES
+@using CoreCnice.Connect;
+@using CoreCnice.UtilsCs;
+
+@{
+    Layout = "~/Views/Shared/_LayoutDetail.cshtml";
+    int typeCat = ViewBag.Type;
+    string linkimg = "";
+    string alt = "";
+
+    if (!String.IsNullOrEmpty(Model.CAT_IMAGE3))
+    {
+        linkimg = "/UploadImages/Data/Cats/" + Model.CAT_ID + "/" + Model.CAT_IMAGE3;
+    }
+    else
+    {
+        if (!String.IsNullOrEmpty(ViewBag.IMAGE2))
+        {
+            linkimg = "/UploadImages/Data/Cats/" + Model.CAT_ID + "/" + Model.CAT_IMAGE2;
+        }
+        else
+        {
+            linkimg = "";
+        }
+    }
+    if (!String.IsNullOrEmpty(ViewBag.Alt))
+    {
+        alt = ViewBag.Alt;
+    }
+    else
+    {
+        alt = ViewBag.Title;
+    }
+    int lang = Utils.CIntDef(ViewBag.Langue);
+
+}
+
+
+<style>
+    .sapxep .dropdown-toggle::after {
+        display: inline-block;
+        width: 0;
+        height: 0;
+        margin-left: .255em;
+        vertical-align: .255em;
+        content: "";
+        right: 0px;
+        float: right;
+        margin-top: 9px;
+        border-top: .3em solid;
+        border-right: .3em solid hsl(0deg 0% 0% / 0%);
+        border-bottom: 0;
+        border-left: .3em solid hsl(0deg 0% 0% / 0%);
+    }
+
+    .newsfind .mb_40 {
+        margin-bottom: 0px
+    }
+</style>
+@if (lang == 1)
+{
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="@ViewBag.UrlCal">@Html.Raw(ViewBag.NAME)</a></li>
+            </ol>
+        </div><!-- End .container -->
+    </nav>
+}
+else
+{
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="@ViewBag.UrlCal">@Html.Raw(ViewBag.NAME)</a></li>
+            </ol>
+        </div><!-- End .container -->
+    </nav>
+}
+<div class="find-home newsfind" style="width: 100%; border-bottom: 1px solid hsl(233deg 15% 88%); padding: 0px; border-top: 1px solid hsl(233deg 15% 88%); background: hsl(0deg 0% 100%);">
+    <div class="container">
+        @await Component.InvokeAsync("FilterCat", new { Cat = ViewBag.id })
+        @*@if (lang == 1)
+            {
+                <p class="default" id="idtimkiem" onclick="clickSearchTotal()" style="background: hsl(33deg 70% 55%) !important;font-weight: bold;margin-top: 5px;cursor:pointer;">
+                    Tìm kiếm theo lựa chọn
+                </p>
+            }
+            else
+            {
+                <p class="default" id="idtimkiem" onclick="clickSearchTotal()" style="background: hsl(33deg 70% 55%) !important;font-weight: bold;margin-top: 5px;cursor:pointer;">
+                    Search by selection
+                </p>
+            }*@
+    </div>
+</div>
+
+<div class="find-home" style="display:none">
+    <div class="container">
+        <div class="filter-items" style="margin-bottom: 10px;">
+            @if (lang == 1)
+            {
+                <h5>Lựa chọn bộ lọc : </h5>
+            }
+            else
+            {
+                <h5>Filter selection : </h5>
+            }
+            <div id="tieuchichon">
+                @*<p class="default" style="color:#000;font-weight:bold">
+                        Xóa tất cả <span onclick="location.href=window.location.pathname;return false;">
+                            <i class="fas fa-times"></i>
+                        </span>
+                    </p>*@
+
+                @if (lang == 1)
+                {
+                    <p class="default" id="idtimkiem" onclick="clickSearchTotal()" style="background: hsl(33deg 70% 55%) !important;font-weight: bold;margin-top: 5px;cursor:pointer;">
+                        Tìm kiếm theo lựa chọn
+                    </p>
+                }
+                else
+                {
+                    <p class="default" id="idtimkiem" onclick="clickSearchTotal()" style="background: hsl(33deg 70% 55%) !important;font-weight: bold;margin-top: 5px;cursor:pointer;">
+                        Search by selection
+                    </p>
+                }
+            </div>
+        </div>      
+    </div>
+</div>
+
+<div class="agency_about_area d-flex bg_color">
+    <div class="container">
+        <div class="col-lg-12 col-md-12" style="margin-top:30px;">
+            @if (lang == 1)
+            {
+                @Html.Raw(Model.CAT_DESC_EN)
+            }
+            else
+            {
+                @Html.Raw(Model.CAT_NAME_JS)
+            }
+        </div>
+    </div>
+</div>
+
+@await Component.InvokeAsync("CatExclusiveproducts", new { Position = 2, cat_id = Model.CAT_ID })
+
+@await Component.InvokeAsync("Suggestions", new { Position = 7, cat_id = Model.CAT_ID })
+
+@await Component.InvokeAsync("ProductList", new { Position = 2, cat_Pr = Model.CAT_ID })

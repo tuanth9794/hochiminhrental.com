@@ -1,0 +1,140 @@
+﻿@using CoreCnice.Domain;
+@using CoreCnice.Connect;
+@using CoreCnice.Servicer;
+@model CoreCnice.Domain.ESHOP_CATEGORIES;
+
+@{
+    Layout = "~/Views/Shared/_LayoutRegister.cshtml"; 
+}
+
+<div id="wrapper">
+
+    <!-- Start main-content -->
+    <div class="main-content">
+        <!-- Section: home -->
+        <section id="home" class="divider bg-lighter">
+            <div class="display-table">
+                <div class="display-table-cell">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6 col-md-push-3">
+                                <div class="text-center mb-60"><a href="/" class=""><img alt="" src="/sptech/images/logo-wide.png"></a></div>
+                                <div class="bg-lightest border-1px p-30 mb-0">
+                                    <h3 class="text-theme-colored mt-0 pt-5"> ĐĂNG KÝ THÔNG TIN LÀM ĐẠI LÝ</h3>
+                                    <hr>
+                                    <p>SPTECH với đa dạng nguồn hàng và phong phú chính vì vậy hay liên hệ ngay với SPTECH để bắt đầu kinh doanh ngay hôm nay.</p>
+                                    <form id="job_apply_form" name="job_apply_form">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label>Họ và tên <small>*</small></label>
+                                                    <input name="form_name" type="text" placeholder="Nhập họ tên" required="" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label>Email <small>*</small></label>
+                                                    <input name="form_email" class="form-control required email" type="email" placeholder="Nhập email">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label>Số điện thoại <small>*</small></label>
+                                                    <input name="form_name" type="text" placeholder="Nhập Sđt" required="" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label>Địa chỉ <small>*</small></label>
+                                                    <input name="form_email" class="form-control required email" type="email" placeholder="Nhập email">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label>Giới tính <small>*</small></label>
+                                                    <select name="form_sex" class="form-control required">
+                                                        <option value="Male">Nam</option>
+                                                        <option value="Female">Nữ</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label>Lĩnh vực sản phẩm <small>*</small></label>
+                                                    <select name="form_post" class="form-control required">
+                                                        <option value="Finance Manager">Linh kiện điện tử</option>
+                                                        <option value="Area Manager">Hàng độc quyền</option>
+                                                        <option value="Country Manager">Country Manager</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label>Khu vực <small>*</small></label>
+                                                    <select name="form_sex" class="form-control required">
+                                                        <option value="Male">Hồ chí minh</option>
+                                                        <option value="Female">Miền Nam</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Nội dung đăng ký <small>*</small></label>
+                                            <textarea name="form_message" class="form-control required" rows="5" placeholder="Vui lòng nhập nội dung để được tư vấn sát nhất"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <input name="form_botcheck" class="form-control" type="hidden" value="" />
+                                            <button type="submit" class="btn btn-block btn-dark btn-theme-colored btn-sm mt-20 pt-10 pb-10" data-loading-text="Please wait...">Đăng ký ngay</button>
+                                        </div>
+                                    </form>
+                                    <!-- Job Form Validation-->
+                                    <script type="text/javascript">
+                                        $("#job_apply_form").validate({
+                                            submitHandler: function (form) {
+                                                var form_btn = $(form).find('button[type="submit"]');
+                                                var form_result_div = '#form-result';
+                                                $(form_result_div).remove();
+                                                form_btn.before('<div id="form-result" class="alert alert-success" role="alert" style="display: none;"></div>');
+                                                var form_btn_old_msg = form_btn.html();
+                                                form_btn.html(form_btn.prop('disabled', true).data("loading-text"));
+                                                $(form).ajaxSubmit({
+                                                    dataType: 'json',
+                                                    success: function (data) {
+                                                        if (data.status === 'true') {
+                                                            $(form).find('.form-control').val('');
+                                                        }
+                                                        form_btn.prop('disabled', false).html(form_btn_old_msg);
+                                                        $(form_result_div).html(data.message).fadeIn('slow');
+                                                        setTimeout(function () { $(form_result_div).fadeOut('slow') }, 6000);
+                                                    }
+                                                });
+                                            }
+                                        });
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- end main-content -->
+    <!-- Footer -->
+    <footer id="footer" class="footer bg-black-111">
+        <div class="container p-20">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <p class="mb-0">Copyright &copy;2020 SPTECH. All Rights Reserved</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <a class="scrollToTop" href="#"><i class="fa fa-angle-up"></i></a>
+</div>

@@ -1,0 +1,10 @@
+﻿@* Danh sách hình chi tiết ProductImages*@
+@model IEnumerable<CoreCnice.Domain.ESHOP_NEWS_IMAGE>
+
+@foreach (var category in Model.ToList())
+{
+    <li data-thumb="/UploadImages/Data/News/@category.NEWS_ID/@category.NEWS_IMG_IMAGE1"><a href="/UploadImages/Data/News/@category.NEWS_ID/@category.NEWS_IMG_IMAGE1" data-lightbox="single-product"><img src="/UploadImages/Data/News/@category.NEWS_ID/@category.NEWS_IMG_IMAGE1" alt="@category.NEWS_IMG_DESC"></a></li>   
+}
+
+
+

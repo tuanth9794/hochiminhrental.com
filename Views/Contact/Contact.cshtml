@@ -1,0 +1,49 @@
+﻿<section class="main">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-md-12">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">TRANG CHỦ</a></li>
+                    <li class="breadcrumb-item"><a href="#">@ViewBag.Title</a></li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-12">
+                <div class="sec-heading-area p_0_15" style="text-align: CENTER;">
+                    <h2 class="section-heading">THÔNG TIN LIÊN HỆ</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-12">
+                <div class="sec-heading-area p_0_15" style="margin-top: 32px; text-align: CENTER;">
+                    <h2 class="section-heading">ĐĂNG KÝ NHẬN NGAY TƯ VẤN</h2>
+                </div>
+                @using (Html.BeginForm("Index", "ContactPost", FormMethod.Post))
+                                    {
+                <div class="frm-contact">
+                    <div class="frow">
+                        <input type="text" name="hoten" value="" placeholder="HỌ VÀ TÊN" class="ss-q-short" id="entry_1984425753" dir="auto" aria-label="Họ và tên" aria-required="true" required="" title="">
+                    </div>
+                    <div class="frow">
+                        <input type="text" name="diachi" value="" placeholder="ĐỊA CHỈ" class="ss-q-short" id="entry_329208216" dir="auto" aria-label="ĐỊA CHỈ  " title="">
+                    </div>
+                    <div class="frow">
+                        <input type="tel" name="dienthoai" value="" placeholder="ĐIỆN THOẠI" class="ss-q-short" id="entry_1084420629" dir="auto" aria-label="Điện thoại" aria-required="true" required="" title="Bạn chưa điền số điện thoại!">
+                    </div>
+                    <div class="frow">
+                        <input type="email" name="email" value="" placeholder="EMAIL" class="ss-q-short" id="entry_1131307808" dir="auto" aria-label="EMAIL  " title="">
+                    </div>
+                    <div class="frow">
+                        <textarea name="noidung" value="" placeholder="NỘI DUNG" class="ss-q-short" id="entry_1858681469" dir="auto" aria-label="NỘI DUNG  " title=""></textarea>
+                    </div>
+                    <div class="frow" style="margin-bottom: 10px">
+                        <input type="submit" name="submit" value="GỬI THÔNG TIN" id="ss-submit" class="jfk-button jfk-button-action form-submit">
+                    </div>
+                </div>
+                                    }
+            </div>
+        </div>
+    </div>
+</section>

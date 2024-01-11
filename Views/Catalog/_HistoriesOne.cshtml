@@ -1,0 +1,50 @@
+﻿@model CoreCnice.Models.NewsModelCat;
+@using CoreCnice.Connect;
+@using CoreCnice.UtilsCs;
+@{
+    clsFormat cl = new clsFormat();
+    string linkimg = "";
+
+    string linkurl = "";
+
+    if (!String.IsNullOrEmpty(Model.NEWS_URL))
+    {
+        linkurl = Model.NEWS_URL;
+    }
+    else
+    {
+        linkurl = "/" + Model.CAT_SEO_URL + "/" + Model.NEWS_SEO_URL;
+
+    }
+
+    string linkimgNews = "";
+    if (!String.IsNullOrEmpty(Model.NEWS_IMAGE1))
+    {
+        linkimg = "/UploadImages/Data/News/" + Model.NEWS_ID + "/" + Model.NEWS_IMAGE1;
+        linkimgNews = "/UploadImages/Data/News/" + Model.NEWS_ID + "/thumb-" + Model.NEWS_IMAGE1;
+        if (Utils.checkfileExit(linkimgNews) == true)
+        {
+            linkimg = linkimgNews;
+        }
+    }
+    else
+    {
+        linkimg = "/images/noimg.jpg";
+    }
+}
+
+<div class="setup_item row">
+    <div class="col-md-5 setup_img wow fadeInLeft" data-wow-delay="0.2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInLeft;">
+        <img src="@linkimg" alt="" style="width:100%">
+    </div>
+    <div class="col-md-2 s_number">
+        <div class="round">01</div>
+    </div>
+    <div class="col-md-5">
+        <div class="setup_content wow fadeInRight" data-wow-delay="0.4s" style="visibility: visible; animation-delay: 0.4s; animation-name: fadeInRight;">
+            <h5>@Html.Raw(Model.NEWS_TITLE)</h5>
+            <p style="text-align:justify">@Html.Raw(Model.NEWS_DESC)</p>
+        </div>
+    </div>
+    <div class="line bottom_half wow height" data-wow-delay="0.5s" style="visibility: visible; animation-delay: 0.5s; animation-name: height;"></div>
+</div>

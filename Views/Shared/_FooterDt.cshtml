@@ -1,0 +1,63 @@
+﻿@using CoreCnice.Domain;
+@using CoreCnice.Connect;
+@using CoreCnice.Servicer;
+
+@{
+    BulSoftCmsConnectContext _context = new BulSoftCmsConnectContext();
+    var Meta = _context.ESHOP_CONFIG.SingleOrDefault(m => m.CONFIG_ID == 1);
+}
+<style>
+    .dark p {
+        color: hsl(0, 0%, 100%);
+        margin-bottom: 2px;
+    }
+
+    .ftadres .widget {
+        margin-bottom: 0px;
+    }
+
+    .footer .widget .widget-title {
+        margin-top: 0px;
+        margin-bottom: 10px;
+    }
+</style>
+@await Component.InvokeAsync("HomeCatPTTT", new { Position = 4 })
+<footer id="footer" class="footer bg-theme-colored">
+    <div class="container pt-30 pb-40">
+        <div class="row border-bottom-black">
+            @await Component.InvokeAsync("Footer", new { Position = 1 })
+            <div class="col-sm-6 col-md-3">
+                <div class="widget dark">
+                    <h4 class="widget-title">THỜI GIAN LÀM VIỆC</h4>
+                    @Html.Raw(Meta.CONFIG_DESCRIPTION_EN)
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ftadres" style="background: hsl(146, 92%, 22%) !important;">
+        <div class="container pt-30 pb-40">
+            @Html.Raw(Meta.CONFIG_FOOTER)
+        </div>
+    </div>
+    <div class="footer-bottom bg-black-222">
+        <div class="container pt-10 pb-0">
+            <div class="row">
+                <div class="col-md-6 sm-text-center">
+                    <p class="font-13 text-black-777 m-0">Copyright &copy;2020 SPTECH . All Rights Reserved</p>
+                </div>
+                <div class="col-md-6 text-right flip sm-text-center">
+                    <div class="widget no-border m-0">
+                        <ul class="styled-icons icon-dark icon-circled icon-sm">
+                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fa fa-skype"></i></a></li>
+                            <li><a href="#"><i class="fa fa-youtube"></i></a></li>
+                            <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                            <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

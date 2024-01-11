@@ -1,0 +1,55 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_CATEGORIES>
+@using CoreCnice.UtilsCs;
+@{
+    int lang = Utils.CIntDef(ViewBag.Langue);
+}
+<div class="saas_signup_form row">
+    <div class="catnote owl-carousel goiycss catnote">
+        @foreach (var category in Model.ToList())
+        {
+            string linkimg = "";
+
+            if (!String.IsNullOrEmpty(category.CAT_IMAGE1))
+            {
+                linkimg = "/UploadImages/Data/Cats/" + category.CAT_ID + "/" + category.CAT_IMAGE1;
+            }
+            else
+            {
+                linkimg = "/images/noimg.jpg";
+            }
+            <div class="item">
+                <div class="listing-cat">
+                    <a href="@category.CAT_SEO_URL" title="Districst">
+                        <div class="overlay" style="background-color: rgba(0, 0, 0, 0.79); "></div>
+                        <div class="lc-background" style="background-image: url('@linkimg');"></div>
+                        <div class="lc-info">
+                            @if (lang == 1)
+                            {
+                                <h4 class="case27-secondary-text">@category.CAT_NAME</h4>
+                            }
+                            else
+                            {
+                                <h4 class="case27-secondary-text">@category.CAT_NAME_EN</h4>
+                            }
+                        </div>
+                        <div class="lc-icon"> <i class="icon-location-pin-4" style=""></i></div>
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    .catnote button.owl-prev {
+        left: -45px;
+    }
+
+    .catnote button.owl-next, .catnote button.owl-prev {
+        top: -10px;
+    }
+
+    .catnote .owl-next span, .catnote .owl-prev span {
+        font-size: 36px;
+    }
+</style>

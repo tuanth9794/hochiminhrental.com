@@ -1,0 +1,81 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_CATEGORIES>
+@using CoreCnice.Connect;
+@using CoreCnice.UtilsCs;
+@{
+    clsFormat fm = new clsFormat();
+    BulSoftCmsConnectContext _context = new BulSoftCmsConnectContext();
+}
+
+@foreach (var category in Model.ToList())
+{
+    <section class="seo_partner_logo_area sec_pad" style="background:#fff;">
+        <div class="container">
+            <div class="seo_sec_title text-center mb_70 wow fadeInUp" data-wow-delay="0.3s">
+                <h2><span>@Html.Raw(category.CAT_NAME)</span> @Html.Raw(category.CAT_CODE)</h2>
+            </div>
+            <div class="partner_logo_area_four" style="padding-top:0px">
+                <div class="row partner_info">
+                    @{
+                        var listNew = (from n in _context.ESHOP_NEWS
+                                       join c in _context.ESHOP_NEWS_CAT on n.NEWS_ID equals c.NEWS_ID
+                                       join cat in _context.ESHOP_CATEGORIES on c.CAT_ID equals cat.CAT_ID
+                                       where c.CAT_ID == category.CAT_ID
+                                       orderby n.NEWS_ID descending
+                                       select new
+                                       {
+                                           n.NEWS_ID,
+                                           n.NEWS_TITLE,
+                                           n.NEWS_URL,
+                                           n.NEWS_SEO_URL,
+                                           n.NEWS_IMAGE1,
+                                           n.NEWS_PRICE2,
+                                           n.NEWS_PRICE1,
+                                           n.NEWS_DESC,
+                                           n.NEWS_IMAGE2,
+                                           cat.CAT_SEO_URL
+                                       }).Take(16);
+
+
+                        foreach (var itemn in listNew.ToList().Skip(0).Take(100))
+                        {
+                            string linkurl = "";
+
+                            if (!String.IsNullOrEmpty(linkurl))
+                            {
+                                linkurl = itemn.NEWS_URL;
+                            }
+                            else
+                            {
+                                linkurl = itemn.CAT_SEO_URL + "/" + itemn.NEWS_SEO_URL;
+                            }
+
+                            string linkimg = "";
+
+                            if (!String.IsNullOrEmpty(itemn.NEWS_IMAGE1))
+                            {
+                                linkimg = "/UploadImages/Data/News/" + itemn.NEWS_ID + "/" + itemn.NEWS_IMAGE1;
+                            }
+                            else
+                            {
+                                linkimg = "/images/noimg.jpg";
+
+                            }
+                            <div class="col-lg-3 col-sm-6">
+                                <div class="ex_team_item">
+                                    <img src="@linkimg" alt="">
+                                    <div class="team_content">
+                                        <a href="#">
+                                            <h3 class="f_p f_size_16 f_600 t_color3">@Html.Raw(itemn.NEWS_TITLE)</h3>
+                                        </a>
+                                        <h5>@Html.Raw(itemn.NEWS_DESC)</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+}
+

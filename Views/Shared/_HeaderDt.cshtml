@@ -1,0 +1,268 @@
+﻿@using CoreCnice.Domain;
+@using CoreCnice.Connect;
+@using CoreCnice.Servicer;
+@using CoreCnice.UtilsCs;
+
+@{
+    string hotline = "";
+    string Email = "";
+    string linklogo = "";
+    BulSoftCmsConnectContext _context = new BulSoftCmsConnectContext();
+    var Config = _context.ESHOP_AD_ITEM.Where(m => m.AD_ITEM_POSITION == 3);
+    var Meta = _context.ESHOP_CONFIG.SingleOrDefault(m => m.CONFIG_ID == 1);
+    var Support = _context.ESHOP_ONLINE.Where(x => x.ONLINE_TYPE == 1);
+    if (Support.ToList().Count > 0)
+    {
+        hotline = Support.ToList()[0].ONLINE_COMBACK;
+        Email = Support.ToList()[0].ONLINE_NICKNAME;
+    }
+
+    if (Config.ToList().Count > 0)
+    {
+
+        linklogo = "/UploadImages/Data/Banner/" + Config.ToList()[0].AD_ITEM_FILENAME;
+
+    }
+    int lang = Utils.CIntDef(ViewBag.Langue);
+    int tien = Utils.CIntDef(ViewBag.Money);
+    string vnd = "VND";
+    string usd = "USD";
+    string clwidth = "";
+    int count = 0;
+    int _count1 = 1;
+    string divopen = "";
+    string divcloser = "";
+}
+<header class="header_area" id="hdfix">
+    <nav class="navbar navbar-expand-lg menu_one menu_four menu_poss">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/"><img src="@linklogo" alt="@Meta.CONFIG_TITLE"></a>
+            <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="menu_toggle">
+                    <span class="hamburger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+                    <span class="hamburger-cross">
+                        <span></span>
+                        <span></span>
+                    </span>
+                </span>
+            </button>
+            <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarSupportedContent">
+                @await Html.PartialAsync("_Menu")
+            </div>
+            <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarSupportedContent">
+                <ul class="navbar-nav menu navbar-nav menu d-flex justify-content-end" style="margin-right:15px">
+                    <li class="nav-item dropdown submenu">
+                        <div class="btn-group cofg">
+                            @if (lang == 1)
+                            {
+                                <button type="button" class="btn cls btn-danger">
+                                    <img src="~/images/vn_flag.png" class="co" />
+                                    @if (tien == 1)
+                                    {
+                                        @vnd
+                                    }
+                                    else
+                                    {
+                                        @usd
+                                    }
+                                </button>
+                            }
+                            else
+                            {
+                                <button type="button" class="btn cls btn-danger">
+                                    <img src="~/images/en.svg" class="co" />
+                                    @if (tien == 1)
+                                    {
+                                        @vnd
+                                    }
+                                    else
+                                    {
+                                        @usd
+                                    }
+                                </button>
+                            }
+                            <button type="button" class="btn cl btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <div class="dropdown-menu popover">
+                                <div class="row is-relative currency-box">
+                                    <div class="col-md-5 col-xs-12">
+                                        <a class="is-flex middle-xs is-relative pointer is-checked" onclick="ChuyenNgonNgu(1)">
+                                            <img src="~/images/vi.svg" width="16" height="16">
+                                            <span class="px--12">Tiếng Việt</span>
+                                        </a>
+                                        <a class="is-flex middle-xs is-relative pointer" onclick="ChuyenNgonNgu(2)">
+                                            <img src="~/images/en.svg" width="16" height="16">
+                                            <span class="px--12">English</span>
+                                        </a>
+                                    </div>
+                                    <div class="col-md-7 col-xs-12">
+                                        <a class="is-flex middle-xs is-relative pointer is-checked" onclick="ChangeMoney(1)">
+                                            <b>VND</b>
+                                            <span class="px--12">Việt Nam Đồng</span>
+                                        </a>
+                                        <a class="is-flex middle-xs is-relative pointer" onclick="ChangeMoney(2)">
+                                            <b>USD</b>
+                                            <span class="px--12">Dollar USA</span>
+                                        </a>
+                                    </div>
+                                    @*<div class="col-md-12 col-xs-12">
+                                    <a class="is-flex middle-xs is-relative pointer">
+                                    <b>USD</b>
+                                    <span class="px--12">@cl.FormatMoney(Utils.CDecDef(ViewBag.USD)) VND</span>
+                                    </a>
+                                    </div>*@
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <div class="log">
+                    @if (lang == 2)
+                    {
+                        <a href="/sellernet/trang-dang-nhap">
+                            <button type="ghost" color="secondary" class="sc-kIeTtH eagIPs">
+                                <div class="sc-hOqqkJ bKiBMa">
+                                    <span type="primary" class="sc-TmcTc dUUUwk">Log in</span>
+                                </div>
+                            </button>
+                        </a>
+                        <a href="/sellernet/trang-dang-ky">
+                            <button type="ghost" color="secondary" class="sc-kIeTtH eagIPs">
+                                <div class="sc-hOqqkJ bKiBMa"><span type="primary" class="sc-TmcTc dUUUwk">Register</span></div>
+                            </button>
+                        </a>
+                        <div class="btn-group" role="group">
+                            <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle eByCtD" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="text-align: center;display: flex;">
+                                <span type="primary" class="sc-TmcTc dUUUwk">  Post a message</span>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="min-width: auto !important;">
+                                <a class="dropdown-item" href="/sellernet/trang-dang-nhap">Rent Customer</a>
+                                <a class="dropdown-item" href="/sellernet/trang-dang-nhap">Business</a>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <a href="/sellernet/trang-dang-nhap">
+                            <button type="ghost" color="secondary" class="sc-kIeTtH eagIPs">
+                                <div class="sc-hOqqkJ bKiBMa">
+                                    <span type="primary" class="sc-TmcTc dUUUwk">Đăng nhập</span>
+                                </div>
+                            </button>
+                        </a>
+                        <a href="/sellernet/trang-dang-ky">
+                            <button type="ghost" color="secondary" class="sc-kIeTtH eagIPs">
+                                <div class="sc-hOqqkJ bKiBMa"><span type="primary" class="sc-TmcTc dUUUwk">Đăng ký</span></div>
+                            </button>
+                        </a>
+                        <div class="btn-group" role="group">
+                            <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle eByCtD" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="text-align: center;display: flex;">
+                                <span type="primary" class="sc-TmcTc dUUUwk">Đăng tin</span>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="min-width: auto !important;">
+                                <a class="dropdown-item" href="/sellernet/trang-dang-nhap" style="font-size: 14px;">Cần thuê</a>
+                                <a class="dropdown-item" href="/sellernet/trang-dang-nhap" style="font-size: 14px;">Kinh doanh</a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+<style>
+    .eagIPs {
+        position: relative;
+        height: 48px;
+        display: inline-block;
+        border-radius: 8px;
+        cursor: pointer;
+        white-space: nowrap;
+        width: fit-content;
+        background-color: transparent;
+        padding: 14px 16px;
+        color: rgb(44, 44, 44);
+        opacity: 1;
+        border: none;
+    }
+
+    .bKiBMa {
+        display: flex;
+        -webkit-box-align: center;
+        align-items: center;
+        height: 100%;
+        width: 100%;
+        -webkit-box-pack: center;
+        justify-content: center;
+    }
+
+    .eagIPs:hover {
+        background-color: rgb(242, 242, 242);
+        color: rgb(44, 44, 44);
+        border: none;
+    }
+
+    .eByCtD {
+        position: relative;
+        height: 48px;
+        display: inline-block;
+        border-radius: 8px;
+        cursor: pointer;
+        white-space: nowrap;
+        width: fit-content;
+        background-color: rgb(255, 255, 255);
+        padding: 14px 16px;
+        color: rgb(224, 60, 49);
+        opacity: 1;
+        border: 1px solid rgb(224, 60, 49);
+    }
+
+        .eByCtD:hover {
+            background-color: rgb(255, 236, 235);
+            color: rgb(224, 60, 49);
+            border: 1px solid rgb(224, 60, 49);
+        }
+
+            .eByCtD:hover.sc-kIeTtH:hover span {
+                color: rgb(224, 60, 49);
+            }
+
+    .dUUUwk {
+        font-family: Lexend;
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: 500;
+        color: rgb(44, 44, 44);
+        display: inline-block;
+    }
+
+    .dropdown-toggle::after {
+        display: inline-block;
+        width: 0;
+        height: 0;
+        margin-left: 0.255em;
+        vertical-align: 0.255em;
+        content: "";
+        border-top: 0.3em solid;
+        border-right: 0.3em solid transparent;
+        border-bottom: 0;
+        border-left: 0.3em solid transparent;
+        margin-top: 8px;
+    }
+
+    .btn-secondary:not(:disabled):not(.disabled).active, .btn-secondary:not(:disabled):not(.disabled):active, .show > .btn-secondary.dropdown-toggle {
+        color: #fff;
+        background-color: rgb(255, 236, 235);
+        border-color: 1px solid rgb(224, 60, 49);
+    }
+
+    .timeshow
+    {
+        display:none !important;
+    }
+</style>

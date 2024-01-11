@@ -1,0 +1,137 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_CONTACT>
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    var defaultGridPageSize = 10;
+    //page title
+    ViewBag.Title = "Danh sách liên hệ khách hàng";
+}
+
+
+<div class="content-header clearfix">
+    <h1 class="pull-left">
+        DANH SÁCH LIÊN HỆ
+    </h1>
+    @*<div class="pull-right">
+            <a href="@Url.Action("Create")" class="btn bg-blue">
+                <i class="fa fa-plus-square"></i>
+                THÊM MỚI
+            </a>
+        </div>*@
+</div>
+<!-- Main content -->
+<div class="content">
+    <div id="example">
+        <div id="grid"></div>
+        <script>
+                $(document).ready(function () {
+                    $("#grid").kendoGrid({
+                        dataSource: {
+                            type: "json",
+                            transport: {
+                                read: "/Admin/AdminContact/ContactList"
+                            },
+                            pageSize: @(defaultGridPageSize)
+                        },
+                        groupable: true,
+                        sortable: true,
+                        selectable: true,
+                        navigatable: true,
+                         filterable: true,
+                        pageable: {
+                            refresh: true,
+                            pageSizes: true,
+                            buttonCount: 5
+                        },
+                        columns: [{
+                            field: "contacT_NAME",
+                            title: "Tên liên hệ",
+                            filterable: {
+                                multi: true,
+                                search: true
+                            }
+                        }, {
+                            field: "contacT_PHONE",
+                                title: "Điện thoại",
+                                filterable: {
+                                    multi: true,
+                                    search: true
+                            },
+                            width: 100
+                            },
+                            {
+                                field: "contacT_EMAIL",
+                                title: "Email liên hệ",
+                                filterable: {
+                                    multi: true,
+                                    search: true
+                                },
+                                width: 250
+                            },{
+                                field: "contacT_TITLE",
+                            title: "Tiêu đề liên hệ",
+                            filterable: {
+                                multi: true,
+                                search: true
+                            }
+                            }, {
+                                field: "contacT_CONTENT",
+                                title: "Nội dung liên hệ",
+                        }, {
+                                field: "contacT_PUBLISHDATE",
+                                title: "Thời gian",
+                                type: "date",
+                                format: "{0:dd-MM-yyyy}",
+                                width: 100
+                        },{
+                                field: "contacT_ID",
+                    title: "Xem thông tin",
+                    headerAttributes: { style: "text-align:center" },
+                    attributes: { style: "text-align:center" },
+                    template: '<a href="/Admin/AdminContact/Edit/#=contacT_ID#" class="btn btn-social btn-info btn-xs"><i class="fa fa-pencil" ></i> Xem chi tiết</a><a class="btn bg-red btn-xs" onclick="xoaimages(#=contacT_ID#)"><span class="glyphicon glyphicon-trash"></span>Xóa</a>',
+                    width:150
+                }]
+                    });
+                });
+        </script>
+    </div>
+</div>
+
+<style type="text/css">
+    .customer-photo {
+        display: inline-block;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background-size: 32px 35px;
+        background-position: center center;
+        vertical-align: middle;
+        line-height: 32px;
+        box-shadow: inset 0 0 1px #999, inset 0 0 10px rgba(0,0,0,.2);
+        margin-left: 5px;
+    }
+
+    .customer-name {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: 32px;
+        padding-left: 3px;
+    }
+</style>
+<script>
+    function xoaimages(x) {
+        var getItemId = parseInt(x);
+        $.ajax({
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            url: '/Admin/AdminContact/DeleteContact?id=' + getItemId,
+            data: "{ 'ItemId':' " + getItemId + "' }",
+            success: function (data) {
+                window.location.reload(true);
+            },
+            error: function (data) {
+                alert(data);
+            }
+        });
+    };
+</script>

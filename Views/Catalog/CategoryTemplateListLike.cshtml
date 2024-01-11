@@ -1,0 +1,82 @@
+﻿@model IEnumerable<CoreCnice.Models.NewsModelCat>
+@using CoreCnice.Connect;
+@using CoreCnice.UtilsCs;
+@*@await Component.InvokeAsync("CatBanner", new { Position = @ViewBag.Id })*@
+@{
+    Layout = "~/Views/Shared/_LayoutDetail.cshtml";
+    int lang = Utils.CIntDef(ViewBag.Langue);
+    int sapxep = Utils.CIntDef(ViewBag.SapXep);
+}
+
+<style>
+    .sapxep .dropdown-toggle::after {
+        display: inline-block;
+        width: 0;
+        height: 0;
+        margin-left: .255em;
+        vertical-align: .255em;
+        content: "";
+        right: 0px;
+        float: right;
+        margin-top: 9px;
+        border-top: .3em solid;
+        border-right: .3em solid hsl(0deg 0% 0% / 0%);
+        border-bottom: 0;
+        border-left: .3em solid hsl(0deg 0% 0% / 0%);
+    }
+
+    .newsfind .mb_40 {
+        margin-bottom: 0px
+    }
+  .likeicon .social_twitter:before {  
+    font-size: 23px;
+    color: hsl(33deg 70% 55%) !important;
+    content: "";
+}
+</style>
+@if (lang == 1)
+{
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="/favorites-list">Danh sách yêu thích</a></li>
+            </ol>
+        </div><!-- End .container -->
+    </nav>
+}
+else
+{
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="/favorites-list">Favorites List</a></li>
+            </ol>
+        </div><!-- End .container -->
+    </nav>
+}
+
+
+
+
+<div class="agency_about_area d-flex bg_color" style="padding:30px 0px">
+    <div class="container">
+        <div class="productsp row">
+            @if (Model != null)
+            {
+                foreach (var item in Model.ToList())
+                {
+                    @Html.Partial("~/Views/Catalog/_ProductOneLike.cshtml", item)
+                }
+            }
+
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-12 d-flex justify-content-center">
+                @await Component.InvokeAsync("PaginationCat", new { Position = ViewBag.id, URL = ViewBag.URL })
+            </div>
+        </div>
+    </div>
+</div>
+

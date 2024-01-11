@@ -1,0 +1,19 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_AD_ITEM>
+<div class="footer_top">
+    <div class="container">
+        <div class="row">
+            @foreach (var category in Model.ToList())
+            {               
+                <div class="col-3 col-md-3 item">
+                    <div class="icon" style="background:none">
+                        <img src="/UploadImages/data/Banner/@category.AD_ITEM_FILENAME" alt="" asp-append-version="true">
+                    </div>
+                    <div class="info">
+                        <b>@category.AD_ITEM_CODE</b>
+                        <span>@category.AD_ITEM_DESC</span>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

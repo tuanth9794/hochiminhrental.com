@@ -1,0 +1,207 @@
+﻿@using CoreCnice.UtilsCs;
+@model CoreCnice.Domain.Customer_Request
+@{
+    Layout = "~/Views/Shared/_LayoutCus.cshtml";
+    clsFormat cl = new clsFormat();
+    int lang = Utils.CIntDef(ViewBag.Langue);
+    int tygia = Utils.CIntDef(ViewBag.USD);
+    int tien = Utils.CIntDef(ViewBag.Money);
+    string donvi = "";
+    string donviEn = "";
+}
+
+<style>
+    .form-control, .form-select {
+        border: 1px solid #c3c4c8 !important;
+    }
+</style>
+
+<!-- The actual snackbar -->
+<div id="snackbar"></div>
+
+@{
+    if (lang == 1)
+    {
+        <section class="content-main">
+            <div class="row">
+                <div class="col-12">
+                    <div class="content-header">
+                        <h2 class="content-title">Gửi yêu cầu của khách hàng</h2>                       
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h4>Thông tin yêu cầu</h4>
+                        </div>
+                        <div class="card-body">
+                            <form name="ContactForm" id="ContactForm">
+                                <div class="mb-4">
+                                    <label for="product_name" class="form-label">Họ và tên</label>
+                                    <input type="text" placeholder="Họ tên khách hàng" class="form-control name" value="@Model.Customer_Name"/>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="mb-4">
+                                            <label class="form-label">Số điện thoại</label>
+                                            <div class="row gx-2">
+                                                <input placeholder="" type="text" class="form-control sodt" value="@Model.Customer_Phone"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="mb-4">
+                                            <label class="form-label">Địa chỉ email</label>
+                                            <input placeholder="" type="text" class="form-control emailkhach" id="emailget" value="@Model.Customer_Email"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label class="form-label">Quốc tịch</label>
+                                        <input placeholder="" type="text" class="form-control quoctich" value="@Model.Customer_Quoctich"/>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label">Dự án</label>
+                                    <input type="text" placeholder="" class="form-control duanname" value="@Model.Customer_DuAn"/>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="mb-4">
+                                            <label class="form-label">Số phòng ngủ</label>
+                                            <div class="row gx-2">
+                                                <input placeholder="" type="text" class="form-control sopn" value="@Model.Customer_PN"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="mb-4">
+                                            <label class="form-label">Diện tích</label>
+                                            <input placeholder="" type="text" class="form-control dientich" value="@Model.Customer_Dt"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label class="form-label">Ngân sách</label>
+                                        <input placeholder="" type="text" class="form-control ngansach" value="@Model.Customer_Ns"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="mb-4">
+                                            <label class="form-label">Thời gian dọn vào</label>
+                                            <div class="row gx-2">
+                                                <input class="form-control thoigiandonvao" type="date" value="@Model.Customer_TimeAv"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-4">
+                                            <label class="form-label">Thời hạn thuê</label>
+                                            <input class="form-control thoihanthua" type="text" value="@Model.Customer_TimeThue"/>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label">Mô tả yêu cầu</label>
+                                    <textarea placeholder="Mô tả yêu cầu" class="form-control mota" rows="4">@Model.Customer_Desc</textarea>
+                                </div>                               
+                            </form>
+                        </div>                       
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    }
+    else
+    {
+        <section class="content-main">
+            <div class="row">
+                <div class="col-12">
+                    <div class="content-header">
+                        <h2 class="content-title">Send customer request</h2>                     
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h4>Information required</h4>
+                        </div>
+                        <div class="card-body">
+                            <form>
+                                <div class="mb-4">
+                                    <label for="product_name" class="form-label">First and last name</label>
+                                    <input type="text" placeholder="" class="form-control name" value="@Model.Customer_Name"/>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="mb-4">
+                                            <label class="form-label">Phone number</label>
+                                            <div class="row gx-2">
+                                                <input placeholder="" type="text" class="form-control sodt" value="@Model.Customer_Phone"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="mb-4">
+                                            <label class="form-label">Email address</label>
+                                            <input placeholder="" type="text" class="form-control emailkhach" value="@Model.Customer_Email"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label class="form-label">Nationality</label>
+                                        <input placeholder="" type="text" class="form-control quoctich" value="@Model.Customer_Quoctich"/>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label">Project / Area</label>
+                                    <input type="text" placeholder="" class="form-control duanname" value="@Model.Customer_DuAn"/>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="mb-4">
+                                            <label class="form-label">Number of bedrooms</label>
+                                            <div class="row gx-2">
+                                                <input placeholder="" type="text" class="form-control sopn" value="@Model.Customer_PN"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="mb-4">
+                                            <label class="form-label">Area</label>
+                                            <input placeholder="" type="text" class="form-control dientich" value="@Model.Customer_Dt"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label class="form-label">Budget</label>
+                                        <input placeholder="" type="text" class="form-control ngansach" value="@Model.Customer_Ns"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="mb-4">
+                                            <label class="form-label">Time to move in</label>
+                                            <div class="row gx-2">
+                                                <input placeholder="" type="text" class="form-control thoigiandonvao" value="@Model.Customer_TimeAv"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-4">
+                                            <label class="form-label">Lease term</label>
+                                            <input placeholder="" type="text" class="form-control thoihanthua" value="@Model.Customer_TimeThue"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label">Description of the request</label>
+                                    <textarea placeholder="" class="form-control mota" rows="4">@Model.Customer_Desc</textarea>
+                                </div>                               
+                            </form>
+                        </div>                      
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+}

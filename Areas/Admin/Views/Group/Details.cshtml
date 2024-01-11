@@ -1,0 +1,43 @@
+﻿@model CoreCnice.Domain.ESHOP_GROUP
+
+@{
+    ViewData["Title"] = "Details";
+     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ESHOP_GROUP</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.GROUP_CODE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.GROUP_CODE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.GROUP_NAME)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.GROUP_NAME)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.GROUP_TYPE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.GROUP_TYPE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.GROUP_PUBLISHDATE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.GROUP_PUBLISHDATE)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.GROUP_ID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

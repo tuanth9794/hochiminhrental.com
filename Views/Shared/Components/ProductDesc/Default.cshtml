@@ -1,0 +1,93 @@
+﻿@model IEnumerable<CoreCnice.Domain.PRO_DESC>
+@using CoreCnice.Connect;
+@using CoreCnice.UtilsCs;
+
+@{
+    BulSoftCmsConnectContext _context = new BulSoftCmsConnectContext();
+
+    clsFormat cl = new clsFormat();
+    int _countTer = 0;
+    int _countTerF = 0;
+    int lang = Utils.CIntDef(ViewBag.Langue);
+}
+<style>
+    .tongquan-content img {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+</style>
+@if (Model != null)
+{
+    <div class="row ">
+        <div class="col-lg-4">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs design_tab" role="tablist">
+                @foreach (var category in Model.ToList())
+                {
+                    string tabmenu = "Tab" + category.PRO_ID;
+                    string activead = "";
+                    _countTer++;
+                    if (_countTer == 1)
+                    {
+                        activead = "active show";
+                    }
+                    string linkimg = "";
+                    if (!String.IsNullOrEmpty(category.PRO_IMAGES))
+                    {
+                        linkimg = "/UploadImages/Data/News/" + category.NEWS_ID + "/" + category.PRO_IMAGES;
+                    }
+                    else
+                    {
+                        linkimg = "/images/noimg.jpg";
+                    }
+                    <li class="nav-item wow fadeInUp" data-wow-delay="0.4s" style="visibility: visible; animation-delay: 0.4s; animation-name: fadeInUp;">
+                        <a class="nav-link @activead" id="one-tab-@category.PRO_ID" data-toggle="tab" href="#@tabmenu" role="tab" aria-controls="one" aria-selected="true">
+                            @if (lang == 1)
+                            {
+                                <h5> <img src="@linkimg" title="@category.PRO_NAME" style="width: 19px;" /> @category.PRO_NAME</h5>
+                            }
+                            else
+                            {
+                                <h5> <img src="@linkimg" title="@category.PRO_NAME_EN" style="width: 19px;" /> @category.PRO_NAME_EN</h5>
+                            }
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+        <div class="col-lg-8">
+            <div class="tab-content">
+                @foreach (var category in Model.ToList())
+                {
+                    string tabmenu = "Tab" + category.PRO_ID;
+                    string activead = "";
+                    _countTerF++;
+                    if (_countTerF == 1)
+                    {
+                        activead = "active show";
+                    }
+                    else
+                    {
+                        activead = "fade";
+                    }
+
+                    string fileName = "wwwroot/UploadImages/Data/News/" + category.NEWS_ID + "/" + category.PRO_FILE;
+
+                    <div class="tab-pane fade @activead" id="@tabmenu" role="tabpanel" aria-labelledby="one-tab-@category.PRO_ID">
+                        <div class="row">
+                            @if (lang == 1)
+                            {
+                                @Html.Raw(Utils.StripHTML(Html.Raw(category.PRO_FILE).ToString()))
+                            }
+                            else
+                            {
+                                @Html.Raw(Utils.StripHTML(Html.Raw(category.PRO_FILE_EN).ToString()))
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
+

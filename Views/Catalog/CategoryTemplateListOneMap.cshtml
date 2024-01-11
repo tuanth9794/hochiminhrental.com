@@ -1,0 +1,80 @@
+﻿@model IEnumerable<CoreCnice.Models.NewsModelCat>
+@using CoreCnice.Connect;
+@using CoreCnice.UtilsCs;
+@*@await Component.InvokeAsync("CatBanner", new { Position = @ViewBag.Id })*@
+@{
+    Layout = "~/Views/Shared/_LayoutDetail.cshtml";
+}
+
+<style>
+    .sapxep .dropdown-toggle::after {
+        display: inline-block;
+        width: 0;
+        height: 0;
+        margin-left: .255em;
+        vertical-align: .255em;
+        content: "";
+        right: 0px;
+        float: right;
+        margin-top: 9px;
+        border-top: .3em solid;
+        border-right: .3em solid hsl(0deg 0% 0% / 0%);
+        border-bottom: 0;
+        border-left: .3em solid hsl(0deg 0% 0% / 0%);
+    }
+</style>
+<nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><a href="@ViewBag.UrlCal">@Html.Raw(ViewData["Title"])</a></li>
+        </ol>
+    </div><!-- End .container -->
+</nav>
+<div class="find-home wow fadeInUp" data-wow-delay="0.6s" style="visibility: visible; animation-delay: 0.6s; animation-name: fadeInLeft;">
+    <div class="container">
+        @await Component.InvokeAsync("FilterCat", new { Cat = 2 })
+    </div>
+</div>
+
+<div class="agency_about_area d-flex bg_color wow fadeInUp" style="padding:30px 0px">
+    <div class="container">
+        <div class="sec_title text-center mb_20 wow fadeInUp" data-wow-delay="0.3s" style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
+            <div class="row">
+                <div class="col-lg-9">
+                    <h2 class="f_p f_size_30 l_height50 f_600 t_color" style="text-transform:uppercase;text-align: left;">Có @Model.ToList().Count sản phẩm @Html.Raw(ViewData["Title"])</h2>
+                </div>
+                <div class="col-lg-3">
+                    <div class="dropdown sapxep" style="float: left;width:100%">
+                        <button class="btn_three btn_hover dropdown-toggle" type="button" id="dropdownMenuButtonSapXep" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-top: 6px;width: 100%;background: none;border: 1px solid #e3e3e3;color: #000;padding: 10px;">
+                            Sắp xếp : Lựa chọn
+                        </button>
+                        <div class="dropdown-menu el-popover" aria-labelledby="dropdownMenuButtonSapXep" style="margin-top: 10px;width: 100%;">
+                            <div class="input-group" style="padding-bottom: 4px;">
+                                <a href="javascript:void(0)" style="width:100%;" onclick="GetSapXep(1)"><span class="form-control" style="border:none;border-bottom: 1px solid hsl(0deg 0% 89%);border-radius: 0px;">Giá tăng dần</span></a>
+                            </div>
+                            <div class="input-group" style="padding-bottom: 4px;">
+                                <a href="javascript:void(0)" style="width:100%;" onclick="GetSapXep(2)"> <span class="form-control" style="border:none;border-radius: 0px;">Giá giảm dần</span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="productsp row">
+                    @{
+                        @foreach (var item in Model.ToList())
+                        {
+                            @Html.Partial("~/Views/Catalog/_ProductOne.cshtml", item);
+                        }
+                    }
+                </div>
+            </div>
+            <div class="col-lg-6">
+            </div>
+        </div>
+    </div>
+</div>
+

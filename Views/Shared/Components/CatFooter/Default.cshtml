@@ -1,0 +1,15 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_CATEGORIES>
+@using CoreCnice.Connect;
+@using CoreCnice.Domain;
+@{
+    BulSoftCmsConnectContext _context = new BulSoftCmsConnectContext();
+}
+<ul class="list-unstyled">
+    @foreach (var category in Model.ToList())
+    {
+        <li>
+            <a href="@category.CAT_SEO_URL" title="@category.CAT_NAME"
+               rel="nofollow">@category.CAT_NAME</a>
+        </li>
+    }
+</ul>

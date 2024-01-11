@@ -1,0 +1,102 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_ONLINE>
+
+@{
+    ViewData["Title"] = "Danh sách hỗ trợ trực tuyến";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    var defaultGridPageSize = 10;
+}
+
+<div class="content-header clearfix">
+    <h1 class="pull-left">
+        DANH SÁCH HỖ TRỢ TRỰC TUYẾN
+    </h1>
+    <div class="pull-right">
+        <a href="@Url.Action("Create")" class="btn bg-blue">
+            <i class="fa fa-plus-square"></i>
+            THÊM MỚI
+        </a>
+    </div>
+</div>
+<!-- Main content -->
+<div class="content">
+    <div id="example">
+        <div id="grid"></div>
+        <script>
+                $(document).ready(function () {
+                    $("#grid").kendoGrid({
+                        dataSource: {
+                            type: "json",
+                            transport: {
+                                read: "/Admin/AdminSupport/SupportList"
+                            },
+                            pageSize: @(defaultGridPageSize)
+                        },
+                        groupable: true,
+                        sortable: true,
+                        selectable: true,
+                        navigatable: true,
+                         filterable: true,
+                        pageable: {
+                            refresh: true,
+                            pageSizes: true,
+                            buttonCount: 5
+                        },
+                        columns: [{
+                            field: "onlinE_DESC",
+                            title: "Miêu tả",
+                        }, {
+                                field: "onlinE_NICKNAME",
+                            title: "Nick Name",
+                            }, {
+                                field: "onlinE_ID",
+                    title: "Xem thông tin",
+                    headerAttributes: { style: "text-align:center" },
+                    attributes: { style: "text-align:center" },
+                                template: '<a href="/Admin/AdminSupport/Edit/#=onlinE_ID#" class="btn btn-social btn-info btn-xs"><i class="fa fa-pencil" ></i> Xem chi tiết</a><a class="btn bg-red btn-xs" onclick="xoasuport(#=onlinE_ID#)"><span class="glyphicon glyphicon-trash"></span>Xóa</a>',
+                    width:150
+                }]
+                    });
+                });
+        </script>
+    </div>
+</div>
+
+<style type="text/css">
+    .customer-photo {
+        display: inline-block;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background-size: 32px 35px;
+        background-position: center center;
+        vertical-align: middle;
+        line-height: 32px;
+        box-shadow: inset 0 0 1px #999, inset 0 0 10px rgba(0,0,0,.2);
+        margin-left: 5px;
+    }
+
+    .customer-name {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: 32px;
+        padding-left: 3px;
+    }
+</style>
+
+<script>
+    function xoasuport(x) {
+        var getItemId = parseInt(x);
+        $.ajax({
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            url: '/Admin/AdminSupport/DeleteSP?id=' + getItemId,
+            data: "{ 'ItemId':' " + getItemId + "' }",
+            success: function (data) {
+                window.location.reload(true);
+            },
+            error: function (data) {
+                alert(data);
+            }
+        });
+    };
+</script>

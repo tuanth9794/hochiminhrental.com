@@ -1,0 +1,10 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_AD_ITEM>
+
+<div class="owl-carousel-1col" data-nav="true">
+    @foreach (var category in Model.ToList())
+    {
+        <div class="item">
+            <img src="~/UploadImages/data/Aditems/@category.AD_ITEM_ID/@category.AD_ITEM_FILENAME" class="images_bk" style="height:auto" alt="@category.AD_ITEM_DESC" />
+        </div>
+    }
+</div>

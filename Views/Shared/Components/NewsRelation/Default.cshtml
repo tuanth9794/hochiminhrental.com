@@ -1,0 +1,61 @@
+﻿@model IEnumerable<CoreCnice.Models.NewsModelCat>
+
+
+<div id="newsrlt" class="owl-carousel goiycss">
+    @foreach (var category in Model.ToList())
+    {
+        @Html.Partial("~/Views/Catalog/_PostOneRL.cshtml", category);
+    }
+</div>
+
+
+<style>
+    .goiycss .owl-nav {
+        display: block !important;
+    }
+
+    .goiycss .owl-prev, .goiycss .owl-next {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        border: 1px solid hsl(222, 27%, 90%);
+        text-align: center;
+        font-size: 14px;
+        color: hsl(225, 18%, 49%);
+        border-radius: 50%;
+        line-height: 48px;
+        -webkit-transition: all 0.3s linear;
+        -o-transition: all 0.3s linear;
+        transition: all 0.3s linear;
+        cursor: pointer;
+        color: hsl(0deg 0% 50%) !important;
+    }
+
+    .goiycss .owl-nav {
+        position: absolute;
+        top: 30%;
+        width: 100%;
+    }
+
+    .goiycss .owl-prev {
+        left: -60px;
+    }
+
+    .goiycss .owl-next {
+        right: -60px;
+    }
+    .mtd
+    {
+        height:86px;
+        overflow:hidden;
+    }
+    .blog_content h5 {
+        overflow: hidden;
+        font-size: 15px;
+        line-height: 23px;
+        color: hsl(211, 100%, 50%);
+        font-size: 13px;
+        text-align: justify;
+        height: 46px;
+    }
+</style>

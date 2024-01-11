@@ -1,0 +1,213 @@
+﻿@using CoreCnice.UtilsCs;
+@using CoreCnice.Connect;
+@using Microsoft.EntityFrameworkCore;
+@{
+    BulSoftCmsConnectContext _context = new BulSoftCmsConnectContext();
+    int user_id = Utils.CIntDef(User.Identity.Name);
+
+    var LogResult = await _context.ESHOP_USER.SingleOrDefaultAsync(m => m.USER_ID == user_id);
+    
+    int groupid = Utils.CIntDef(LogResult.GROUP_ID);
+
+    var logGroup = await _context.ESHOP_GROUP.SingleOrDefaultAsync(m => m.GROUP_ID == groupid);
+
+    int group_type = Utils.CIntDef(logGroup.GROUP_TYPE); 
+}
+
+@if (group_type == 0)
+{
+<ul class="sidebar-menu tree" data-widget="tree">
+    <li class="header">DANH SÁCH QUẢN TRỊ</li>
+    <li class="active">
+        <a href="/Admin/Dashboard">
+            <i class="fa fa-dashboard"></i> <span>TỔNG QUAN</span>
+        </a>
+    </li>
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-th"></i>
+            <span>Danh sách chuyên mục</span>
+            <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+        </a>
+
+        <ul class="treeview-menu" style="display: none;">
+            <li><a href="/Admin/Categories/List"><i class="fa fa-circle-o"></i> Danh sách chuyên mục</a></li>
+            @*<li><a href="/Admin/Categories"><i class="fa fa-circle-o"></i> Quản trị chức năng</a></li>*@
+            <li><a href="/Admin/Categories/CreateCat"><i class="fa fa-circle-o"></i> Thêm mới chuyên mục</a></li>
+        </ul>
+    </li>
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-book"></i>
+            <span>Quản trị tin / sản phẩm</span>
+            <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+        </a>
+        <ul class="treeview-menu">
+            <li><a href="/Admin/news/ListNews"><i class="fa fa-circle-o"></i> Danh sách tin tức</a></li>
+            <li><a href="/Admin/news"><i class="fa fa-circle-o"></i> Danh sách sản phẩm</a></li>
+            <li><a href="/Admin/News/Create"><i class="fa fa-circle-o"></i> Thêm mới tin / san phẩm</a></li>
+            <li><a href="/Admin/Properties"><i class="fa fa-circle-o"></i> Danh sách tiên ích</a></li>
+            <li><a href="/Admin/Properties/Create"><i class="fa fa-circle-o"></i>Thêm mới tiện ích</a></li>
+            <li><a href="/Admin/Properties/IndexFilter"><i class="fa fa-circle-o"></i> Danh sách bộ lọc</a></li>
+            <li><a href="/Admin/news/Advancedsearch"><i class="fa fa-circle-o"></i> Tìm kiếm nâng cao</a></li>
+               <li><a href="/Admin/news/ListNewsSheet"><i class="fa fa-circle-o"></i> Chỉnh sửa trực tiếp</a></li>
+        </ul>
+    </li>
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-folder"></i>
+            <span>Hình Ảnh</span>
+            <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+        </a>
+
+        <ul class="treeview-menu">
+            <li><a href="/Admin/picture"><i class="fa fa-circle-o"></i> Danh sách hình ảnh</a></li>
+            <li><a href="/Admin/picture/Create"><i class="fa fa-circle-o"></i> Thêm mới hình ảnh</a></li>
+        </ul>
+    </li>
+    <li class="treeview">
+            <a href="#">
+                <i class="fa fa-fw fa-slideshare"></i>
+                <span>Khách Hàng</span>
+                <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+            </a>
+
+            <ul class="treeview-menu">
+                <li><a href="/Admin/AdminCustomer"><i class="fa fa-circle-o"></i> Danh sách khách hàng</a></li>
+                <li><a href="/Admin/AdminCustomer/IndexRequest"><i class="fa fa-circle-o"></i> Yêu cầu của khách</a></li>
+            </ul>
+        </li>
+    <li class="treeview">
+            <a href="#">
+                <i class="fa fa-fw fa-cart-arrow-down"></i>
+                <span>Kinh doanh</span>
+                <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+            </a>
+
+            <ul class="treeview-menu">
+                <li><a href="/Admin/AdminCustomer/IndexSeller"><i class="fa fa-circle-o"></i> Danh sách kinh doanh</a></li>
+            </ul>
+        </li>
+
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-fw fa-support"></i>
+            <span>Danh sách hỗ trợ</span>
+            <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+        </a>
+
+        <ul class="treeview-menu">
+            <li><a href="/Admin/AdminSupport"><i class="fa fa-circle-o"></i> Danh sách hỗ trợ</a></li>
+            <li><a href="/Admin/AdminSupport/Create"><i class="fa fa-circle-o"></i> Thêm mới hỗ trợ</a></li>
+        </ul>
+    </li>
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-envelope"></i>
+            <span>Liên Hệ</span>
+            <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+        </a>
+
+        <ul class="treeview-menu">
+            <li><a href="/Admin/AdminContact"><i class="fa fa-circle-o"></i> Danh sách liên hệ</a></li>
+            <li><a href="/Admin/Config/ConfigEmail"><i class="fa fa-circle-o"></i> Cấu hình email</a></li>
+        </ul>
+    </li>
+
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-fw fa-user"></i>
+            <span>Người quản trị</span>
+            <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+        </a>
+
+        <ul class="treeview-menu">
+            <li><a href="/Admin/Group"><i class="fa fa-circle-o"></i> Danh sách nhóm quản trị</a></li>
+            <li><a href="/Admin/Group/Create"><i class="fa fa-circle-o"></i> Thêm mới nhóm quản trị</a></li>
+            <li><a href="/Admin/UserAdmin"><i class="fa fa-circle-o"></i> Danh sách tài khoản</a></li>
+            <li><a href="/Admin/UserAdmin/Create"><i class="fa fa-circle-o"></i> Thêm mới tài khoản</a></li>
+        </ul>
+    </li>
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-fw fa-cog"></i>
+            <span>Cấu hình thông tin</span>
+            <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+        </a>
+
+        <ul class="treeview-menu">
+            <li><a href="/Admin/Config/Edit"><i class="fa fa-circle-o"></i> Thông tin chung</a></li>
+            <li><a href="/Admin/Config/MetaSeo"><i class="fa fa-circle-o"></i> Cấu Hình Meta</a></li>
+        </ul>
+    </li>
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-fw fa-cog"></i>
+            <span>Hỗ trợ seo</span>
+            <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+        </a>
+
+        <ul class="treeview-menu">
+            <li><a href="/Admin/ImagesSeo"><i class="fa fa-circle-o"></i>Tạo Images Thumb</a></li>
+            <li><a href="/Admin/ImagesSeo/UploadFile"><i class="fa fa-circle-o"></i>Upload File</a></li>
+        </ul>
+    </li>
+    <li class="header">TÀI LIỆU HỖ TRỢ</li>
+    <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Quản trị web</span></a></li>
+    <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Quản Lý Bán Hàng</span></a></li>
+    <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Hướng Dẫn</span></a></li>
+</ul>
+}
+else
+{
+    <ul class="sidebar-menu tree" data-widget="tree">
+    <li class="header">DANH SÁCH QUẢN TRỊ</li>
+    <li class="active">
+        <a href="/Admin/Dashboard">
+            <i class="fa fa-dashboard"></i> <span>TỔNG QUAN</span>
+        </a>
+    </li>
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-th"></i>
+            <span>Danh sách chuyên mục</span>
+            <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+        </a>
+
+        <ul class="treeview-menu" style="display: none;">
+            <li><a href="/Admin/Categories/List"><i class="fa fa-circle-o"></i> Danh sách chuyên mục</a></li>
+            @*<li><a href="/Admin/Categories"><i class="fa fa-circle-o"></i> Quản trị chức năng</a></li>*@
+            <li><a href="/Admin/Categories/CreateCat"><i class="fa fa-circle-o"></i> Thêm mới chuyên mục</a></li>
+        </ul>
+    </li>
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-book"></i>
+            <span>Quản trị tin / sản phẩm</span>
+            <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+        </a>
+        <ul class="treeview-menu">
+            <li><a href="/Admin/news/ListNews"><i class="fa fa-circle-o"></i> Danh sách tin tức</a></li>
+            <li><a href="/Admin/news"><i class="fa fa-circle-o"></i> Danh sách sản phẩm</a></li>
+            <li><a href="/Admin/News/Create"><i class="fa fa-circle-o"></i> Thêm mới tin / san phẩm</a></li>
+            <li><a href="/Admin/Properties"><i class="fa fa-circle-o"></i> Danh sách tiên ích</a></li>
+            <li><a href="/Admin/Properties/Create"><i class="fa fa-circle-o"></i>Thêm mới tiện ích</a></li>
+            <li><a href="/Admin/Properties/IndexFilter"><i class="fa fa-circle-o"></i> Danh sách bộ lọc</a></li>
+            <li><a href="/Admin/news/Advancedsearch"><i class="fa fa-circle-o"></i> Tìm kiếm nâng cao</a></li>
+               <li><a href="/Admin/news/ListNewsSheet"><i class="fa fa-circle-o"></i> Chỉnh sửa trực tiếp</a></li>
+        </ul>
+    </li>
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-folder"></i>
+            <span>Hình Ảnh</span>
+            <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+        </a>
+
+        <ul class="treeview-menu">
+            <li><a href="/Admin/picture"><i class="fa fa-circle-o"></i> Danh sách hình ảnh</a></li>
+            <li><a href="/Admin/picture/Create"><i class="fa fa-circle-o"></i> Thêm mới hình ảnh</a></li>
+        </ul>
+    </li> 
+</ul>
+}

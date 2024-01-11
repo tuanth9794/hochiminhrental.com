@@ -1,0 +1,155 @@
+﻿@model CoreCnice.Domain.Customer_Request
+
+@{
+    var defaultGridPageSize = 20;
+    ViewData["Title"] = "Thông tin gửi yêu cầu -" + Model.Customer_Name;
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+    .radio {
+        float: left !important;
+        margin-right: 10px !important
+    }
+</style>
+@using (Html.BeginForm(FormMethod.Post, new { enctype = "multipart/form-data", data_ajax = "false" }))
+{
+
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+            Thông tin gửi yêu cầu - @Model.Customer_Name
+            <small>
+                <i class="fa fa-arrow-circle-left"></i>
+                <a href="/Admin/AdminOrder">Về danh sách</a>
+            </small>
+        </h1>
+        <div class="pull-right">
+            <button type="submit" name="save" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>
+                Lưu chỉnh sửa
+            </button>
+        </div>
+    </div>
+
+    <section class="content">
+        @if (!string.IsNullOrEmpty(ViewBag.Error))
+        {
+            <div class="callout callout-info">
+                <h4>Thông báo</h4>
+                <p>
+                    @Html.Raw(ViewBag.Error)
+                </p>
+            </div>
+        }
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="Customer_request_id" value="@Model.Customer_request_id" />
+          <div class="row">
+            <div class="col-md-6">
+                <!-- general form elements -->
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Thông tin liên hệ</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- form start -->
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Tên khách hàng</label>
+                            <input type="text" class="form-control" asp-for="Customer_Name" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Số điện thoại</label>
+                            <input type="text" class="form-control" asp-for="Customer_Phone" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Địa chỉ Email</label>
+                            <input type="text" class="form-control" asp-for="Customer_Email" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Ngày gửi yêu cầu</label>
+                            <input type="text" class="form-control" asp-for="Customer_PublishDate" disabled>
+                        </div>                    
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Thông tin yêu cầu</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- form start -->
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Phòng ngủ</label>
+                            <input type="text" class="form-control"  asp-for="Customer_PN" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Diện tích</label>
+                            <input type="text" class="form-control" id="catseotitle" asp-for="Customer_Dt" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Ngân sách</label>
+                            <input type="text" class="form-control" id="catseotitle" asp-for="Customer_Ns" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Quốc tịch</label>
+                            <input type="text" class="form-control" asp-for="Customer_Quoctich" disabled>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Nhu cầu khách hàng</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- form start -->
+                    <div class="box-body">                       
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Loại căn hộ quan tâm</label>
+                           <input type="text" class="form-control"  asp-for="Customer_DuAn" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Thời gian thuê</label>
+                            <input type="text" class="form-control"  asp-for="Customer_TimeThue" disabled>
+                        </div>
+                          <div class="form-group">
+                            <label for="exampleInputPassword1">Ngày dọn vào</label>
+                            <input type="text" class="form-control"  asp-for="Customer_TimeAv" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Yêu cầu thêm</label>
+                            <textarea class="form-control" rows="3" id="catdesc" asp-for="Customer_Desc" disabled></textarea>
+
+                        </div>
+                         <div class="form-group">
+                            <label for="exampleInputPassword1">Thứ tự hiển thị</label>
+                            <input type="text" class="form-control"  asp-for="Customer_Request_Order">                         
+                        </div>
+                          <div class="form-group">
+                            <label for="inputEmail3" class="col-md-2 control-label">Loại tin</label>
+                            <div class="col-md-10">
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.Customer_Active, "0", new { id = 0, @checked = "checked", @class = "radio" })
+                                    Ẩn 
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.Customer_Active, "1", new { id = 1, @class = "radio" })
+                                  Hiện
+                                </div>                              
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>       
+        </div>
+    
+    </section>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
+}
+

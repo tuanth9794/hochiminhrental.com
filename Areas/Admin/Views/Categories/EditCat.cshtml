@@ -1,0 +1,588 @@
+﻿@model CoreCnice.Domain.ESHOP_CATEGORIES
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Chỉnh sửa thông tin -" + Model.CAT_NAME;
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<style>
+    .radio {
+        float: left !important;
+        margin-right: 10px !important
+    }
+
+    .imagesLoad {
+        display: none;
+    }
+</style>
+<script src="~/Admin/tinymce/js/tinymce/tinymce.js"></script>
+@using (Html.BeginForm(FormMethod.Post, new { enctype = "multipart/form-data", data_ajax = "false" }))
+{
+
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+            Chỉnh sửa thông tin - @Model.CAT_NAME
+            <small>
+                <i class="fa fa-arrow-circle-left"></i>
+                <a href="/Admin/Categories/List">Về danh sách</a>
+            </small>
+        </h1>
+        <div class="pull-right">
+            <a href="/Admin/Categories/CatFilterList/@Model.CAT_ID" name="save" class="btn bg-green">
+                <i class="fa fa-fw fa-file-picture-o"></i>
+                Danh sách thuộc tính
+            </a>
+            <button type="submit" name="save" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>
+                Lưu chỉnh sửa
+            </button>
+            <button type="submit" name="DeleteCatConfirmed" class="btn bg-red" formmethod="post" formaction="/Admin/Categories/DeleteCatConfirmed?id=@Model.CAT_ID">
+                <span class="glyphicon glyphicon-trash"></span>
+                Xóa
+            </button>
+        </div>
+    </div>
+
+    <section class="content">
+        @if (!string.IsNullOrEmpty(ViewBag.Error))
+        {
+            <div class="callout callout-info">
+                <p>
+                    @Html.Raw(ViewBag.Error)
+                </p>
+            </div>
+        }
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="CAT_ID" value="@Model.CAT_ID" />
+        <div class="row">
+            <div class="col-md-6">
+                <!-- general form elements -->
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Thông tin chung</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- form start -->
+
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Mã (Icon)</label>
+                            <input type="text" class="form-control" asp-for="CAT_CODE">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Chuyên mục cha</label>
+                            <select asp-for="CAT_PARENT_ID" class="form-control" asp-items="@(new SelectList(ViewBag.ListCatPr,"CAT_ID","CAT_NAME"))"></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Tên chuyên mục</label>
+                            <input type="text" class="form-control" asp-for="CAT_NAME">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Tên chuyên mục TA</label>
+                            <input type="text" class="form-control" asp-for="CAT_NAME_EN">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Miêu tả ngắn</label>
+                            <textarea class="form-control" rows="3" id="catdesc" asp-for="CAT_DESC"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Miêu tả ngắn TA</label>
+                            <textarea class="form-control" rows="3" id="catdesc" asp-for="CAT_DESC_JS"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Liên kết tĩnh</label>
+                            <input type="text" class="form-control" id="catlienket" asp-for="CAT_URL">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Liên kết tĩnh En</label>
+                            <input type="text" class="form-control" id="catlienket" asp-for="CAT_LIENKET_EN">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Số tin / 1 trang</label>
+                            <input type="text" class="form-control" id="catlienket" asp-for="CAT_PAGEITEM">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Thông tin seo</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- form start -->
+
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Seo title</label>
+                            <input type="text" class="form-control" id="catseotitle" asp-for="CAT_SEO_TITLE">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Seo title En</label>
+                            <input type="text" class="form-control" id="catseotitle" asp-for="CAT_TARGET">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Seo Url</label>
+                            <input type="text" class="form-control" id="catseourl" asp-for="CAT_SEO_URL">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Seo Url EN</label>
+                            <input type="text" class="form-control" id="catseourlen" asp-for="CAT_SEO_URL_EN">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">SEO Keyword</label>
+                            <textarea class="form-control" rows="2" id="catseokey" asp-for="CAT_SEO_KEYWORD"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">SEO Des</label>
+                            <textarea class="form-control" rows="2" id="catseokey" asp-for="CAT_SEO_DESC"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">SEO Des En</label>
+                            <textarea class="form-control" rows="2" id="catseokey" asp-for="CAT_SEO_META_DESC_EN"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">SEO canonical</label>
+                            <input type="text" class="form-control" id="catseotitle" asp-for="CAT_SEO_TITLE_EN">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">SEO canonical EN</label>
+                            <input type="text" class="form-control" id="catseotitle" asp-for="CAT_SEO_META_CANONICAL">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Alt Banner</label>
+                            <input type="text" class="form-control" id="catseotitle" asp-for="CAT_FIELD1">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">
+                            Thông tin hiển thị
+                        </h3>
+                        <!-- tools box -->
+                        <div class="pull-right box-tools">
+                            <button type="button" class="btn btn-default btn-sm" data-widget="collapse" data-toggle="tooltip"
+                                    title="Collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                        <!-- /. tools -->
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-md-2 control-label">Loại chuyên mục</label>
+                            <div class="col-md-10">
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.CAT_TYPE, "0", new { id = 0, @checked = "checked", @class = "radio" })
+                                    Tin tức
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.CAT_TYPE, "1", new { id = 1, @class = "radio" })
+                                    Sản phẩm
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.CAT_TYPE, "10", new { id = 10, @class = "radio" })
+                                    Sản phẩm bản đồ
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.CAT_TYPE, "2", new { id = 2, @class = "radio" })
+                                    Chuyên mục cha cấp 2
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.CAT_TYPE, "3", new { id = 3, @class = "radio" })
+                                    Trang tư vấn
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.CAT_TYPE, "6", new { id = 6, @class = "radio" })
+                                    Trang giới thiệu
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.CAT_TYPE, "7", new { id = 7, @class = "radio" })
+                                    Gợi ý chuyên mục
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.CAT_TYPE, "8", new { id = 8, @class = "radio" })
+                                    Sản phẩm độc quyền chuyên mục
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.CAT_TYPE, "9", new { id = 9, @class = "radio" })
+                                    Bảng giá dịch vụ
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.CAT_TYPE, "11", new { id = 11, @class = "radio" })
+                                    Chuyên mục cha cấp 1
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="line" />
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-md-2 control-label">Hiển thị</label>
+                            <div class="col-md-10">
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.CAT_STATUS, "0", new { id = 0, @checked = "checked", @class = "radio" })
+                                    Không
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.CAT_STATUS, "1", new { id = 1, @class = "radio" })
+                                    Có
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.CAT_STATUS, "2", new { id = 2, @class = "radio" })
+                                    Tin tức nổi bật
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="line" />
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-md-2 control-label">Hiển thị trang chủ</label>
+                            <div class="col-md-10">
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.CAT_SHOWHOME, "0", new { id = 0, @checked = "checked", @class = "radio" })
+                                    Không
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.CAT_SHOWHOME, "1", new { id = 1, @class = "radio" })
+                                    Vị trí 1
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.CAT_SHOWHOME, "2", new { id = 2, @class = "radio" })
+                                    Vị trí 2
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.CAT_SHOWHOME, "3", new { id = 3, @class = "radio" })
+                                    Vị trí 3
+                                </div>
+                                @*<div class="col-md-3">
+            @Html.RadioButtonFor(model => model.CAT_SHOWHOME, "7", new { id = 7, @class = "radio" })
+            Tin tức trang chủ
+        </div>*@
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.CAT_SHOWHOME, "4", new { id = 4, @class = "radio" })
+                                    Vị trí 4
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.CAT_SHOWHOME, "5", new { id = 5, @class = "radio" })
+                                    Ý kiến khách hàng
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.CAT_SHOWHOME, "8", new { id = 8, @class = "radio" })
+                                    Sản phẩm chuyên mục
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.CAT_SHOWHOME, "9", new { id = 9, @class = "radio" })
+                                    Gợi ý tìm kiếm
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.CAT_SHOWHOME, "11", new { id = 11, @class = "radio" })
+                                    căn hộ cho thuê theo dự án
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="line" />
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-md-2 control-label">Hiển thị footer</label>
+                            <div class="col-md-10">
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.CAT_SHOWFOOTER, "0", new { id = 0, @checked = "checked", @class = "radio" })
+                                    Không
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.CAT_SHOWFOOTER, "1", new { id = 1, @class = "radio" })
+                                    Có
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="line" />
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-md-2 control-label">Vị trí hiển thị</label>
+                            <div class="col-md-10">
+                                @*<div class="col-md-3">
+                                        @Html.RadioButtonFor(model => model.CAT_POSITION, "0", new { id = 0, @checked = "checked", @class = "radio" })
+                                        Menu top
+                                    </div>*@
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.CAT_POSITION, "1", new { id = 1, @checked = "checked", @class = "radio" })
+                                    Menu chính
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.CAT_POSITION, "2", new { id = 2, @checked = "checked", @class = "radio" })
+                                    Menu trái
+                                </div>
+                                @*<div class="col-md-3">
+                                        @Html.RadioButtonFor(model => model.CAT_POSITION, "2", new { id = 2, @checked = "checked", @class = "radio" })
+                                        Menu trái
+                                    </div>
+                                    <div class="col-md-3">
+                                        @Html.RadioButtonFor(model => model.CAT_POSITION, "4", new { id = 4, @checked = "checked", @class = "radio" })
+                                        Menu chính và Menu Trái
+                                    </div>*@
+
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(model => model.CAT_POSITION, "3", new { id = 3, @class = "radio" })
+                                    Không chọn
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="line" />
+                        <div class="form-group form-horizontal ">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="inputEmail3" class="col-md-5 control-label textalginleft">Thứ tự hiển thị trang chủ</label>
+                                    <div class="col-md-7">
+                                        <input type="text" class="form-control " id="catseotitle" asp-for="CAT_PERIOD">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="inputEmail3" class="col-md-5 control-label textalginleft">Thứ tự hiển thị menu</label>
+                                    <div class="col-md-7">
+                                        <input type="text" class="form-control " id="catseotitle" asp-for="CAT_PERIOD_ORDER">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="box box-info">
+                    <div class="box-header">
+                        <h3 class="box-title">
+                            Miêu tả dài
+                        </h3>
+                        <!-- tools box -->
+                        <div class="pull-right box-tools">
+                            <button type="button" class="btn btn-info btn-sm" data-widget="collapse" data-toggle="tooltip"
+                                    title="Collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                        <!-- /. tools -->
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body pad">
+                        <textarea id="editor" class="textarea" asp-for="CAT_DESC_EN" placeholder="Place some text here" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="box box-info">
+                    <div class="box-header">
+                        <h3 class="box-title">
+                            Miêu tả dài tiếng anh
+                        </h3>
+                        <!-- tools box -->
+                        <div class="pull-right box-tools">
+                            <button type="button" class="btn btn-info btn-sm" data-widget="collapse" data-toggle="tooltip"
+                                    title="Collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                        <!-- /. tools -->
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body pad">
+                        <textarea id="editor" class="textarea" asp-for="CAT_NAME_JS" placeholder="Place some text here" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="box box-info">
+                    <div class="box-header">
+                        <h3 class="box-title">
+                            Thẻ tiêu đề
+                        </h3>
+                        <!-- tools box -->
+                        <div class="pull-right box-tools">
+                            <button type="button" class="btn btn-info btn-sm" data-widget="collapse" data-toggle="tooltip"
+                                    title="Collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                        <!-- /. tools -->
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body pad">
+                        <textarea asp-for="CAT_FIELD2" placeholder="Place some text here" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="box box-info">
+                    <div class="box-header">
+                        <h3 class="box-title">
+                            Hình ảnh chuyên mục
+                        </h3>
+                        <!-- tools box -->
+                        <div class="pull-right box-tools">
+                            <button type="button" class="btn btn-info btn-sm" data-widget="collapse" data-toggle="tooltip"
+                                    title="Collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                        <!-- /. tools -->
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body pad">
+                        <div class="form-group form-horizontal ">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="inputEmail3" class="col-md-5 control-label textalginleft">Hình hiển thị</label>
+                                    <div class="col-md-7">
+                                        <input type="file" asp-for="CAT_IMAGE1">
+                                        <input class="form-control imagesLoad" asp-for="CAT_IMAGE1">
+                                        @if (!string.IsNullOrEmpty(Model.CAT_IMAGE1))
+                                        {
+                                            <img src="~/UploadImages/Data/Cats/@Model.CAT_ID/@Model.CAT_IMAGE1" id="ImagesThumId" />
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="inputEmail3" class="col-md-5 control-label textalginleft">Hình banner</label>
+                                    <div class="col-md-7">
+                                        <input type="file" asp-for="CAT_IMAGE2">
+                                        <input class="form-control imagesLoad" asp-for="CAT_IMAGE2">
+                                        @if (!string.IsNullOrEmpty(Model.CAT_IMAGE2))
+                                        {
+                                            <img src="~/UploadImages/Data/Cats/@Model.CAT_ID/@Model.CAT_IMAGE2" id="ImagesBnId" />
+                                        }
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="inputEmail3" class="col-md-5 control-label textalginleft">Hình banner chi tiết</label>
+                                    <div class="col-md-7">
+                                        <input type="file" asp-for="CAT_IMAGE3">
+                                        <input class="form-control imagesLoad" asp-for="CAT_IMAGE3">
+                                        @if (!string.IsNullOrEmpty(Model.CAT_IMAGE3))
+                                        {
+                                            <img src="~/UploadImages/Data/Cats/@Model.CAT_ID/@Model.CAT_IMAGE3" id="ImagesBnId" />
+                                        }
+
+                                    </div>
+                                </div>
+                                @*<div class="col-md-6">
+                                        <label for="inputEmail3" class="col-md-5 control-label textalginleft">Hình banner</label>
+                                        <div class="col-md-7">
+                                            <input id="xFilePath" name="FilePath" type="text" class="input-block-level" />
+                                            <input type="button" value="Chọn hình đại diện" onclick="BrowseServer();" class="controls" />
+                                            <img id="Image1" runat="server" width="53" />
+                                        </div>
+                                    </div>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    @section Scripts {
+        <script>
+            $(function () {
+                $("#CAT_NAME").focusout(function () {
+                    var str = $("#CAT_NAME").val();// lấy chuỗi dữ liệu nhập vào từ form có tên title
+                    var str123 = $("#CAT_NAME").val();
+                    str = str.toLowerCase();// chuyển chuỗi sang chữ thường để xử lý
+                    /* tìm kiếm và thay thế tất cả các nguyên âm có dấu sang không dấu*/
+                    str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+                    str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+                    str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+                    str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+                    str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+                    str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+                    str = str.replace(/đ/g, "d");
+                    str = str.replace(/!|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'| |\"|\&|\#|\[|\]|~|$|_/g, "-");
+                    /* tìm và thay thế các kí tự đặc biệt trong chuỗi sang kí tự - */
+                    str = str.replace(/-+-/g, "-"); //thay thế 2- thành 1-
+                    str = str.replace(/^\-+|\-+$/g, "");//cắt bỏ ký tự - ở đầu và cuối chuỗi
+                    $("#catseourl").val(str);// xuất kết quả xữ lý ra
+                });
+            });
+            $(function () {
+                $("#CAT_NAME_EN").focusout(function () {
+                    var str = $("#CAT_NAME_EN").val();// lấy chuỗi dữ liệu nhập vào từ form có tên title
+                    var str123 = $("#CAT_NAME_EN").val();
+                    str = str.toLowerCase();// chuyển chuỗi sang chữ thường để xử lý
+                    /* tìm kiếm và thay thế tất cả các nguyên âm có dấu sang không dấu*/
+                    str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+                    str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+                    str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+                    str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+                    str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+                    str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+                    str = str.replace(/đ/g, "d");
+                    str = str.replace(/!|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'| |\"|\&|\#|\[|\]|~|$|_/g, "-");
+                    /* tìm và thay thế các kí tự đặc biệt trong chuỗi sang kí tự - */
+                    str = str.replace(/-+-/g, "-"); //thay thế 2- thành 1-
+                    str = str.replace(/^\-+|\-+$/g, "");//cắt bỏ ký tự - ở đầu và cuối chuỗi
+                    $("#catseourlen").val(str);// xuất kết quả xữ lý ra
+                });
+            });
+            tinymce.init({
+                selector: 'textarea.textarea',  // change this value according to your HTML
+                plugins: [
+                    'advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker',
+                    'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+                    'save table contextmenu directionality emoticons template paste textcolor'
+                ],
+                a_plugin_option: true,
+                toolbar: [
+                    'undo redo | styleselect | bold italic | link image | alignleft aligncenter alignright',
+                    'newdocument, undo, redo, visualaid, cut, copy, paste, selectall, bold, italic, underline, strikethrough, subscript, superscript, removeformat, formats'
+                ],
+                //file_browser_callback: 'myFileBrowser',
+                a_configuration_option: 400,
+                //images_upload_url: '/Areas/Admin/api/UploadService',
+                //automatic_uploads: false,
+                //images_reuse_filename: true,
+                //images_upload_base_path: '/UploadImages/UploadService/'
+                //image_advtab: true,
+                //external_filemanager_path: "/Admin/responsive_filemanager/filemanager/",
+                //filemanager_title: "Trình quản lý thư viện",
+                //external_plugins: { "filemanager": "/Admin/responsive_filemanager/filemanager/plugin.min.js" }
+                file_browser_callback: RoxyFileBrowser
+            });
+
+            $(function () {
+                //select2 eklentimizin tanımı
+                $('#select2').select2({
+                    placeholder: "Lựa chọn danh mục",
+                });
+            });
+
+            function RoxyFileBrowser(field_name, url, type, win) {
+                var roxyFileman = '/lib/fileman/index.html';
+                if (roxyFileman.indexOf("?") < 0) {
+                    roxyFileman += "?type=" + type;
+                }
+                else {
+                    roxyFileman += "&type=" + type;
+                }
+                roxyFileman += '&input=' + field_name + '&value=' + win.document.getElementById(field_name).value;
+                if (tinyMCE.activeEditor.settings.language) {
+                    roxyFileman += '&langCode=' + tinyMCE.activeEditor.settings.language;
+                }
+                tinyMCE.activeEditor.windowManager.open({
+                    file: roxyFileman,
+                    title: 'Roxy Fileman',
+                    width: 850,
+                    height: 650,
+                    resizable: "yes",
+                    plugins: "media",
+                    inline: "yes",
+                    close_previous: "no"
+                }, { window: win, input: field_name });
+                return false;
+            }
+        </script>
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
+}
+

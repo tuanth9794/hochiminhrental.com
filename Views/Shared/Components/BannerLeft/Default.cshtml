@@ -1,0 +1,9 @@
+﻿@model IEnumerable<CoreCnice.Domain.ESHOP_AD_ITEM>
+
+@foreach (var category in Model.ToList())
+{
+    <div class="widget">
+        <a href="@category.AD_ITEM_URL"><img src="/UploadImages/Data/Banner/@category.AD_ITEM_FILENAME" /></a>
+    </div>
+}
+

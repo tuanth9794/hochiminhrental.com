@@ -1,0 +1,6 @@
+﻿@model IEnumerable<CoreCnice.Models.NewsModelCat>
+
+@foreach (var category in Model.ToList())
+{
+    @Html.Partial("~/Views/Catalog/_JobOne.cshtml", category);
+}

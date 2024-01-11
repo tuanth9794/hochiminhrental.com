@@ -1,0 +1,130 @@
+﻿@model CoreCnice.Domain.ESHOP_AD_ITEM
+
+@{
+    ViewData["Title"] = "Delete";
+     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>ESHOP_AD_ITEM</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AD_ITEM_CODE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AD_ITEM_CODE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AD_ITEM_FILENAME)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AD_ITEM_FILENAME)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AD_ITEM_DESC)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AD_ITEM_DESC)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AD_ITEM_TYPE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AD_ITEM_TYPE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AD_ITEM_HEIGHT)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AD_ITEM_HEIGHT)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AD_ITEM_WIDTH)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AD_ITEM_WIDTH)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AD_ITEM_CLICKCOUNT)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AD_ITEM_CLICKCOUNT)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AD_ITEM_URL)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AD_ITEM_URL)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AD_ITEM_PUBLISHDATE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AD_ITEM_PUBLISHDATE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AD_ITEM_DATEFROM)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AD_ITEM_DATEFROM)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AD_ITEM_DATETO)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AD_ITEM_DATETO)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AD_ITEM_ORDER)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AD_ITEM_ORDER)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AD_ITEM_POSITION)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AD_ITEM_POSITION)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AD_ITEM_TARGET)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AD_ITEM_TARGET)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AD_ITEM_COUNT)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AD_ITEM_COUNT)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AD_ITEM_LANGUAGE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AD_ITEM_LANGUAGE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AD_ITEM_FIELD1)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AD_ITEM_FIELD1)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AD_ITEM_FIELD2)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AD_ITEM_FIELD2)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="AD_ITEM_ID" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

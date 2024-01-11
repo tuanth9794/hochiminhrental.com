@@ -1,0 +1,100 @@
+﻿@model CoreCnice.Domain.ESHOP_CONFIG
+
+@{
+    ViewData["Title"] = "Chỉnh sửa " + Model.CONFIG_NAME;
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<style>
+    .radio {
+        float: left !important;
+        margin-right: 10px !important
+    }
+    .content-wrapper img {
+        width: 100px;
+        margin-top: 10px;
+    }
+</style>
+@using (Html.BeginForm(FormMethod.Post, new { enctype = "multipart/form-data", data_ajax = "false" }))
+{
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+            Chỉnh sửa thông tin - <span style="color:#0026ff"> @Model.CONFIG_TITLE</span>
+        </h1>
+        <div class="pull-right">
+            <button type="submit" name="save" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>
+                Lưu chỉnh sửa
+            </button>
+        </div>
+    </div>
+    <section class="content">
+        @if (!string.IsNullOrEmpty(ViewBag.Error))
+        {
+            <div class="callout callout-info">
+                <h4>Thông báo</h4>
+                <p>
+                    @Html.Raw(ViewBag.Error)
+                </p>
+            </div>
+        }
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" class="form-control" asp-for="CONFIG_ID">
+        <input type="hidden" class="form-control" asp-for="CONFIG_NAME">
+        <input type="hidden" class="form-control" asp-for="CONFIG_EMAIL">
+        <input type="hidden" class="form-control" asp-for="CONFIG_PASSWORD">
+        <input type="hidden" class="form-control" asp-for="CONFIG_SMTP">
+        <input type="hidden" class="form-control" asp-for="CONFIG_PORT">
+        <input type="hidden" class="form-control" asp-for="CONFIG_DESCRIPTION">
+        <input type="hidden" class="form-control" asp-for="CONFIG_FACEBOOK">
+        <input type="hidden" class="form-control" asp-for="CONFIG_GOOGLE">
+        <input type="hidden" class="form-control" asp-for="CONFIG_ADD">
+        <input type="hidden" class="form-control" asp-for="CONFIG_FOOTER">
+        <input type="hidden" class="form-control" asp-for="CONFIG_FIELD2">
+        <input type="hidden" class="form-control" asp-for="CONFIG_FIELD4">
+        <input type="hidden" class="form-control" asp-for="CONFIG_DESCRIPTION_EN">
+        <input type="hidden" class="form-control" asp-for="CONFIG_FIELD1">
+        <input type="hidden" class="form-control" asp-for="CONFIG_FIELD3">
+        <input type="hidden" class="form-control" asp-for="CONFIG_FIELD5">
+        @*<input type="hidden" asp-for="NEWS_ID" value="@Model.NEWS_ID" />*@
+        <div class="row">
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Thông tin cấu hình</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- form start -->
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Seo Title</label>
+                            <input type="text" class="form-control" asp-for="CONFIG_TITLE">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Seo Desc</label>
+                            <textarea asp-for="CONFIG_NAME_US" placeholder="Place some text here" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Key Word</label>
+                            <textarea asp-for="CONFIG_KEYWORD" placeholder="Place some text here" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Favicon</label>
+                            <input type="file" asp-for="CONFIG_FAVICON">
+                            <input type="hidden" asp-for="CONFIG_FAVICON">
+                            @if (!string.IsNullOrEmpty(Model.CONFIG_FAVICON))
+                            {
+                                <img src="~/UploadImages/Data/@Model.CONFIG_FAVICON" id="ImagesBnId" />
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
